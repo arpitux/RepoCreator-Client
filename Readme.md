@@ -15,7 +15,7 @@ node_modules/.bin/jspm install
 ```
 npm start
 ```
-Alternatively, if port 8080 is in use, you can use this command to run on some other port
+Alternatively, if port 8080 is in use, you can use (`Error: listen EACCESS 127.0.0.1:8080`) this command to run on some other port
 ```
 node_modules/.bin/static dist -p 8081
 ```
