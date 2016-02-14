@@ -1,16 +1,17 @@
 import { decompressFromEncodedURIComponent, compressToEncodedURIComponent } from "lz-string";
 import { computedFrom } from 'aurelia-binding';
-import { inject } from 'aurelia-dependency-injection';
+import { autoinject } from 'aurelia-dependency-injection';
 import { Router } from 'aurelia-router';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { RepoCreator } from 'source/services/RepoCreator';
+import { OAuth } from 'source/services/OAuth-Auth0';
 import { ProgressModal } from 'source/components/progress-modal';
 import { CompleteModal } from 'source/components/complete-modal';
 import { Validation, ValidationGroup } from 'aurelia-validation';
 import underscore from 'underscore';
 import 'bootstrap';
 
-@inject(Router, EventAggregator, RepoCreator, Validation)
+@autoinject
 export class EnterReplacements {
 	activated: boolean = false;
 	templateOwner: string = null;
@@ -26,6 +27,7 @@ export class EnterReplacements {
 		private router: Router,
 		private eventAggregator: EventAggregator,
 		private repoCreator: RepoCreator,
+		private oAuth: OAuth,
 		private validation: Validation
 	) { }
 
@@ -119,7 +121,17 @@ export class EnterReplacements {
 	}
 
 	private keysToReplacements(keys: string[]): Replacement[] {
-		return underscore(keys).map((key: string) => new Replacement(key, ''));
+		return underscore(keys)
+			.map((key: string) => {
+				let replacement = new Replacement(key, '');
+				if (/git.?hub.?owner/i.test(replacement.friendlyName))
+					this.oAuth.gitHubLogin.then(login => replacement.value = login);
+				if (/git.?hub.?repo/i.test(replacement.friendlyName))
+					replacement.value = this.destinationName;
+				if (/current.?year/i.test(replacement.friendlyName))
+					replacement.value = new Date(Date.now()).getUTCFullYear().toString();
+				return replacement;
+			});
 	}
 
 	private setupValidation() {
