@@ -24,6 +24,7 @@
       "bootstrap": "github:twbs/bootstrap@^3.3.6",
       "css": "github:systemjs/plugin-css@^0.1.20",
       "font-awesome": "npm:font-awesome@^4.5.0",
+      "isotope": "github:metafizzy/isotope@^2.2.2",
       "jquery": "github:components/jquery@^2.1.4",
       "lz-string": "bower:lz-string@^1.4.4",
       "oauthio-web": "npm:oauthio-web@^0.5.0",
@@ -50,6 +51,9 @@
             "exports": "Auth0Lock"
           }
         }
+      },
+      "github:metafizzy/isotope@2.2.2": {
+        "main": "dist/isotope.pkgd.js"
       }
     }
   },

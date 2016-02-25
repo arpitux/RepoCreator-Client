@@ -43,6 +43,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.20",
     "error-modal": "local-component/error-modal",
     "font-awesome": "npm:font-awesome@4.5.0",
+    "isotope": "github:metafizzy/isotope@2.2.2",
     "jquery": "github:components/jquery@2.1.4",
     "lz-string": "bower:lz-string@1.4.4",
     "nav-bar": "local-component/nav-bar",

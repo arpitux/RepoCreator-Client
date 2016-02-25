@@ -64,9 +64,6 @@
 							<a href="#page-top"></a>
 						</li>
 						<li class="page-scroll">
-							<a href="#about">About</a>
-						</li>
-						<li class="page-scroll">
 							<a href="#howitworks">How it Works</a>
 						</li>
 						<li class="page-scroll">
@@ -88,11 +85,11 @@
 			<!-- /.container -->
 		</nav>
 
-		<header class="intro-img intro-dark-bg" style="background-image: url(assets/img/demo-bgs/banner-bg.png)" data-stellar-background-ratio="0.5">
+		<header class="intro-img intro-dark-bg" style="background-image: url(assets/img/demo-bgs/demo-bg-1.jpg)" data-stellar-background-ratio="0.5">
 			<div class="overlay"></div>
 			<div class="intro-body" data-scrollreveal="move 0 over 1.5s">
 				<div class="container">
-					<div class="intro-welcome">Welcome to RepoCreator!</div>
+					<div class="intro-welcome">RepoCreator by <img src="images/Zoltu-Logo-Web.png" style="height:45px;margin-top:-18px;margin-left:10px" /></div>
 					<br>
 					<h1 class="brand-heading">
 						Get <span class="text-primary">Scaffolded</span> projects <br /> in <span class="text-primary">seconds</span>
@@ -128,8 +125,8 @@
 						<hr class="primary">
 						<p>While project scaffolding is nothing new, RepoCreator simplifies the process by giving you a simple web interface that interacts directly with GitHub. There is no need to download or install a tool and all of its dependencies.</p>
 						<p class="page-scroll mbn">
-							<a href="#howitworks" class="btn btn-primary btn-lg btn-light btn-outline btn-square mr10">Learn More</a>
-							<a href="#templates" class="btn btn-primary btn-square btn-lg"><i class="fa fa-search"></i> Search Templates</a>
+							<a href="#howitworks" class="btn btn-primary btn-lg btn-light btn-outline btn-square mr10 mb20">Learn More</a>
+							<a href="#templates" class="btn btn-primary btn-square btn-lg mb20"><i class="fa fa-search"></i> Search Templates</a>
 						</p>
 					</div>
 				</div>
@@ -144,9 +141,9 @@
 						<hr class="primary">
 						<p>You can use any repository on Github as the template for RepoCreator. If you'd like to create your own template, just create your project like you normally would but anywhere you would type a repo-specific string, instead type magic_variable_magic, magic.variable.magic or magic-variable-magic.</p>
 						<p>For example, if you have the following tag in your template's HTML file:</p>
-						<pre class="mb20">&lt;title&gt; magic_app_name_magic &lt;/title&gt;</pre>
+						<pre class="mb20 fs18">&lt;title&gt; magic_app_name_magic &lt;/title&gt;</pre>
 						<p>When you create a new project from the template you will be prompted for the replacement of <code>app_name</code>. If you set the value to <code>My Cool App</code>, then in the new repo you will have this:</p>
-						<pre>&lt;title&gt; My Cool App &lt;/title&gt;</pre>
+						<pre class="fs18">&lt;title&gt; My Cool App &lt;/title&gt;</pre>
 					</div>
 				</div>
 			</div>
@@ -198,118 +195,15 @@
 					<div class="col-lg-12 text-center">
 						<h2>Templates</h2>
 						<hr class="primary">
-						<div class="row mb20 mt30">
-							<div class="col-xs-12 col-sm-5 text-right">
-								<div class="input-group">
-									<input type="text" class="form-control input-lg" placeholder="Search Github">
-									<span class="input-group-btn">
-								        <button class="btn btn-secondary btn-lg btn-square" type="button">Go!</button>
-								    </span>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-7">
-								<ul class="list-inline mbn text-right" id="filters">
-									<li class="mb10">
-										<button data-filter="*" type="button" class="btn btn-primary btn-square btn-raised active">All</button>
-									</li>
-									<li class="mb10">
-										<button data-filter=".popular, .sponsored" type="button" class="btn btn-primary btn-square btn-raised">Popular</button>
-									</li>
-									<li class="mb10">
-										<button data-filter="*" type="button" class="btn btn-primary btn-square btn-raised">My Sponsored</button>
-									</li>
-									<li class="mb10">
-										<button data-filter="*" type="button" class="btn btn-primary btn-square btn-raised">My Favorites</button>
-									</li>
-								</ul>
-							</div>
-						</div>
 					</div>
 				</div>
-				<div class="row" data-scrollreveal="enter bottom over 1s">
-					<div class="isotope">
-						<div class="col-sm-4 portfolio-item popular sponsored">
-							<a href="#portfolio-modal-1" class="portfolio-link">
-								<figure class="favorites"><i class="fa fa-heart-o"></i> 9</figure>
-								<div class="details">
-									<div class="summary">
-										<h3>AzureApiApp</h3>
-										<div class="sponsor-caption"><i class="fa fa-bookmark"></i> Sponsored</div>
-									</div>
-									<div class="description">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									</div>
-								</div>
-								<img src="images/zoltu-icon-64x64.png" class="img-centered" alt="">
-							</a>
-						</div>
-						<div class="col-sm-4 portfolio-item popular sponsored">
-
-							<a href="#portfolio-modal-1" class="portfolio-link">
-								<figure class="favorites"><i class="fa fa-heart-o"></i> 9</figure>
-								<div class="details">
-									<div class="summary">
-										<h3>AzureApiAppSimple</h3>
-										<div class="sponsor-caption"><i class="fa fa-bookmark"></i> Sponsored</div>
-									</div>
-									<div class="description">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									</div>
-								</div>
-								<img src="images/zoltu-icon-64x64.png" class="img-centered" alt="">
-							</a>
-						</div>
-						<div class="col-sm-4 portfolio-item popular">
-							<a href="#portfolio-modal-1" class="portfolio-link">
-								<figure class="favorites"><i class="fa fa-heart-o"></i> 9</figure>
-								<div class="details">
-									<div class="summary">
-										<h3>AzureApiApp</h3>
-										<div class="sponsor-caption"><i class="fa fa-bookmark"></i> Sponsored</div>
-									</div>
-									<div class="description">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									</div>
-								</div>
-								<img src="images/zoltu-icon-64x64.png" class="img-centered" alt="">
-							</a>
-						</div>
-						<div class="col-sm-4 portfolio-item popular">
-							<a href="#portfolio-modal-1" class="portfolio-link">
-								<figure class="favorites"><i class="fa fa-heart-o"></i> 9</figure>
-								<div class="details">
-									<div class="summary">
-										<h3>AzureApiApp</h3>
-										<div class="sponsor-caption"><i class="fa fa-bookmark"></i> Sponsored</div>
-									</div>
-									<div class="description">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									</div>
-								</div>
-								<img src="images/zoltu-icon-64x64.png" class="img-centered" alt="">
-							</a>
-						</div>
-						<div class="col-sm-4 portfolio-item popular">
-							<a href="#portfolio-modal-1" class="portfolio-link">
-								<figure class="favorites"><i class="fa fa-heart-o"></i> 9</figure>
-								<div class="details">
-									<div class="summary">
-										<h3>AzureApiApp</h3>
-										<div class="sponsor-caption"><i class="fa fa-bookmark"></i> Sponsored</div>
-									</div>
-									<div class="description">
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									</div>
-								</div>
-								<img src="images/zoltu-icon-64x64.png" class="img-centered" alt="">
-							</a>
-						</div>
-					</div>
+				<div  aurelia-app="source/main-repocreator">
+					<div style="text-align: center; font-size: 300%">Loading...</div>
 				</div>
 			</div>
 		</section>
 
-		<section class="bg-dark">
+		<section id="faq" class="bg-dark">
 			<div class="container">
 				<div class="row text-center">
 					<div class="col-lg-8 col-lg-offset-2">
@@ -427,20 +321,23 @@
 									<span class="period">forever</span>
 								</div>
 								<ul class="pricing-items list-unstyled text-center">
-									<li class="item">Public Access</li>
-									<li class="item">
-										<span class="text-primary">Fully Responsive</span> Design
+									<li class="item"><i class="fa fa-check-circle"></i> Public Access</li>
+									<li class="item"><i class="fa fa-check-circle"></i> Dedicated Support</li>
+									<li id="info_cc0" class="pn" style="display:none">
+										<div class="p15">
+											Any template repository that is both public and CC0 licensed will be free to use.
+										</div>
 									</li>
-									<li class="item">Dedicated Support</li>
-									<li class="pricing-button">
-										<a href="#" class="btn btn-primary btn-square btn-raised">Try Now</a>
+									<li class="pricing-button page-scroll">
+										<button class="btn btn-default btn-square mr10" onclick="ShowPricingInfo(this,'cc0')"><i class="fa fa-angle-double-down"></i> Know More</button>
+										<a href="#templates" class="btn btn-primary btn-square">Try Now</a>
 									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 pricing-col" data-scrollreveal="enter right over 1.5s">
-						<div class="pricing-table featured">
+					<div class="col-md-4 pricing-col" data-scrollreveal="enter bottom over 1.5s">
+						<div class="pricing-table">
 							<div class="pricing-heading" style="background-image: url('assets/img/demo-pricing/1.jpg')">
 								<h2>Any</h2>
 							</div>
@@ -450,13 +347,17 @@
 									<span class="period">monthly</span>
 								</div>
 								<ul class="pricing-items list-unstyled text-center">
-									<li class="item">Public Access</li>
-									<li class="item">
-										<span class="text-primary">Fully Responsive</span> Design
+									<li class="item"><i class="fa fa-check-circle"></i> Public Access</li>
+									<li class="item"><i class="fa fa-check-circle"></i> Sponsored</li>
+									<li class="item"><i class="fa fa-check-circle"></i> Dedicated Support</li>
+									<li id="info_any5" class="pn" style="display:none">
+										<div class="p15">
+											If you would like a repository to be available as a template but do not want to, or cannot, use the CC0 license then you can sponsor the repository so it is available for use as a template.
+										</div>
 									</li>
-									<li class="item">Dedicated Support</li>
-									<li class="pricing-button">
-										<a href="#" class="btn btn-primary btn-square btn-raised">Buy Now</a>
+									<li class="pricing-button page-scroll">
+										<button class="btn btn-default btn-square  mr10" onclick="ShowPricingInfo(this,'any5')"><i class="fa fa-angle-double-down"></i> Know More</button>
+										<a href="#templates" class="btn btn-primary btn-square">Try Now</a>
 									</li>
 								</ul>
 							</div>
@@ -473,13 +374,17 @@
 									<span class="period">monthly</span>
 								</div>
 								<ul class="pricing-items list-unstyled text-center">
-									<li class="item">Private Access</li>
-									<li class="item">
-										<span class="text-primary">Fully Responsive</span> Design
+									<li class="item"><i class="fa fa-check-circle"></i> Private Access</li>
+									<li class="item"><i class="fa fa-check-circle"></i> Sponsored</li>
+									<li class="item"><i class="fa fa-check-circle"></i> Dedicated Support</li>
+									<li id="info_any10" class="pn" style="display:none">
+										<div class="p15">
+											If you want to use a private repository as a template you can sponsor it to make it available.
+										</div>
 									</li>
-									<li class="item">Dedicated Support</li>
-									<li class="pricing-button">
-										<a href="#" class="btn btn-primary btn-square btn-raised">Buy Now</a>
+									<li class="pricing-button page-scroll">
+										<button class="btn btn-default btn-square mr10" onclick="ShowPricingInfo(this,'any10')"><i class="fa fa-angle-double-down"></i> Know More</button>
+										<a href="#templates" class="btn btn-primary btn-square">Try Now</a>
 									</li>
 								</ul>
 							</div>
@@ -576,25 +481,31 @@
 	</div>
 
 	<!-- Standard Portfolio Modal - Images and Text -->
-	<div id="portfolio-modal-1" class="mfp-hide mfp-slideUp container pn" style="position:relative">
+	<div id="portfolio-modal-1" class="mfp-with-anim mfp-hide container pn" style="position:relative">
 		<div class="template-popup">
 			<div class="row mn">
-				<div class="col-sm-12 col-md-3 pn">
+				<div class="col-xs-12 col-sm-3 pn">
 					<div class="repo-popup-img-container">
 						<div class="fs26 mb20">AzureApiApp</div>
-						<div class="fs14 mb20 text-left">
+						<div class="fs16 mb20 text-left hidden-xs">
 							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, iusto molestiae possimus sint dignissimos! Laudantium, dolore, vel, sint, labore optio perferendis illo dolorum similique.
 						</div>
 						<button type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</button>
-						<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-heart"></i> Favorite</button>
-						<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+						<div class="hidden-xs">
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-heart"></i> Favorite</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+						</div>
+						<div class="visible-xs hidden-sm">
+							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-heart"></i> Favorite</button>
+							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+						</div>
 					</div>
-					<div class="repo-popup-img" style="background-image:url('images/zoltu-icon-64x64.png');"></div>
+					<div class="repo-popup-img" style="background-image:url('assets/img/demo-portfolio/1.jpg');"></div>
 				</div>
-				<div class="col-sm-12 col-md-9 pn">
-					<div id="repo-popup-steps-container" class="pl30 pt30 pr30">
+				<div class="col-xs-12 col-sm-9 pn">
+					<div id="repo-popup-steps-container">
 						<div class="stepsForm sf-theme-default" style="width: 100%;height:100%">
-							<div class="sf-steps">
+							<div class="sf-steps hidden-xs">
 								<div class="sf-steps-content text-center">
 									<div class="step1 sf-active" onclick="ShowStep1()">
 										<span>1</span> Repository
@@ -607,7 +518,18 @@
 									</div>
 								</div>
 							</div>
-							<div class="sf-steps-form sf-radius" style="height:calc(100% - 49px);">
+							<div class="sf-steps-form sf-radius">
+								<div id="app-error">
+									<div class="message">
+										<div class="text  bg-danger">
+											<i class="fa fa-warning"></i> Oops something went wrong! Please try after some time.
+										</div>
+										<div class="text-right">
+											<button type="button" class="btn btn-default ml10 btn-raised" onclick="$.magnificPopup.close(); showError = false;">OK</button>
+											<a class="btn btn-default ml10 btn-raised" href="https://help.zoltu.io/" target="_blank"><i class="fa fa-envelope-o"></i> Contact Support</a>
+										</div>
+									</div>
+								</div>
 								<ul id="template-step1" class="sf-content mtn" style="display: block;height:100%">
 									<!-- form step one -->
 									<li class="mbn">
@@ -618,13 +540,14 @@
 												<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 													<!--<input class="form-control input-lg" placeholder="eg. My First Repository" />-->
 													<div class="form-inline">
-														<input class="form-control input-lg" placeholder="eg. " data-placement="bottom" data-toggle="tooltip" data-delay='{"show":"500"}'
-														title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, iusto molestiae possimus sint dignissimos."
-														/>
-														<button class="btn btn-success btn-lg btn-square" onclick="ShowStep2()">Next!</button>
+														<input class="form-control mb20 input-lg brr4" placeholder="eg. " />
+														<button class="btn btn-success mb20 btn-lg btn-square" onclick="ShowStep2()">Next</button>
 													</div>
 												</div>
 											</div>
+										</div>
+										<div id="loader_replacements">
+											<i class="fa fa-refresh fa-spin"></i> Fetching Replacements..
 										</div>
 									</li>
 								</ul>
@@ -636,86 +559,82 @@
 												<div id="replacement_scrolling">
 													<div class="row text-left">
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index1" style="padding:.1em .5em">1</span>
-															<label class="label1">code_project_name</label>
-															<input class="form-control input-lg text1" />
+															<span class="label label-primary index1" style="padding:.1em .5em">1</span> <label class="label1">code_project_name</label>
+															<input class="form-control input-lg brr4 text1" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index2" style="padding:.1em .5em">2</span>
-															<label class="label2">solution_name</label>
-															<input class="form-control input-lg text2" />
+															<span class="label label-primary index2" style="padding:.1em .5em">2</span> <label class="label2">solution_name</label>
+															<input class="form-control input-lg brr4 text2" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index3" style="padding:.1em .5em">3</span>
-															<label class="label3">tests_project_name</label>
-															<input class="form-control input-lg text3" />
+															<span class="label label-primary index3" style="padding:.1em .5em">3</span> <label class="label3">tests_project_name</label>
+															<input class="form-control input-lg brr4 text3" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index4" style="padding:.1em .5em">4</span>
-															<label class="label4">title</label>
-															<input class="form-control input-lg text4" />
+															<span class="label label-primary index4" style="padding:.1em .5em">4</span> <label class="label4">title</label>
+															<input class="form-control input-lg brr4 text4" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index5" style="padding:.1em .5em">5</span>
-															<label class="label5">description</label>
-															<input class="form-control input-lg text5" />
+															<span class="label label-primary index5" style="padding:.1em .5em">5</span> <label class="label5">description</label>
+															<input class="form-control input-lg brr4 text5" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index6" style="padding:.1em .5em">6</span>
-															<label class="label6">company_name</label>
-															<input class="form-control input-lg text6" />
+															<span class="label label-primary index6" style="padding:.1em .5em">6</span> <label class="label6">company_name</label>
+															<input class="form-control input-lg brr4 text6" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index7" style="padding:.1em .5em">7</span>
-															<label class="label7">product_name</label>
-															<input class="form-control input-lg text7" />
+															<span class="label label-primary index7" style="padding:.1em .5em">7</span> <label class="label7">product_name</label>
+															<input class="form-control input-lg brr4 text7" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index8" style="padding:.1em .5em">8</span>
-															<label class="label8">namespace</label>
-															<input class="form-control input-lg text8" />
+															<span class="label label-primary index8" style="padding:.1em .5em">8</span> <label class="label8">namespace</label>
+															<input class="form-control input-lg brr4 text8" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index9" style="padding:.1em .5em">9</span>
-															<label class="label9">assembly_name</label>
-															<input class="form-control input-lg text9" />
+															<span class="label label-primary index9" style="padding:.1em .5em">9</span> <label class="label9">assembly_name</label>
+															<input class="form-control input-lg brr4 text9" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index10" style="padding:.1em .5em">10</span>
-															<label class="label10">title</label>
-															<input class="form-control input-lg text10" />
+															<span class="label label-primary index10" style="padding:.1em .5em">10</span> <label class="label10">title</label>
+															<input class="form-control input-lg brr4 text10" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index11" style="padding:.1em .5em">11</span>
-															<label class="label11">description</label>
-															<input class="form-control input-lg text11" />
+															<span class="label label-primary index11" style="padding:.1em .5em">11</span> <label class="label11">description</label>
+															<input class="form-control input-lg brr4 text11" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index12" style="padding:.1em .5em">12</span>
-															<label class="label12">company_name</label>
-															<input class="form-control input-lg text12" />
+															<span class="label label-primary index12" style="padding:.1em .5em">12</span> <label class="label12">company_name</label>
+															<input class="form-control input-lg brr4 text12" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index13" style="padding:.1em .5em">13</span>
-															<label class="label13">product_name</label>
-															<input class="form-control input-lg text13" />
+															<span class="label label-primary index13" style="padding:.1em .5em">13</span> <label class="label13">product_name</label>
+															<input class="form-control input-lg brr4 text13" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index14" style="padding:.1em .5em">14</span>
-															<label class="label14">namespace</label>
-															<input class="form-control input-lg text14" />
+															<span class="label label-primary index14" style="padding:.1em .5em">14</span> <label class="label14">namespace</label>
+															<input class="form-control input-lg brr4 text14" />
 														</div>
 														<div class="col-xs-12 col-sm-6 mb20">
-															<span class="label label-primary index15" style="padding:.1em .5em">15</span>
-															<label class="label15">assembly_name</label>
-															<input class="form-control input-lg text15" />
+															<span class="label label-primary index15" style="padding:.1em .5em">15</span> <label class="label15">assembly_name</label>
+															<input class="form-control input-lg brr4 text15" />
 														</div>
 													</div>
 												</div>
-												<div class="text-right pt25" style="border-top: 2px solid #ddd">
+												<div class="text-right pt25  hidden-xs" style="border-top: 2px solid #ddd">
 													<button type="button" class="btn btn-default btn-lg btn-square pull-left" onclick="ShowStep1()">Back</button>
 													<span>0</span> out of <span class="label label-primary">15</span>
-													<button class="btn btn-square btn-lg btn-success ml20" type="submit"><i class="fa fa-check-circle"></i> Create Repo</button>
+													<button class="btn btn-square btn-lg btn-success hidden-xs ml20" type="submit"><i class="fa fa-check-circle"></i> Create Repo</button>
+												</div>
+												<div class="pt25 pl30 pr30 visible-xs hidden-sm" style="border-top: 2px solid #ddd;">
+													<div class="mb10 row">
+														<div class="col-xs-6">
+															<button type="button" class="btn btn-default btn-lg btn-square pull-left " onclick="ShowStep1()">Back</button>
+														</div>
+														<div class="col-xs-6 text-right pt10">
+															<span>0</span> out of <span class="label label-primary">15</span>
+														</div>
+													</div>
+													<button class="btn btn-square btn-block btn-lg btn-success" type="submit"><i class="fa fa-check-circle"></i> Create Repo</button>
 												</div>
 											</form>
 										</div>
@@ -748,7 +667,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
 	<script src="assets/js/plugins/jquery.fs.wallpaper/jquery.fs.wallpaper.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-	<script src="assets/js/plugins/jquery.tubular/jquery.tubular.1.0.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/3.0.9/scrollreveal.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js"></script>
@@ -762,66 +680,83 @@
 	<script src="assets/js/spectrum.js"></script>
 	<script>
 		var stepSliding = false;
-		 $(document).ready(function () {
-			 $('.portfolio-link').magnificPopup({
-				 mainClass: 'mfp-rotateUp mfp-ready',
-				 overflowY: 'scroll',
-				 items: {
-					 src: '#portfolio-modal-1',
-				 },
-				 overflowY:'hidden',
-				 callbacks: {
-					 open: function () {
-						 document.body.style.overflow = "hidden";
-						 setTimeout(function () {
-							 $(".navbar").addClass("top-nav-collapse").css("margin-right","17px");
-						 }, 10);
-					 },
-					 close: function () {
-						 document.body.style.overflow = "visible";
-						 $(".navbar").css("margin-right", "initial");
-					 }
-				 }
-			 });
-		 });
-		 function ShowStep1() {
-			 if (stepSliding == false) {
-				 stepSliding = true;
-				 $("#template-step1").addClass("animated animated-short fadeInLeft").show();
-				 $("#template-step2").addClass("animated animated-short fadeOutRight");
-				 setTimeout(function () {
-					 $("#template-step1").removeClass("animated animated-short fadeInLeft");
-					 $("#template-step2").removeClass("animated animated-short fadeOutRight").hide();
-					 stepSliding = false;
-				 }, 1000);
-				 $(".sf-steps-content div").removeClass("sf-active");
-				 $(".sf-steps-content div.step1").addClass("sf-active");
-			 }
+		$(document).ready(function () {
+			$('.portfolio-link').magnificPopup({
+				mainClass: 'mfp-zoomIn',
+				closeOnBgClick: false,
+				overflowY: 'scroll',
+				removalDelay: 500,
+				items: {
+					src: '#portfolio-modal-1',
+				},
+				callbacks: {
+					open: function () {
+						$("body").addClass("template-wizard-open");
+					},
+					close: function () {
+						$("body").removeClass("template-wizard-open");
+						$("#app-error").hide();
+						$("#repo_name_container").show();
+						ShowStep1();
+						stepSliding = false;
+					}
+				}
+			});
+		});
+		function ShowStep1() {
+			if (stepSliding == false) {
+				stepSliding = true;
+				$("#template-step1").addClass("animated animated-short fadeInLeft").show();
+				$("#template-step2").addClass("animated animated-short fadeOutRight");
+				setTimeout(function () {
+					$("#template-step1").removeClass("animated animated-short fadeInLeft");
+					$("#template-step2").removeClass("animated animated-short fadeOutRight").hide();
+					stepSliding = false;
+				}, 1000);
+				$(".sf-steps-content div").removeClass("sf-active");
+				$(".sf-steps-content div.step1").addClass("sf-active");
+			}
 		}
-		 function ShowStep2() {
-			 if (stepSliding == false) {
-				 stepSliding = true;
-				 $("#replacement_scrolling").niceScroll({ mousescrollstep: 20, cursorwidth: "10px", cursorcolor: "#bbbbbb", cursoropacitymin: 0.5 });
-				 $("#template-step1").addClass("animated animated-short fadeOutLeft");
-				 $("#template-step2").addClass("animated animated-short fadeInRight").show();
-				 setTimeout(function () {
-					 $("#template-step1").removeClass("animated animated-short fadeOutLeft").hide();
-					 $("#template-step2").removeClass("animated animated-short fadeInRight");
-					 stepSliding = false;
-				 }, 1000);
-				 $(".sf-steps-content div").removeClass("sf-active");
-				 $(".sf-steps-content div.step2").addClass("sf-active");
-			 }
+		var showError = true;
+		function ShowStep2() {
+			if (stepSliding == false) {
+				stepSliding = true;
+
+				var replacements = FetchReplacements();
+				setTimeout(function () {
+					if (showError == true) {
+						$("#loader_replacements").fadeOut("fast", function () {
+							$("#app-error").show();
+						});
+					}
+					else {
+						$("#loader_replacements").fadeOut("fast", function () {
+							$("#replacement_scrolling").niceScroll({ mousescrollstep: 20, cursorwidth: "10px", cursorcolor: "#bbbbbb", cursoropacitymin: 0.5 });
+							$("#template-step1").addClass("animated animated-short fadeOutLeft");
+							$("#template-step2").addClass("animated animated-short fadeInRight").show();
+							setTimeout(function () {
+								$("#template-step1").removeClass("animated animated-short fadeOutLeft").hide();
+								$("#template-step2").removeClass("animated animated-short fadeInRight");
+
+								$("#repo_name_container").show();
+								stepSliding = false;
+							}, 1000);
+							setTimeout(function () {
+								$(".sf-steps-content div").removeClass("sf-active");
+								$(".sf-steps-content div.step2").addClass("sf-active");
+							}, 500);
+
+						});
+					}
+				}, 1000);
+			}
 		}
-		function ValidateReplacements()
-		{
+		function ValidateReplacements() {
 			var validate = true;
 			var firstErrorIndex = 0;
 			var cnt = $("#form2 input").length;
-			for (var i=1; i <= cnt; i++)
-			{
-				if($(".text" + i).val().trim() == "")
-				{
+			for (var i = 1; i <= cnt; i++) {
+				if ($(".text" + i).val().trim() == "") {
 					console.log($(".index" + i).parent().position().top);
 					$(".index" + i).removeClass("label-primary").addClass("label-danger");
 					$(".text" + i).addClass("br-danger");
@@ -829,18 +764,38 @@
 					if (firstErrorIndex == 0)
 						firstErrorIndex = i;
 				}
-				else
-				{
+				else {
 					$(".index" + i).removeClass("label-danger").addClass("label-primary");
 					$(".text" + i).removeClass("br-danger");
 				}
 			}
-			if (firstErrorIndex > 0)
-			{
+			if (firstErrorIndex > 0) {
 				$("#replacement_scrolling").scrollTo($(".index" + firstErrorIndex).first(), 800);
 			}
 			return validate;
 		}
+		function ShowPricingInfo(btn, product) {
+			$("#info_" + product).slideToggle("fast",
+				function () {
+					if ($("#info_" + product).css('display') == 'none')
+						$(btn).html("<i class='fa fa-angle-double-down'></i> Know More");
+					else
+						$(btn).html("<i class='fa fa-angle-double-up'></i> Know More");
+				});
+		}
+		function FetchReplacements() {
+			$("#repo_name_container").fadeOut("fast", function () {
+				$("#loader_replacements").fadeIn("fast");
+			});
+		}
+	</script>
+
+	<!-- Aurelia -->
+	<script src="jspm_packages/system.js"></script>
+	<script src="jspm-config.js"></script>
+	<script src="build.js"></script>
+	<script>
+		System.import('aurelia-bootstrapper');
 	</script>
 </body>
 
