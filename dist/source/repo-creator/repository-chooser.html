@@ -19,10 +19,10 @@
 							<button type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter('.popular')">Popular</button>
 						</li>
 						<li class="mb10">
-							<button data-filter=".sponsored" type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter('.my-sponsored')">My Sponsored</button>
+							<button type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter('.my-sponsored')">My Sponsored</button>
 						</li>
 						<li class="mb10">
-							<button data-filter="*" type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter('.favorite')">My Favorites</button>
+							<button type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter('.favorite')">My Favorites</button>
 						</li>
 					</ul>
 				</div>
@@ -31,7 +31,7 @@
 	</div>
 	<div class="row">
 		<div class="template-filter-container">
-			<div class="col-sm-4 portfolio-item" repeat.for="template of allTemplates" class.bind="template.isFavorite ? 'favorite' : '' + template.isSponsored ? ' sponsored' : ''">
+			<div class="col-sm-4 portfolio-item" repeat.for="template of allTemplates" class.bind="template.cssFilters">
 				<a href="#portfolio-modal-1" class="portfolio-link">
 					<figure class="favorites"><i class="fa fa-heart-o"></i> ${template.favoriteCount}</figure>
 					<div class="details">
