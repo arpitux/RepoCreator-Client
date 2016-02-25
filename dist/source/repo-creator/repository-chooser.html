@@ -32,11 +32,11 @@
 	<div class="row">
 		<div class="template-filter-container">
 			<div class="col-sm-4 portfolio-item" repeat.for="template of allTemplates" class.bind="template.cssFilters">
-				<a href="#portfolio-modal-1" class="portfolio-link">
+				<a class="portfolio-link" click.delegate="$parent.launchScaffolding(template.repository)">
 					<figure class="favorites"><i class="fa fa-heart-o"></i> ${template.favoriteCount}</figure>
 					<div class="details">
 						<div class="summary">
-							<h3>${template.owner}: ${template.name}</h3>
+							<h3>${template.repository.owner}: ${template.repository.name}</h3>
 							<div class="sponsor-caption" if.bind="template.isSponsored"><i class="fa fa-bookmark"></i> Sponsored</div>
 						</div>
 						<div class="description">
