@@ -1,0 +1,175 @@
+<template>
+	<require from="./scaffold-modal.css"></require>
+	<ai-dialog class="container">
+		<ai-dialog-body>
+			<div class="row mn">
+				<div class="col-xs-12 col-sm-3 pn">
+					<div class="repo-popup-img-container">
+						<div class="fs26 mb20">${repository.name}</div>
+						<div class="fs16 mb20 text-left hidden-xs">
+							${repository.description}
+						</div>
+						<button type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</button>
+						<div class="hidden-xs">
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-heart"></i> Favorite</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+						</div>
+						<div class="visible-xs hidden-sm">
+							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-heart"></i> Favorite</button>
+							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+						</div>
+					</div>
+					<div class="repo-popup-img" style="background-image:url('assets/img/demo-portfolio/1.jpg');"></div>
+				</div>
+				<div class="col-xs-12 col-sm-9 pn">
+					<div id="repo-popup-steps-container">
+						<div class="stepsForm sf-theme-default" style="width: 100%;height:100%">
+							<div class="sf-steps hidden-xs">
+								<div class="sf-steps-content text-center">
+									<div class="step1 sf-active" onclick="ShowStep1()">
+										<span>1</span> Repository
+									</div>
+									<div class="step2">
+										<span>2</span> Replacements
+									</div>
+									<div class="step3">
+										<span>3</span> Done
+									</div>
+								</div>
+							</div>
+							<div class="sf-steps-form sf-radius">
+								<div id="app-error">
+									<div class="message">
+										<div class="text  bg-danger">
+											<i class="fa fa-warning"></i> Oops something went wrong! Please try after some time.
+										</div>
+										<div class="text-right">
+											<button type="button" class="btn btn-default ml10 btn-raised" onclick="$.magnificPopup.close(); showError = false;">OK</button>
+											<a class="btn btn-default ml10 btn-raised" href="https://help.zoltu.io/" target="_blank"><i class="fa fa-envelope-o"></i> Contact Support</a>
+										</div>
+									</div>
+								</div>
+								<ul id="template-step1" class="sf-content mtn" style="display: block;height:100%">
+									<!-- form step one -->
+									<li class="mbn">
+										<div id="repo_name_container">
+											<h3 class="br-n">Repository Name</h3>
+											<hr class="primary">
+											<div class="row">
+												<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+													<!--<input class="form-control input-lg" placeholder="eg. My First Repository" />-->
+													<div class="form-inline">
+														<input class="form-control mb20 input-lg brr4" placeholder="eg. " />
+														<button class="btn btn-success mb20 btn-lg btn-square" onclick="ShowStep2()">Next</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="loader_replacements">
+											<i class="fa fa-refresh fa-spin"></i> Fetching Replacements..
+										</div>
+									</li>
+								</ul>
+								<ul id="template-step2" class="sf-content mtn" style="display: none;height:100%">
+									<!-- form step two -->
+									<li class="mbn">
+										<div class="mt30 text-center" style="height:calc(100% - 30px)">
+											<form id="form2" onsubmit="return ValidateReplacements();" style="height:100%">
+												<div id="replacement_scrolling">
+													<div class="row text-left">
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index1" style="padding:.1em .5em">1</span> <label class="label1">code_project_name</label>
+															<input class="form-control input-lg brr4 text1" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index2" style="padding:.1em .5em">2</span> <label class="label2">solution_name</label>
+															<input class="form-control input-lg brr4 text2" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index3" style="padding:.1em .5em">3</span> <label class="label3">tests_project_name</label>
+															<input class="form-control input-lg brr4 text3" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index4" style="padding:.1em .5em">4</span> <label class="label4">title</label>
+															<input class="form-control input-lg brr4 text4" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index5" style="padding:.1em .5em">5</span> <label class="label5">description</label>
+															<input class="form-control input-lg brr4 text5" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index6" style="padding:.1em .5em">6</span> <label class="label6">company_name</label>
+															<input class="form-control input-lg brr4 text6" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index7" style="padding:.1em .5em">7</span> <label class="label7">product_name</label>
+															<input class="form-control input-lg brr4 text7" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index8" style="padding:.1em .5em">8</span> <label class="label8">namespace</label>
+															<input class="form-control input-lg brr4 text8" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index9" style="padding:.1em .5em">9</span> <label class="label9">assembly_name</label>
+															<input class="form-control input-lg brr4 text9" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index10" style="padding:.1em .5em">10</span> <label class="label10">title</label>
+															<input class="form-control input-lg brr4 text10" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index11" style="padding:.1em .5em">11</span> <label class="label11">description</label>
+															<input class="form-control input-lg brr4 text11" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index12" style="padding:.1em .5em">12</span> <label class="label12">company_name</label>
+															<input class="form-control input-lg brr4 text12" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index13" style="padding:.1em .5em">13</span> <label class="label13">product_name</label>
+															<input class="form-control input-lg brr4 text13" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index14" style="padding:.1em .5em">14</span> <label class="label14">namespace</label>
+															<input class="form-control input-lg brr4 text14" />
+														</div>
+														<div class="col-xs-12 col-sm-6 mb20">
+															<span class="label label-primary index15" style="padding:.1em .5em">15</span> <label class="label15">assembly_name</label>
+															<input class="form-control input-lg brr4 text15" />
+														</div>
+													</div>
+												</div>
+												<div class="text-right pt25  hidden-xs" style="border-top: 2px solid #ddd">
+													<button type="button" class="btn btn-default btn-lg btn-square pull-left" onclick="ShowStep1()">Back</button>
+													<span>0</span> out of <span class="label label-primary">15</span>
+													<button class="btn btn-square btn-lg btn-success hidden-xs ml20" type="submit"><i class="fa fa-check-circle"></i> Create Repo</button>
+												</div>
+												<div class="pt25 pl30 pr30 visible-xs hidden-sm" style="border-top: 2px solid #ddd;">
+													<div class="mb10 row">
+														<div class="col-xs-6">
+															<button type="button" class="btn btn-default btn-lg btn-square pull-left " onclick="ShowStep1()">Back</button>
+														</div>
+														<div class="col-xs-6 text-right pt10">
+															<span>0</span> out of <span class="label label-primary">15</span>
+														</div>
+													</div>
+													<button class="btn btn-square btn-block btn-lg btn-success" type="submit"><i class="fa fa-check-circle"></i> Create Repo</button>
+												</div>
+											</form>
+										</div>
+									</li>
+								</ul>
+								<ul id="template-step3" class="sf-content" style="display: none;">
+									<!-- form step tree -->
+									<li style="margin-bottom: 2rem;">
+										step3
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ai-dialog-body>
+	</ai-dialog>
+</template>
