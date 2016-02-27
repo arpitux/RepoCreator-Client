@@ -270,7 +270,7 @@
     transition: 0.4s;
     position: absolute;
     width: 100%;
-    bottom: -55px;
+    bottom: -75px;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link .details h3 {
@@ -289,19 +289,29 @@
 .portfolio-1 .portfolio-item .portfolio-link .details .description {
     background-color: #3e444d;
     color: white;
-    display: table;
-    height: 30px;
+    /*display: table;*/
+    height: 72px;
     list-style: none;
     margin-bottom: 0;
     width: 100%;
     font-size: 14px;
     padding: 8px 12px;
 }
+.portfolio-1 .portfolio-item .portfolio-link .details .description:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 20px;
+  background: linear-gradient(to right, rgba(62, 68, 77, 0), rgba(62, 68, 77, 1) 50%);
+}
+
 
 .portfolio-1 .portfolio-item .portfolio-link .details .summary {
     color: white;
     padding: 12px;
-    height: 70px;
     padding-top: 20px;
     background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(100%, rgba(0, 0, 0, 0.5)));
