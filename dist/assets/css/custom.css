@@ -41,9 +41,11 @@
 .mrn10 {
     margin-right: -10px;
 }
-.ml10{
-    margin-left:10px;
+
+.ml10 {
+    margin-left: 10px;
 }
+
 .ml20 {
     margin-left: 20px;
 }
@@ -84,8 +86,8 @@
     padding: 20px;
 }
 
-.p25{
-    padding:25px;
+.p25 {
+    padding: 25px;
 }
 
 .p30 {
@@ -203,9 +205,11 @@
 .br-n {
     border: 0px;
 }
-.brr3{
-    border-radius:3px;
+
+.brr3 {
+    border-radius: 3px;
 }
+
 .brr6 {
     border-radius: 6px !important;
 }
@@ -289,7 +293,6 @@
 .portfolio-1 .portfolio-item .portfolio-link .details .description {
     background-color: #3e444d;
     color: white;
-    /*display: table;*/
     height: 72px;
     list-style: none;
     margin-bottom: 0;
@@ -297,17 +300,17 @@
     font-size: 14px;
     padding: 8px 12px;
 }
-.portfolio-1 .portfolio-item .portfolio-link .details .description:after {
-  content: "";
-  text-align: right;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 25%;
-  height: 20px;
-  background: linear-gradient(to right, rgba(62, 68, 77, 0), rgba(62, 68, 77, 1) 50%);
-}
 
+.portfolio-1 .portfolio-item .portfolio-link .details .description:after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 25%;
+    height: 20px;
+    background: linear-gradient(to right, rgba(62, 68, 77, 0), rgba(62, 68, 77, 1) 50%);
+}
 
 .portfolio-1 .portfolio-item .portfolio-link .details .summary {
     color: white;
@@ -470,7 +473,10 @@ pre {
         font-size: 25px !important;
         top: 120px !important;
     }
-    #app-error{top:50px;}
+
+    #app-error {
+        top: 50px;
+    }
 }
 
 #repo-popup-steps-container .sf-steps-form {
@@ -586,11 +592,35 @@ body.template-wizard-open .navbar {
 }
 
 .portfolio-1 .portfolio-item .portfolio-link {
-    border-radius:5px;
+    border-radius: 5px;
 }
 
-#app-error{position:absolute;width:100%;top:calc(50% - 100px);text-align:center;display:none;z-index:1;padding:0px 10px 0px 10px}
-#app-error .message{display:inline-block;line-height:20px;text-align:left}
-#app-error .message .text{padding:20px 25px 20px 25px;border-radius:3px;margin-bottom:20px}
+#app-error {
+    position: absolute;
+    width: 100%;
+    top: calc(50% - 100px);
+    text-align: center;
+    display: none;
+    z-index: 1;
+    padding: 0px 10px 0px 10px;
+}
 
-.btn-menu-login{padding-left:10px !important; padding-right:10px !important;padding-top:6px !important; padding-bottom:6px !important;margin:8px 10px 0px 10px}
+#app-error .message {
+    display: inline-block;
+    line-height: 20px;
+    text-align: left;
+}
+
+#app-error .message .text {
+    padding: 20px 25px 20px 25px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.btn-menu-login {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    margin: 8px 10px 0px 10px;
+}
