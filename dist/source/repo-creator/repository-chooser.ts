@@ -11,7 +11,7 @@ export class RepositoryChooser {
 	protected allTemplates: RepositoryViewModel[] = [
 		new RepositoryViewModel(new Repository("GitHub", "owner", "name"), "description", "images/zoltu-icon-64x64.png", 1, true, false, false, false),
 		new RepositoryViewModel(new Repository("GitHub", "zoltu", "c#"), "my template!", "images/zoltu-icon-64x64.png", 100, false, true, false, false),
-		new RepositoryViewModel(new Repository("GitHub", "foo", "bar"), "Long description.  Maybe several lines.  Who knows!  GitHub might have a limit but I don't know what it is so we should be prepared for anything (or find out the limit).", "images/zoltu-icon-64x64.png", 1, false, false, true, false),
+		new RepositoryViewModel(new Repository("GitHub", "foo", "bar"), "Long description.  Maybe several lines.  Who knows!  GitHub might have a limit but I don't know what it is so we should be prepared for anything (or find out the limit).  Long description.  Maybe several lines.  Who knows!  GitHub might have a limit but I don't know what it is so we should be prepared for anything (or find out the limit).  Long description.  Maybe several lines.  Who knows!  GitHub might have a limit but I don't know what it is so we should be prepared for anything (or find out the limit).", "images/zoltu-icon-64x64.png", 1, false, false, true, false),
 		new RepositoryViewModel(new Repository("GitHub", "zip", "zap"), "", "images/zoltu-icon-64x64.png", 100, false, false, false, true),
 		new RepositoryViewModel(new Repository("GitHub", "apple", "banana"), "☃", "images/zoltu-icon-64x64.png", 1, true, true, true, true),
 		new RepositoryViewModel(new Repository("GitHub", "", ""), "no owner or name!", "images/zoltu-icon-64x64.png", 100, false, false, false, false),
