@@ -43,7 +43,7 @@
 							${template.description}
 						</div>
 					</div>
-					<img src.bind="template.icon" class="img-centered" alt="">
+					<img src.bind="template.icon" class="img-centered" alt="" load.trigger="$parent.imageOnLoad()">
 				</a>
 			</div>
 		</div>
