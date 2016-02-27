@@ -3,6 +3,17 @@ ai-dialog-overlay.active {
 	opacity: 0.6;
 }
 
+ai-dialog-container {
+	transform: scale(0.5);
+	transition: all 0.2s linear;
+	opacity: 1;
+}
+
+ai-dialog-container.active {
+	transform: scale(1);
+	opacity: 1;
+}
+
 ai-dialog.container {
 	border-radius: 0px;
 	border: 0px;

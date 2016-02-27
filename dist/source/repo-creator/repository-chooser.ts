@@ -38,6 +38,10 @@ export class RepositoryChooser {
 	protected filter(filterSelector: string) {
 		this.isotope.arrange({ filter: filterSelector });
 	}
+
+	protected imageOnLoad() {
+		this.isotope.layout();
+	}
 }
 
 class RepositoryViewModel {
