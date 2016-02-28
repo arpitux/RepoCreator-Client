@@ -197,7 +197,7 @@
 						<hr class="primary">
 					</div>
 				</div>
-				<div  aurelia-app="source/main-repocreator">
+				<div aurelia-app="source/main-repocreator">
 					<div style="text-align: center; font-size: 300%">Loading...</div>
 				</div>
 			</div>
@@ -512,78 +512,6 @@
 	<script src="assets/js/spectrum.nav.js"></script>
 	<script src="assets/js/spectrum.js"></script>
 	<script>
-		var stepSliding = false;
-		$(document).ready(function () {
-			$('.portfolio-link').magnificPopup({
-				mainClass: 'mfp-zoomIn',
-				closeOnBgClick: false,
-				overflowY: 'scroll',
-				removalDelay: 500,
-				items: {
-					src: '#portfolio-modal-1',
-				},
-				callbacks: {
-					open: function () {
-						$("body").addClass("template-wizard-open");
-					},
-					close: function () {
-						$("body").removeClass("template-wizard-open");
-						$("#app-error").hide();
-						$("#repo_name_container").show();
-						ShowStep1();
-						stepSliding = false;
-					}
-				}
-			});
-		});
-		function ShowStep1() {
-			if (stepSliding == false) {
-				stepSliding = true;
-				$("#template-step1").addClass("animated animated-short fadeInLeft").show();
-				$("#template-step2").addClass("animated animated-short fadeOutRight");
-				setTimeout(function () {
-					$("#template-step1").removeClass("animated animated-short fadeInLeft");
-					$("#template-step2").removeClass("animated animated-short fadeOutRight").hide();
-					stepSliding = false;
-				}, 1000);
-				$(".sf-steps-content div").removeClass("sf-active");
-				$(".sf-steps-content div.step1").addClass("sf-active");
-			}
-		}
-		var showError = true;
-		function ShowStep2() {
-			if (stepSliding == false) {
-				stepSliding = true;
-
-				var replacements = FetchReplacements();
-				setTimeout(function () {
-					if (showError == true) {
-						$("#loader_replacements").fadeOut("fast", function () {
-							$("#app-error").show();
-						});
-					}
-					else {
-						$("#loader_replacements").fadeOut("fast", function () {
-							$("#replacement_scrolling").niceScroll({ mousescrollstep: 20, cursorwidth: "10px", cursorcolor: "#bbbbbb", cursoropacitymin: 0.5 });
-							$("#template-step1").addClass("animated animated-short fadeOutLeft");
-							$("#template-step2").addClass("animated animated-short fadeInRight").show();
-							setTimeout(function () {
-								$("#template-step1").removeClass("animated animated-short fadeOutLeft").hide();
-								$("#template-step2").removeClass("animated animated-short fadeInRight");
-
-								$("#repo_name_container").show();
-								stepSliding = false;
-							}, 1000);
-							setTimeout(function () {
-								$(".sf-steps-content div").removeClass("sf-active");
-								$(".sf-steps-content div.step2").addClass("sf-active");
-							}, 500);
-
-						});
-					}
-				}, 1000);
-			}
-		}
 		function ValidateReplacements() {
 			var validate = true;
 			var firstErrorIndex = 0;
@@ -615,11 +543,6 @@
 					else
 						$(btn).html("<i class='fa fa-angle-double-up'></i> Know More");
 				});
-		}
-		function FetchReplacements() {
-			$("#repo_name_container").fadeOut("fast", function () {
-				$("#loader_replacements").fadeIn("fast");
-			});
 		}
 	</script>
 

@@ -581,44 +581,12 @@ body.template-wizard-open .navbar {
     }
 }
 
-#loader_replacements {
-    font-size: 28px;
-    color: #888;
-    text-align: center;
-    display: none;
-    position: relative;
-    top: calc(50% - 50px);
-    padding: 0px 20px 0px 20px;
-}
-
 .btn-square {
     border-radius: 4px !important;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link {
     border-radius: 5px;
-}
-
-#app-error {
-    position: absolute;
-    width: 100%;
-    top: calc(50% - 100px);
-    text-align: center;
-    display: none;
-    z-index: 1;
-    padding: 0px 10px 0px 10px;
-}
-
-#app-error .message {
-    display: inline-block;
-    line-height: 20px;
-    text-align: left;
-}
-
-#app-error .message .text {
-    padding: 20px 25px 20px 25px;
-    border-radius: 3px;
-    margin-bottom: 20px;
 }
 
 .btn-menu-login {
