@@ -12,18 +12,18 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-7 mb20">
-					<ul class="list-inline mbn text-right" id="filters">
+					<ul class="list-inline mbn text-right">
 						<li class="mb10">
-							<button type="button" class="btn btn-primary btn-square btn-raised active" click.delegate="filter(RepoFilter.All)">All</button>
+							<button type="button" class="btn btn-primary btn-square btn-raised" class.bind="(currentFilter == RepoFilter.All) ? 'active' : ''" click.delegate="filter(RepoFilter.All)">All</button>
 						</li>
 						<li class="mb10">
-							<button type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter(RepoFilter.Popular)">Popular</button>
+							<button type="button" class="btn btn-primary btn-square btn-raised" class.bind="(currentFilter == RepoFilter.Popular) ? 'active' : ''" click.delegate="filter(RepoFilter.Popular)">Popular</button>
 						</li>
 						<li class="mb10">
-							<button type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter(RepoFilter.Favorite)">My Favorites</button>
+							<button type="button" class="btn btn-primary btn-square btn-raised" class.bind="(currentFilter == RepoFilter.Favorite) ? 'active' : ''" click.delegate="filter(RepoFilter.Favorite)">My Favorites</button>
 						</li>
 						<li class="mb10">
-							<button type="button" class="btn btn-primary btn-square btn-raised" click.delegate="filter(RepoFilter.MySponsored)">My Sponsored</button>
+							<button type="button" class="btn btn-primary btn-square btn-raised" class.bind="(currentFilter == RepoFilter.MySponsored) ? 'active' : ''" click.delegate="filter(RepoFilter.MySponsored)">My Sponsored</button>
 						</li>
 					</ul>
 				</div>
@@ -44,7 +44,7 @@
 							${template.description}
 						</div>
 					</div>
-					<img src.bind="template.icon" class="img-centered" alt="" load.trigger="$parent.imageOnLoad()">
+					<img src.bind="template.icon" class="img-centered">
 				</a>
 			</div>
 		</div>
