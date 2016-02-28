@@ -32,12 +32,12 @@
 	</div>
 	<div class="row">
 		<div class="template-filter-container">
-			<div class="col-sm-4 portfolio-item" repeat.for="template of filteredTemplates" class.bind="template.cssFilters">
-				<a class="portfolio-link" click.delegate="$parent.launchScaffolding(template.repository)">
+			<div class="col-sm-4 portfolio-item" repeat.for="template of filteredTemplates" class.bind="$parent.getCssFilters(template)">
+				<a class="portfolio-link" click.delegate="$parent.launchScaffolding(template)">
 					<figure class="favorites"><i class="fa fa-heart-o"></i> ${template.favoriteCount}</figure>
 					<div class="details">
 						<div class="summary">
-							<h3>${template.repository.owner}: ${template.repository.name}</h3>
+							<h3>${template.wireModel.owner}: ${template.wireModel.name}</h3>
 							<div class="sponsor-caption" if.bind="template.isSponsored"><i class="fa fa-bookmark"></i> Sponsored</div>
 						</div>
 						<div class="description">

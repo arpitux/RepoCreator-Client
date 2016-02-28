@@ -5,14 +5,14 @@
 			<div class="row mn">
 				<div class="col-xs-12 col-sm-3 pn">
 					<div class="repo-popup-img-container">
-						<div class="fs26 mb20">${repository.name}</div>
+						<div class="fs26 mb20">${repository.wireModel.name}</div>
 						<div class="fs16 mb20 text-left hidden-xs">
-							${repository.description}
+							${repository.wireModel.description}
 						</div>
-						<button type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</button>
+						<a target="_blank" href.bind="repository.gitHubLink" type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
 						<div class="hidden-xs">
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-heart"></i> Favorite</button>
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="favorite()"><i class="fa fa-heart"></i> Favorite</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="sponsor()"><i class="fa fa-dollar"></i> Sponsor</button>
 						</div>
 						<div class="visible-xs hidden-sm">
 							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-heart"></i> Favorite</button>
