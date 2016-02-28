@@ -4,9 +4,9 @@ ai-dialog-overlay.active {
 }
 
 ai-dialog-container {
-	transform: scale(0.5);
-	transition: all 0.2s linear;
-	opacity: 1;
+	transform: scale(0.8);
+	transition: all 0.2s ease-in-out;
+	opacity: 0;
 }
 
 ai-dialog-container.active {

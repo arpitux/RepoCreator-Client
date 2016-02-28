@@ -346,6 +346,10 @@
     overflow: hidden;
 }
 
+.portfolio-1 .portfolio-item .portfolio-link:hover {
+    cursor:pointer;
+}
+
 .portfolio-1 .portfolio-item .portfolio-link:hover .details {
     bottom: 0px;
 }
@@ -623,4 +627,8 @@ body.template-wizard-open .navbar {
     padding-top: 6px !important;
     padding-bottom: 6px !important;
     margin: 8px 10px 0px 10px;
+}
+
+.text-yellow{
+    color:yellow !important;
 }
