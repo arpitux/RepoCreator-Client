@@ -5,14 +5,14 @@
 			<div class="row mn">
 				<div class="col-xs-12 col-sm-3 pn">
 					<div class="repo-popup-img-container">
-						<div class="fs26 mb20">${repository.name}</div>
+						<div class="fs26 mb20">${repository.wireModel.name}</div>
 						<div class="fs16 mb20 text-left hidden-xs">
-							${repository.description}
+							${repository.wireModel.description}
 						</div>
-						<button type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</button>
+						<a target="_blank" href.bind="repository.gitHubLink" type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
 						<div class="hidden-xs">
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-heart"></i> Favorite</button>
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="favorite()"><i class="fa fa-heart"></i> Favorite</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="sponsor()"><i class="fa fa-dollar"></i> Sponsor</button>
 						</div>
 						<div class="visible-xs hidden-sm">
 							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-heart"></i> Favorite</button>
@@ -26,30 +26,30 @@
 						<div class="stepsForm sf-theme-default" style="width: 100%;height:100%">
 							<div class="sf-steps hidden-xs">
 								<div class="sf-steps-content text-center">
-									<div class="step1 sf-active" onclick="ShowStep1()">
+									<div class="step1" class.bind="(currentStep == ScaffoldStep.ChooseName) ? 'sf-active' : ''" click.delegate="tryChangeStep(ScaffoldStep.ChooseName)">
 										<span>1</span> Repository
 									</div>
-									<div class="step2">
+									<div class="step2" class.bind="(currentStep == ScaffoldStep.EnterReplacements) ? 'sf-active' : ''" click.delegate="tryChangeStep(ScaffoldStep.EnterReplacements)">
 										<span>2</span> Replacements
 									</div>
-									<div class="step3">
+									<div class="step3" class.bind="(currentStep == ScaffoldStep.Complete) ? 'sf-active' : ''" click.delegate="tryChangeStep(ScaffoldStep.Complete)">
 										<span>3</span> Done
 									</div>
 								</div>
 							</div>
 							<div class="sf-steps-form sf-radius">
-								<div id="app-error">
+								<div id="app-error" if.bind="currentStep === ScaffoldStep.Error">
 									<div class="message">
 										<div class="text  bg-danger">
-											<i class="fa fa-warning"></i> Oops something went wrong! Please try after some time.
+											<i class="fa fa-warning"></i> ${errorMessage}
 										</div>
 										<div class="text-right">
-											<button type="button" class="btn btn-default ml10 btn-raised" onclick="$.magnificPopup.close(); showError = false;">OK</button>
+											<button type="button" class="btn btn-default ml10 btn-raised" click.delegate="reset()">OK</button>
 											<a class="btn btn-default ml10 btn-raised" href="https://help.zoltu.io/" target="_blank"><i class="fa fa-envelope-o"></i> Contact Support</a>
 										</div>
 									</div>
 								</div>
-								<ul id="template-step1" class="sf-content mtn" style="display: block;height:100%">
+								<ul id="template-step-choose-name" class="sf-content mtn" style="height:100%" if.bind="currentStep === ScaffoldStep.ChooseName">
 									<!-- form step one -->
 									<li class="mbn">
 										<div id="repo_name_container">
@@ -57,21 +57,23 @@
 											<hr class="primary">
 											<div class="row">
 												<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-													<!--<input class="form-control input-lg" placeholder="eg. My First Repository" />-->
 													<div class="form-inline">
-														<input class="form-control mb20 input-lg brr4" placeholder="eg. " />
-														<button class="btn btn-success mb20 btn-lg btn-square" onclick="ShowStep2()">Next</button>
+														<input class="form-control mb20 input-lg brr4" placeholder="vigilant-guacamole" value.bind="transientNewRepoName"/>
+														<button class="btn btn-success mb20 btn-lg btn-square" click.delegate="repoNamed(transientNewRepoName)">Next</button>
 													</div>
 												</div>
 											</div>
 										</div>
+									</li>
+								</ul>
+								<ul id="template-step-awaiting-replacements" class="sf-content mtn" if.bind="currentStep === ScaffoldStep.AwaitingReplacements">
+									<li class="mbn">
 										<div id="loader_replacements">
 											<i class="fa fa-refresh fa-spin"></i> Fetching Replacements..
 										</div>
 									</li>
 								</ul>
-								<ul id="template-step2" class="sf-content mtn" style="display: none;height:100%">
-									<!-- form step two -->
+								<ul id="template-step-enter-replacements" class="sf-content mtn" style="height:100%" if.bind="currentStep == ScaffoldStep.EnterReplacements">
 									<li class="mbn">
 										<div class="mt30 text-center" style="height:calc(100% - 30px)">
 											<form id="form2" onsubmit="return ValidateReplacements();" style="height:100%">
@@ -159,7 +161,7 @@
 										</div>
 									</li>
 								</ul>
-								<ul id="template-step3" class="sf-content" style="display: none;">
+								<ul id="template-step-awaiting-completion" class="sf-content" if.bind="currentStep == ScaffoldStep.Complete">
 									<!-- form step tree -->
 									<li style="margin-bottom: 2rem;">
 										step3
