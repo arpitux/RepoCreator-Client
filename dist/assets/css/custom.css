@@ -560,10 +560,10 @@ pre {
 }
 
 
-body.template-wizard-open {
+body.ai-dialog-open {
 }
 
-body.template-wizard-open .navbar {
+body.ai-dialog-open .navbar {
     margin-right: 17px;
 }
 
