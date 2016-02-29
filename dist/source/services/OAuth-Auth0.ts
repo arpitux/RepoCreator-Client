@@ -113,7 +113,8 @@ export class OAuth {
 	}
 
 	logout = (): void => {
-		this.auth0.logout();
+		// calling this.auth0.logout() causes a redirect, so we'll just clear their session and reject the promise instead
+		sessionStorage.removeItem('JWT Token');
 		this.userPromise = Promise.reject<User>(new Error('Not logged in.'));
 	}
 

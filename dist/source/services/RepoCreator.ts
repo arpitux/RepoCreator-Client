@@ -27,7 +27,7 @@ export class RepoCreator {
 				this.httpClient.configure(builder => builder['withHeader']('Authorization', `Bearer ${jwtToken}`));
 			let repository = new Repository('GitHub', repoOwner, repoName);
 			let request = new FindKeysRequest(repository);
-			return new Promise((resolve: (result: string[]) => void, reject: (error: Error) => void) => new FindKeys(this.httpClient, request, resolve, reject).execute());
+			return new Promise((resolve: (result: string[]) => void, reject: (error: Error) => void) => new FindKeys(this.httpClient, this.oAuth, request, resolve, reject).execute());
 		});
 	}
 
@@ -38,7 +38,7 @@ export class RepoCreator {
 			let templateRepository = new Repository('GitHub', templateRepoOwner, templateRepoName);
 			let destinationRepository = new Repository('GitHub', login, destinationRepoName);
 			let request = new CreateRepoRequest(destinationRepository, templateRepository, replacements);
-			return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => new CreateRepo(this.httpClient, request, resolve, reject).execute());
+			return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => new CreateRepo(this.httpClient, this.oAuth, request, resolve, reject).execute());
 		}));
 	}
 
@@ -141,6 +141,7 @@ export class RepoCreator {
 class CreateRepo {
 	constructor(
 		private httpClient: HttpClient,
+		private oAuth: OAuth,
 		private request: CreateRepoRequest,
 		private resolve: (result: any) => void,
 		private reject: (error: Error) => void
@@ -157,7 +158,12 @@ class CreateRepo {
 	}
 
 	failure(httpResponseMessage: HttpResponseMessage): void {
-		this.reject(new Error(`Failed to initiate repository creation: ${httpResponseMessage.content}`));
+		if (httpResponseMessage.statusCode === 403) {
+			this.reject(new Error(`Unauthorized or authorization expired.  You have been logged out, please try again.`));
+			this.oAuth.logout();
+		}
+		else
+			this.reject(new Error(`Failed to initiate repository creation: ${httpResponseMessage.content.Message}`));
 	}
 
 	progress(token: string): void {
@@ -181,13 +187,19 @@ class CreateRepo {
 	}
 
 	progressFailure(httpResponseMessage: HttpResponseMessage): void {
-		this.reject(new Error(`Failed to get progress update for repository creation: ${httpResponseMessage.content}`));
+		if (httpResponseMessage.statusCode === 403) {
+			this.reject(new Error(`Unauthorized or authorization expired.  You have been logged out, please try again.`));
+			this.oAuth.logout();
+		}
+		else
+			this.reject(new Error(`Failed to get progress update for repository creation: ${httpResponseMessage.content.Message}`));
 	}
 }
 
 class FindKeys {
 	constructor(
 		private httpClient: HttpClient,
+		private oAuth: OAuth,
 		private request: FindKeysRequest,
 		private resolve: (result: string[]) => void,
 		private reject: (error: Error) => void
@@ -204,7 +216,12 @@ class FindKeys {
 	};
 
 	failure(httpResponseMessage: HttpResponseMessage): void {
-		this.reject(new Error(`Failed to initiate key finding: ${httpResponseMessage.content}`));
+		if (httpResponseMessage.statusCode === 403) {
+			this.reject(new Error(`Unauthorized or authorization expired.  You have been logged out, please try again.`));
+			this.oAuth.logout();
+		}
+		else
+			this.reject(new Error(`Failed to initiate replacement finding: ${httpResponseMessage.content.Message}`));
 	};
 
 	progress(token: string): void {
@@ -228,6 +245,11 @@ class FindKeys {
 	};
 
 	progressFailure(httpResponseMessage: HttpResponseMessage): void {
-		this.reject(new Error(`Failed to get progress update: ${httpResponseMessage.content}`));
+		if (httpResponseMessage.statusCode === 403) {
+			this.reject(new Error(`Unauthorized or authorization expired.  You have been logged out, please try again.`));
+			this.oAuth.logout();
+		}
+		else
+			this.reject(new Error(`Failed to get progress update: ${httpResponseMessage.content.Message}`));
 	};
 }
