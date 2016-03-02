@@ -274,19 +274,21 @@
     transition: 0.4s;
     position: absolute;
     width: 100%;
-    bottom: -75px;
+    bottom: -72px;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link .details h3 {
-    margin-bottom: 6px;
+    margin-bottom: 0px;
     margin-top: 0px;
-    font-size: 20px;
+    font-size: 16px;
+    line-height:20px;
     text-shadow: 1px 1px 1px #444;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link .details .sponsor-caption {
+    margin-top:6px;
     font-size: 10px;
-    color: #ccc;
+    color: #ddd;
     text-transform: uppercase;
 }
 
@@ -314,8 +316,7 @@
 
 .portfolio-1 .portfolio-item .portfolio-link .details .summary {
     color: white;
-    padding: 12px;
-    padding-top: 20px;
+    padding: 12px 12px 6px 12px;
     background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(100%, rgba(0, 0, 0, 0.5)));
     background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
@@ -344,6 +345,10 @@
 
 .portfolio-1 .portfolio-item .portfolio-link {
     overflow: hidden;
+}
+
+.portfolio-1 .portfolio-item .portfolio-link:hover {
+    cursor:pointer;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link:hover .details {
@@ -561,10 +566,11 @@ pre {
 
 
 body.ai-dialog-open {
+    margin-right: 18px;
 }
 
 body.ai-dialog-open .navbar {
-    margin-right: 17px;
+    margin-right: 18px;
 }
 
 .pricing-col {
@@ -592,3 +598,12 @@ body.ai-dialog-open .navbar {
     padding-bottom: 6px !important;
     margin: 8px 10px 0px 10px;
 }
+
+.text-yellow{
+    color:yellow !important;
+}
+
+.app-search-error{text-align:center;display:block;z-index:1;}
+.app-search-error .message{line-height:20px;text-align:left;display:inline-block}
+.app-search-error .message .text{padding:15px 20px 15px 20px;border-radius:3px;margin-bottom:30px}
+
