@@ -44,8 +44,13 @@
 					<figure class="favorites"><i class="fa fa-heart-o"></i> ${template.favoriteCount}</figure>
 					<div class="details">
 						<div class="summary">
-							<h3>${template.wireModel.owner}: ${template.wireModel.name}</h3>
-							<div class="sponsor-caption" if.bind="template.isSponsored"><i class="fa fa-bookmark"></i> Sponsored</div>
+							<h3>${template.wireModel.name}</h3>
+							<div class="sponsor-caption">
+                                <i class="fa fa-user"></i> ${template.wireModel.owner}
+                               <span class="pull-right" if.bind="template.isSponsored">
+                                   <i class="fa fa-bookmark"></i> Sponsored
+                               </span>
+                            </div>
 						</div>
 						<div class="description">
 							${template.description}
