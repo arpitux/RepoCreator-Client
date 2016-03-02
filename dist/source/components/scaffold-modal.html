@@ -69,7 +69,7 @@
 										</div>
 									</div>
 								</div>
-								<ul id="template-step-choose-name" class="sf-content mtn" style="height:100%" if.bind="currentStep === ScaffoldStep.ChooseName">
+								<ul id="template-step-choose-name" class="sf-content mtn template-step au-animate" style="height:100%" if.bind="currentStep === ScaffoldStep.ChooseName">
 									<!-- form step one -->
 									<li class="mbn">
 										<div id="repo_name_container">
@@ -86,14 +86,14 @@
 										</div>
 									</li>
 								</ul>
-								<ul id="template-step-awaiting-replacements" class="sf-content mtn" if.bind="currentStep === ScaffoldStep.AwaitingReplacements">
+								<ul id="template-step-awaiting-replacements" class="sf-content mtn template-step au-animate" if.bind="currentStep === ScaffoldStep.AwaitingReplacements">
 									<li class="mbn">
 										<div id="loader_replacements">
 											<i class="fa fa-refresh fa-spin"></i> Fetching Replacements...
 										</div>
 									</li>
 								</ul>
-								<ul id="template-step-enter-replacements" class="sf-content mtn" style="height:100%" if.bind="currentStep == ScaffoldStep.EnterReplacements">
+								<ul id="template-step-enter-replacements" class="sf-content mtn template-step au-animate" style="height:100%" if.bind="currentStep == ScaffoldStep.EnterReplacements">
 									<li class="mbn">
 										<div class="mt30 text-center" style="height:calc(100% - 30px)">
 											<form id="form2" onsubmit="return ValidateReplacements();" style="height:100%">
@@ -125,14 +125,14 @@
 										</div>
 									</li>
 								</ul>
-								<ul id="template-step-awaiting-completion" class="sf-content" if.bind="currentStep == ScaffoldStep.AwaitingCreation">
+								<ul id="template-step-awaiting-completion" class="sf-content template-step au-animate" if.bind="currentStep == ScaffoldStep.AwaitingCreation">
 									<li class="mbn">
 										<div id="loader_replacements">
 											<i class="fa fa-refresh fa-spin"></i> Creating New Repository...
 										</div>
 									</li>
 								</ul>
-								<ul id="template-step-awaiting-completion" class="sf-content" if.bind="currentStep == ScaffoldStep.Complete">
+								<ul id="template-step-awaiting-completion" class="sf-content template-step au-animate" if.bind="currentStep == ScaffoldStep.Complete">
 									<li class="mbn">
 										<div id="loader_replacements">
 											Done!
