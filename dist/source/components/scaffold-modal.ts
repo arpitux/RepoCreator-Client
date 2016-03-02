@@ -66,18 +66,36 @@ export class ScaffoldModal {
 		return this.populatedReplacementCount === this.replacements.length;
 	}
 
-	public favorite = (): void => {
-		if (this.repository.isFavorite)
-			this.templates.removeFavorite(this.repository);
-		else
-			this.templates.addFavorite(this.repository);
+	public addFavorite = (): void => {
+		if (this.repository.isFavorite) {
+			this.templates.fetchFavorites();
+			return;
+		}
+		this.templates.addFavorite(this.repository);
 	}
 
-	public sponsor = () => {
-		if (this.repository.isMySponsored)
-			this.templates.cancelSponsorship(this.repository);
-		else
-			this.templates.sponsor(this.repository);
+	public removeFavorite = (): void => {
+		if (!this.repository.isFavorite) {
+			this.templates.fetchFavorites();
+			return;
+		}
+		this.templates.removeFavorite(this.repository);
+	}
+
+	public sponsor = (): void => {
+		if (this.repository.isMySponsored) {
+			this.templates.fetchMySponsored();
+			return;
+		}
+		this.templates.sponsor(this.repository);
+	}
+
+	public unsponsor = (): void => {
+		if (!this.repository.isMySponsored) {
+			this.templates.fetchMySponsored();
+			return;
+		}
+		this.templates.cancelSponsorship(this.repository);
 	}
 
 	public repoNamed = () => {

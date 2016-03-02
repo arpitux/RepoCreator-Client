@@ -11,8 +11,28 @@
 						</div>
 						<a target="_blank" href.bind="repository.gitHubLink" type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
 						<div class="hidden-xs">
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="favorite()"><i class="fa fa-heart"></i> Favorite</button>
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="sponsor()"><i class="fa fa-dollar"></i> Sponsor</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
+								<i class="fa fa-heart"></i>
+								Favorite
+							</button>
+							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
+								<span class="fa-stack">
+									<i class="fa fa-heart fa-stack-1x"></i>
+									<i class="fa fa-ban fa-stack-2x text-danger"></i>
+								</span>
+								Un-Favorite
+							</button>
+							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
+								<i class="fa fa-dollar"></i>
+								Sponsor
+							</button>
+							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="repository.isMySponsored">
+								<span class="fa-stack">
+									<i class="fa fa-dollar fa-stack-1x"></i>
+									<i class="fa fa-ban fa-stack-2x text-danger"></i>
+								</span>
+								Un-Sponsor
+							</button>
 						</div>
 						<div class="visible-xs hidden-sm">
 							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-heart"></i> Favorite</button>
