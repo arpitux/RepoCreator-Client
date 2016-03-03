@@ -12,13 +12,16 @@ import underscore from 'underscore';
 @autoinject
 export class RepositoryChooser {
 	private currentFilter: RepoFilter = RepoFilter.All;
+	private unreadError: string = null;
 
 	constructor(
 		private templates: Templates,
 		private gitHub: GitHub,
 		private dialogService: DialogService,
 		private eventAggregator: EventAggregator
-	) {}
+	) {
+		this.eventAggregator.subscribe(Error, (error: Error) => this.unreadError = error.message);
+	}
 
 	activate() {
 		this.templates.fetchAllWithoutLoginPrompt();
