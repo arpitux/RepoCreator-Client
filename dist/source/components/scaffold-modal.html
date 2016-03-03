@@ -16,9 +16,9 @@
 								Favorite
 							</button>
 							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
-								<span class="fa-stack">
-									<i class="fa fa-heart fa-stack-1x"></i>
-									<i class="fa fa-ban fa-stack-2x text-danger"></i>
+								<span class="fa-stack mn7">
+									 <i class="fa fa-heart fa-stack-1x"></i>
+									<i class="fa fa-bolt fa-stack-1x fa-inverse text-warning"></i>
 								</span>
 								Un-Favorite
 							</button>
@@ -27,7 +27,7 @@
 								Sponsor
 							</button>
 							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="repository.isMySponsored">
-								<span class="fa-stack">
+								<span class="fa-stack mn7">
 									<i class="fa fa-dollar fa-stack-1x"></i>
 									<i class="fa fa-ban fa-stack-2x text-danger"></i>
 								</span>

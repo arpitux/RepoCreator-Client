@@ -38,6 +38,10 @@
     margin-right: 10px;
 }
 
+.mn7 {
+    margin: -7px;
+}
+
 .mrn10 {
     margin-right: -10px;
 }
@@ -281,12 +285,12 @@
     margin-bottom: 0px;
     margin-top: 0px;
     font-size: 16px;
-    line-height:20px;
+    line-height: 20px;
     text-shadow: 1px 1px 1px #444;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link .details .sponsor-caption {
-    margin-top:6px;
+    margin-top: 6px;
     font-size: 10px;
     color: #ddd;
     text-transform: uppercase;
@@ -348,7 +352,7 @@
 }
 
 .portfolio-1 .portfolio-item .portfolio-link:hover {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link:hover .details {
@@ -599,11 +603,29 @@ body.ai-dialog-open .navbar {
     margin: 8px 10px 0px 10px;
 }
 
-.text-yellow{
-    color:yellow !important;
+.text-yellow {
+    color: yellow !important;
 }
 
-.app-search-error{text-align:center;display:block;z-index:1;}
-.app-search-error .message{line-height:20px;text-align:left;display:inline-block}
-.app-search-error .message .text{padding:15px 20px 15px 20px;border-radius:3px;margin-bottom:30px}
+.app-search-error {
+    text-align: center;
+    display: block;
+    z-index: 1;
+}
+
+.app-search-error .message {
+    line-height: 20px;
+    text-align: left;
+    display: inline-block;
+}
+
+.app-search-error .message .text {
+    padding: 15px 20px 15px 20px;
+    border-radius: 3px;
+    margin-bottom: 30px;
+}
+
+.navbar-fixed-bottom, .navbar-fixed-top {
+    z-index: 1000 !important;
+}
 
