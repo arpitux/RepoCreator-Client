@@ -2,24 +2,36 @@
 	<require from="./scaffold-modal.css"></require>
 	<ai-dialog class="container">
 		<ai-dialog-body>
+			<ai-dialog-header>
+				<div class="fs22 pl15 pt10 pb10 text-white" style="background-color:#41c4ab;overflow:hidden;white-space:nowrap">
+					<i class="fa fa-github"></i> ${repository.wireModel.name}
+				</div>
+			</ai-dialog-header>	
 			<button class="btn-dialog-close" click.trigger="dialogController.cancel()">
 				&times;
 			  </button>
 			<div class="row mn">
 				<div class="col-sm-12 col-md-3 pn">
 					<div class="repo-popup-img-container">
-						<div class="fs26 mb20 text-shadow">${repository.wireModel.name}</div>
-						<div class="fs16 mb20 text-left hidden-xs">
+						<div class="fs16 mb20 text-left hidden-xs hidden-sm">
 							${repository.wireModel.description}
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, iusto molestiae possimus sint dignissimos! Laudantium, dolore, vel, sint, labore optio perferendis illo dolorum similique.
 						</div>
-						<a target="_blank" href.bind="repository.gitHubLink" type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
 						<div class="row">
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
+								<div class="mb20 fs20"><i class="fa fa-user"></i> ${repository.wireModel.owner}</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-12">
+								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-12">
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
 								<i class="fa fa-heart"></i>
 								Favorite
 							</button>
-							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
+							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
 								<span class="fa-stack mn7">
 									 <i class="fa fa-heart fa-stack-1x"></i>
 									<i class="fa fa-bolt fa-stack-1x fa-inverse text-warning"></i>
@@ -28,11 +40,11 @@
 							</button>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
 								<i class="fa fa-dollar"></i>
 								Sponsor
 							</button>
-							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="repository.isMySponsored">
+							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="repository.isMySponsored">
 								<span class="fa-stack mn7">
 									<i class="fa fa-dollar fa-stack-1x"></i>
 									<i class="fa fa-ban fa-stack-2x text-danger"></i>
