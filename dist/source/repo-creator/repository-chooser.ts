@@ -57,7 +57,7 @@ export class RepositoryChooser {
 		this.dialogService.open({
 			viewModel: ScaffoldModal,
 			model: repository,
-			lock: false
+			lock: true
 		}).catch((error: Error) => this.eventAggregator.publish(error))
 	}
 
