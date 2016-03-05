@@ -35,13 +35,11 @@ export class ScaffoldModal {
 		this.repoCreator.findKeys(this.repository.wireModel.owner, this.repository.wireModel.name).then(keys => {
 			this.maxStep = ScaffoldStep.EnterReplacements;
 			if (this.currentStep >= ScaffoldStep.AwaitingReplacements)
-				this.currentStep = ScaffoldStep.EnterReplacements;
+				this.tryChangeStep(ScaffoldStep.EnterReplacements);
 
 			this.replacements = underscore(keys)
 				.map((key: string) => {
 					let replacement = new Replacement(key, '');
-					if (/git.?hub.?owner/i.test(replacement.friendlyName))
-						this.oAuth.gitHubLogin.then(login => replacement.value = login);
 					if (/current.?year/i.test(replacement.friendlyName))
 						replacement.value = new Date(Date.now()).getUTCFullYear().toString();
 					return replacement;
@@ -128,7 +126,7 @@ export class ScaffoldModal {
 	public showError = (message: string) => {
 		this.errorMessage = message;
 		this.maxStep = ScaffoldStep.Error;
-		this.currentStep = ScaffoldStep.Error;
+		this.tryChangeStep(ScaffoldStep.Error);
 	}
 
 	public tryChangeStep = (desiredStep: ScaffoldStep) => {
@@ -136,12 +134,15 @@ export class ScaffoldModal {
 			this.currentStep = desiredStep;
 		else
 			this.currentStep = this.maxStep;
+
+		if (this.currentStep >= ScaffoldStep.EnterReplacements)
+			this.fillInReplacementsNeedingAuthentication();
 	}
 
 	private advanceStep = (suggestedStep: ScaffoldStep) => {
 		if (this.maxStep <= suggestedStep)
 			this.maxStep = suggestedStep;
-		this.currentStep = this.maxStep;
+		this.tryChangeStep(this.maxStep);
 	}
 
 	private reset = () => {
@@ -150,6 +151,13 @@ export class ScaffoldModal {
 		this.replacements = null;
 		this.maxStep = ScaffoldStep.ChooseName;
 		this.currentStep = ScaffoldStep.ChooseName;
+	}
+
+	private fillInReplacementsNeedingAuthentication() {
+		this.replacements.forEach(replacement => {
+			if (/git.?hub.?owner/i.test(replacement.friendlyName))
+				this.oAuth.gitHubLogin.then(login => replacement.value = login);
+		});
 	}
 
 	// necessary for Aurelia templates to be able to reference the enum
