@@ -1,6 +1,6 @@
 import { OAuth } from 'source/services/OAuth-Auth0';
 import { autoinject } from 'aurelia-dependency-injection';
-import { HttpClient, RequestBuilder } from 'aurelia-http-client';
+import { HttpClient, RequestBuilder, HttpResponseMessage } from 'aurelia-http-client';
 
 @autoinject
 export class GitHub {
@@ -18,8 +18,34 @@ export class GitHub {
 			if (maybeGitHubAuthToken)
 				this.httpClient.configure(builder => builder['withHeader']('Authorization', `token ${maybeGitHubAuthToken}`));
 
-			return this.httpClient.get(`https://api.github.com/search/repositories?q=${query}`).then(response => (<SearchResults>response.content).items);
-		})
+			return this.httpClient.get(`https://api.github.com/search/repositories?q=${query}`).then(response => {
+				if (!response.isSuccess)
+					throw response;
+				return (<SearchResults>response.content).items;
+			}).catch ((response: HttpResponseMessage) => {
+				if (response.statusCode === 403)
+					return this.oAuth.gitHubLogin.then(username => this.search(query));
+				else
+					throw new Error(`Failed to search GitHub (${response.statusCode}): ${response.content}`);
+			});
+		});
+	}
+
+	public getRepository(id: string): Promise<SearchResult> {
+		return this.oAuth.maybeGitHubAuthToken.then(maybeGitHubAuthToken => {
+			if (maybeGitHubAuthToken)
+				this.httpClient.configure(builder => builder['withHeader']('Authorization', `token ${maybeGitHubAuthToken}`));
+
+			return this.httpClient.get(`https://api.github.com/repositories/${id}`).then(response => {
+				if (!response.isSuccess)
+					throw response;
+				return <SearchResult>response.content
+			}).catch ((response: HttpResponseMessage) => {
+				if (response.statusCode === 403)
+					return this.oAuth.gitHubLogin.then(username => this.getRepository(id));
+				throw new Error(`Failed to get metadata about repository from GitHub (${response.statusCode}): ${response.content}`);
+			});
+		});
 	}
 }
 

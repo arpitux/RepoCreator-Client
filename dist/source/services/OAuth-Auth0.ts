@@ -2,18 +2,51 @@ import { Profile, Identity } from 'auth0-lock';
 import Auth0Lock from 'auth0-lock';
 import underscore from 'underscore';
 
-class Map<T> {
-	[key: string]: T
-}
-
 class User {
 	constructor(
 		public userId: string,
 		public nickname: string,
 		public email: string,
 		public jwtToken: string,
-		public identities: Map<Identity>
-	) {}
+		public identities: Map<string, Identity>
+	) {
+		this.validate();
+	}
+
+	public get decodedJwtToken(): any {
+		let encodedPayload = this.jwtToken.split(".")[1];
+		let decodedPayload = atob(encodedPayload);
+		let deserializedPayload = JSON.parse(decodedPayload);
+		return deserializedPayload;
+	}
+
+	public static deserializeFromJson(json: string): User {
+		let object = JSON.parse(json);
+		return User.deserializeFromObject(object);
+	}
+
+	public static deserializeFromObject(object: any): User {
+		let userId: string = object.userId;
+		let nickname: string = object.nickname;
+		let email: string = object.email;
+		let jwtToken: string = object.jwtToken;
+		let identities: Map<string, Identity> = new Map<string, Identity>(object.identities);
+		let user = new User(userId, nickname, email, jwtToken, identities);
+		return user;
+	}
+
+	private validate() {
+		if (typeof this.userId !== 'string')
+			throw new Error(`Expected userId to be a string but it was a ${typeof this.userId}`);
+		if (typeof this.nickname !== 'string')
+			throw new Error(`Expected nickname to be a string but it was a ${typeof this.nickname}`)
+		if (typeof this.email !== 'string')
+			throw new Error(`Expected email to be a string but it was a ${typeof this.email}`)
+		if (typeof this.jwtToken !== 'string')
+			throw new Error(`Expected jwtToken to be a string but it was a ${typeof this.jwtToken}`)
+		if (!(this.identities instanceof Map))
+			throw new Error(`Expected identities to be a Map<Identities> but it was a ${typeof this.identities}`)
+	}
 }
 
 interface SigninResult {
@@ -57,9 +90,9 @@ export class OAuth {
 	private _userPromise: Promise<User> = null;
 
 	constructor() {
-		let localStorageJwtToken = JSON.parse(sessionStorage.getItem('JWT Token'));
+		let localStorageJwtToken = sessionStorage.getItem('JWT Token');
 		if (localStorageJwtToken)
-			this._userPromise = Promise.resolve(localStorageJwtToken);
+			this._userPromise = Promise.resolve(User.deserializeFromJson(localStorageJwtToken));
 	}
 
 	private get userPromise(): Promise<User> {
@@ -97,11 +130,11 @@ export class OAuth {
 		if (!this._userPromise)
 			return Promise.resolve<string>(null);
 
-		return this._userPromise.then(user => user.identities['github']['access_token']);
+		return this._userPromise.then(user => user.identities.get('github')['access_token']);
 	}
 
 	get gitHubAuthToken(): Promise<string> {
-		return this.userPromise.then(user => user.identities['github']['access_token']);
+		return this.userPromise.then(user => user.identities.get('github')['access_token']);
 	}
 
 	get gitHubLogin(): Promise<string> {
@@ -120,10 +153,10 @@ export class OAuth {
 
 	private login = (): Promise<User> => {
 		return this.auth0.showSignin({ connections: ['github'], socialBigButtons: true, authParams: { scope: 'openid identities' } }).then(result => {
-			let identities = underscore(result.profile.identities).reduce((result: Map<Identity>, identity: Identity) => {
-				result[identity.provider] = identity;
+			let identities = underscore(result.profile.identities).reduce((result: Map<string, Identity>, identity: Identity) => {
+				result.set(identity.provider, identity);
 				return result;
-			}, new Map<Identity>());
+			}, new Map<string, Identity>());
 			let user = new User(result.profile.user_id, result.profile.nickname, result.profile.email, result.jwtToken, identities);
 			sessionStorage.setItem('JWT Token', JSON.stringify(user));
 			return user;

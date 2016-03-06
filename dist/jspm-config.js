@@ -57,6 +57,7 @@ System.config({
     "typescript": "npm:typescript@1.7.5",
     "underscore": "npm:underscore@1.8.3",
     "validation-hint": "local-component/validation-hint",
+    "wu": "npm:wu@2.1.0",
     "bower:doc-ready@1.0.4": {
       "eventie": "bower:eventie@1.0.6"
     },
@@ -310,6 +311,11 @@ System.config({
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:wu@2.1.0": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     }
   }

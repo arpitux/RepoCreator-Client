@@ -3,7 +3,6 @@ export function configure(aurelia: any) {
 		.standardConfiguration()
 		.developmentLogging()
 		.plugin('aurelia-computed')
-		.plugin('aurelia-validation')
 		.plugin('aurelia-dialog')
 		.plugin('aurelia-animator-css');
 
