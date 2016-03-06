@@ -2,49 +2,64 @@
 	<require from="./scaffold-modal.css"></require>
 	<ai-dialog class="container">
 		<ai-dialog-body>
+			<ai-dialog-header>
+				<div class="fs22 pl15 pt10 pb10 text-white" style="background-color:#41c4ab;overflow:hidden;white-space:nowrap">
+					<i class="fa fa-github"></i> ${repository.wireModel.name}
+				</div>
+			</ai-dialog-header>	
+			<button class="btn-dialog-close" click.trigger="dialogController.cancel()">
+				&times;
+			  </button>
 			<div class="row mn">
-				<div class="col-xs-12 col-sm-3 pn">
+				<div class="col-sm-12 col-md-3 pn">
 					<div class="repo-popup-img-container">
-						<div class="fs26 mb20">${repository.wireModel.name}</div>
-						<div class="fs16 mb20 text-left hidden-xs">
+						<div class="fs16 mb20 text-left hidden-xs hidden-sm">
 							${repository.wireModel.description}
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, iusto molestiae possimus sint dignissimos! Laudantium, dolore, vel, sint, labore optio perferendis illo dolorum similique.
 						</div>
-						<a target="_blank" href.bind="repository.gitHubLink" type="button" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
-						<div class="hidden-xs">
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-12">
+								<div class="mb20 fs20"><i class="fa fa-user"></i> ${repository.wireModel.owner}</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-12">
+								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-12">
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
 								<i class="fa fa-heart"></i>
 								Favorite
 							</button>
-							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
-								<span class="fa-stack">
-									<i class="fa fa-heart fa-stack-1x"></i>
-									<i class="fa fa-ban fa-stack-2x text-danger"></i>
+							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
+								<span class="fa-stack mn7">
+									 <i class="fa fa-heart fa-stack-1x"></i>
+									<i class="fa fa-bolt fa-stack-1x fa-inverse text-warning"></i>
 								</span>
 								Un-Favorite
 							</button>
-							<button type="button" class="btn btn-block btn-primary btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-12">
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
 								<i class="fa fa-dollar"></i>
 								Sponsor
 							</button>
-							<button type="button" class="btn btn-block btn-warning btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="repository.isMySponsored">
-								<span class="fa-stack">
+							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="repository.isMySponsored">
+								<span class="fa-stack mn7">
 									<i class="fa fa-dollar fa-stack-1x"></i>
 									<i class="fa fa-ban fa-stack-2x text-danger"></i>
 								</span>
 								Un-Sponsor
 							</button>
-						</div>
-						<div class="visible-xs hidden-sm">
-							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-heart"></i> Favorite</button>
-							<button type="button" class="btn btn-primary btn-square mt20"><i class="fa fa-dollar"></i> Sponsor</button>
+							</div>
 						</div>
 					</div>
 					<div class="repo-popup-img" style="background-image:url('assets/img/demo-portfolio/1.jpg');"></div>
 				</div>
-				<div class="col-xs-12 col-sm-9 pn">
+				<div class="col-sm-12 col-md-9 pn">
 					<div id="repo-popup-steps-container">
 						<div class="stepsForm sf-theme-default" style="width: 100%;height:100%">
-							<div class="sf-steps hidden-xs">
+							<div class="sf-steps hidden-xs hidden-sm visible-md visible-lg mb30">
 								<div class="sf-steps-content text-center">
 									<div class="step1" class.bind="(currentStep == ScaffoldStep.ChooseName) ? 'sf-active' : ''" click.delegate="tryChangeStep(ScaffoldStep.ChooseName)">
 										<span>1</span> Repository
@@ -95,7 +110,7 @@
 								</ul>
 								<ul id="template-step-enter-replacements" class="sf-content mtn template-step au-animate" style="height:100%" if.bind="currentStep == ScaffoldStep.EnterReplacements">
 									<li class="mbn">
-										<div class="mt30 text-center" style="height:calc(100% - 30px)">
+										<div class="text-center" style="height:calc(100% - 30px)">
 											<form id="form2" onsubmit="return ValidateReplacements();" style="height:100%">
 												<div id="replacement_scrolling">
 													<div class="row text-left">
@@ -105,21 +120,10 @@
 														</div>
 													</div>
 												</div>
-												<div class="text-right pt25  hidden-xs" style="border-top: 2px solid #ddd">
-													<button type="button" class="btn btn-default btn-lg btn-square pull-left" click.delegate="tryChangeStep(ScaffoldStep.ChooseName)">Back</button>
-													<span>${populatedReplacementCount}</span> out of <span class="label label-primary">${replacements.length}</span>
-													<button class="btn btn-square btn-lg btn-success hidden-xs ml20" disabled.bind="!hasNewRepoName || !allReplacementsPopulated" click.delegate="createNewRepository()"><i class="fa fa-check-circle"></i> Create Repo</button>
-												</div>
-												<div class="pt25 pl30 pr30 visible-xs hidden-sm" style="border-top: 2px solid #ddd;">
-													<div class="mb10 row">
-														<div class="col-xs-6">
-															<button type="button" class="btn btn-default btn-lg btn-square pull-left " onclick="ShowStep1()">Back</button>
-														</div>
-														<div class="col-xs-6 text-right pt10">
-															<span>0</span> out of <span class="label label-primary">15</span>
-														</div>
-													</div>
-													<button class="btn btn-square btn-block btn-lg btn-success" type="submit"><i class="fa fa-check-circle"></i> Create Repo</button>
+												<div class="text-right pt25" style="border-top: 2px solid #ddd">
+													<button type="button" class="btn btn-default btn-lg btn-square pull-left" click.delegate="tryChangeStep(ScaffoldStep.ChooseName)"><i class="fa fa-angle-left"></i> <span class="hidden-xs">Back</span></button>
+													<span>${populatedReplacementCount}</span> <span class="hidden-xs">out of</span><span class="hidden-sm hidden-md hidden-lg">/</span> <span class="label label-primary">${replacements.length}</span>
+													<button class="btn btn-square btn-lg btn-success ml20" disabled.bind="!hasNewRepoName || !allReplacementsPopulated" click.delegate="createNewRepository()"><i class="fa fa-check-circle hidden-xs"></i> Create <span class="hidden-xs">Repo</span></button>
 												</div>
 											</form>
 										</div>
@@ -128,14 +132,21 @@
 								<ul id="template-step-awaiting-completion" class="sf-content template-step au-animate" if.bind="currentStep == ScaffoldStep.AwaitingCreation">
 									<li class="mbn">
 										<div id="loader_replacements">
-											<i class="fa fa-refresh fa-spin"></i> Creating New Repository...
+											<i class="fa fa-refresh fa-spin"></i> Creating New Repository..
 										</div>
 									</li>
 								</ul>
 								<ul id="template-step-awaiting-completion" class="sf-content template-step au-animate" if.bind="currentStep == ScaffoldStep.Complete">
 									<li class="mbn">
-										<div id="loader_replacements">
-											Done!
+										<div class="text-center mt40">
+											<i class="fa fa-check-circle fs70 text-success"></i>
+											<div class="mt20 fs20">
+												Congratulations! Your new repo has been created.
+											</div>
+											<div class="mt40">
+												<button class="btn btn-primary btn-lg"><i class="fa fa-github"></i> Open in GitHub</button>
+												<button class="btn btn-default btn-lg">Create Another Repo</button>
+											</div>
 										</div>
 									</li>
 								</ul>
