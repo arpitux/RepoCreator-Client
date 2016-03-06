@@ -132,14 +132,21 @@
 								<ul id="template-step-awaiting-completion" class="sf-content template-step au-animate" if.bind="currentStep == ScaffoldStep.AwaitingCreation">
 									<li class="mbn">
 										<div id="loader_replacements">
-											<i class="fa fa-refresh fa-spin"></i> Creating New Repository...
+											<i class="fa fa-refresh fa-spin"></i> Creating New Repository..
 										</div>
 									</li>
 								</ul>
 								<ul id="template-step-awaiting-completion" class="sf-content template-step au-animate" if.bind="currentStep == ScaffoldStep.Complete">
 									<li class="mbn">
-										<div id="loader_replacements">
-											Done!
+										<div class="text-center mt40">
+											<i class="fa fa-check-circle fs70 text-success"></i>
+											<div class="mt20 fs20">
+												Congratulations! Your new repo has been created.
+											</div>
+											<div class="mt40">
+												<button class="btn btn-primary btn-lg"><i class="fa fa-github"></i> Open in GitHub</button>
+												<button class="btn btn-default btn-lg">Create Another Repo</button>
+											</div>
 										</div>
 									</li>
 								</ul>
