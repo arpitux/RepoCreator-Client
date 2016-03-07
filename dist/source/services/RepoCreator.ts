@@ -7,8 +7,7 @@ import { Request as FindKeysRequest, Progress as FindKeysProgress, Step as FindK
 import { Request as CreateRepoRequest, Progress as CreateRepoProgress, Step as CreateRepoProgressStep } from 'source/models/CreateRepo';
 import underscore from 'underscore';
 
-//let baseUri: string = 'https://repocreator-api.zoltu.io';
-let baseUri: string = 'http://localhost:64736';
+let baseUri: string = 'https://repocreator-api.zoltu.io';
 
 @autoinject
 export class RepoCreator {
