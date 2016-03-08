@@ -1,19 +1,13 @@
-import { Repository } from 'source/models/Repository';
+import { RepositoryKey } from 'source/models/Repository';
 
 export class Request {
 	public constructor(
-		public destination_repository: Repository,
-		public template_repository: Repository,
+		public template_repository_owner: string,
+		public template_repository_name: string,
+		public destination_repository_owner: string,
+		public destination_repository_name: string,
 		public replacements: any
 	) {}
-
-	public static deserialize(input: any): Request {
-		return new Request(
-			Repository.deserialize(input.destination_repo),
-			Repository.deserialize(input.template_repo),
-			input.replacements
-		);
-	}
 }
 
 export class Progress {

@@ -4,9 +4,9 @@
 		<ai-dialog-body>
 			<ai-dialog-header>
 				<div class="fs22 pl15 pt10 pb10 text-white" style="background-color:#41c4ab;overflow:hidden;white-space:nowrap">
-					<i class="fa fa-github"></i> ${repository.wireModel.name}
+					<i class="fa fa-github"></i> ${repository.name}
 				</div>
-			</ai-dialog-header>	
+			</ai-dialog-header>
 			<button class="btn-dialog-close" click.trigger="dialogController.cancel()">
 				&times;
 			  </button>
@@ -14,12 +14,11 @@
 				<div class="col-sm-12 col-md-3 pn">
 					<div class="repo-popup-img-container">
 						<div class="fs16 mb20 text-left hidden-xs hidden-sm">
-							${repository.wireModel.description}
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, iusto molestiae possimus sint dignissimos! Laudantium, dolore, vel, sint, labore optio perferendis illo dolorum similique.
+							${repository.description}
 						</div>
 						<div class="row">
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<div class="mb20 fs20"><i class="fa fa-user"></i> ${repository.wireModel.owner}</div>
+								<div class="mb20 fs20"><i class="fa fa-user"></i> ${repository.owner}</div>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-12">
 								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
@@ -44,7 +43,7 @@
 								<i class="fa fa-dollar"></i>
 								Sponsor
 							</button>
-							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="repository.isMySponsored">
+							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="unsponsor()" if.bind="repository.isMySponsored">
 								<span class="fa-stack mn7">
 									<i class="fa fa-dollar fa-stack-1x"></i>
 									<i class="fa fa-ban fa-stack-2x text-danger"></i>
@@ -144,8 +143,8 @@
 												Congratulations! Your new repo has been created.
 											</div>
 											<div class="mt40">
-												<button class="btn btn-primary btn-lg"><i class="fa fa-github"></i> Open in GitHub</button>
-												<button class="btn btn-default btn-lg">Create Another Repo</button>
+												<a href.bind="newRepositoryUrl" target="_blank"><button class="btn btn-primary btn-lg"><i class="fa fa-github"></i> Open in GitHub</button></a>
+												<button class="btn btn-default btn-lg" click.delegate="dialogController.cancel()">Create Another Repo</button>
 											</div>
 										</div>
 									</li>

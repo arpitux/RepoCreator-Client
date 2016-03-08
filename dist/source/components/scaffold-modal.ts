@@ -5,8 +5,9 @@ import { DialogController } from 'aurelia-dialog';
 import { BindingEngine } from 'aurelia-binding';
 import { OAuth } from 'source/services/OAuth-Auth0';
 import { RepoCreator } from 'source/services/RepoCreator';
-import { Repository as RepositoryWireModel } from 'source/models/Repository';
-import { Templates, RepositoryViewModel } from 'source/services/Templates';
+import { Repository } from 'source/models/Repository';
+import { Templates } from 'source/services/Templates';
+import { RepositoryViewModel } from 'source/view-models/RepositoryViewModel';
 import underscore from 'underscore';
 
 @autoinject
@@ -16,6 +17,7 @@ export class ScaffoldModal {
 	private maxStep: ScaffoldStep = ScaffoldStep.ChooseName;
 	private errorMessage: string;
 	private newRepoName: string;
+	private newRepositoryUrl: string;
 	private replacements: Replacement[];
 
 	constructor(
@@ -32,25 +34,8 @@ export class ScaffoldModal {
 	protected activate(repository: RepositoryViewModel) {
 		this.repository = repository;
 		this.reset();
-		this.repoCreator.findKeys(this.repository.wireModel.owner, this.repository.wireModel.name).then(keys => {
-			this.maxStep = ScaffoldStep.EnterReplacements;
-			if (this.currentStep >= ScaffoldStep.AwaitingReplacements)
-				this.tryChangeStep(ScaffoldStep.EnterReplacements);
-
-			this.replacements = underscore(keys)
-				.map((key: string) => {
-					let replacement = new Replacement(key, '');
-					if (/current.?year/i.test(replacement.friendlyName))
-						replacement.value = new Date(Date.now()).getUTCFullYear().toString();
-					return replacement;
-				});
-			this.repoNameChanged(this.newRepoName, this.newRepoName);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
 	}
 
-	// TODO: this is dirty checked, we could avoid this by putting a watch on every replacement and updating when one of them changes
 	public get populatedReplacementCount() {
 		return this.replacements.filter(replacement => !!replacement.value).length;
 	}
@@ -82,7 +67,7 @@ export class ScaffoldModal {
 
 	public sponsor = (): void => {
 		if (this.repository.isMySponsored) {
-			this.templates.fetchMySponsored();
+			this.templates.fetchSponsored();
 			return;
 		}
 		this.templates.sponsor(this.repository);
@@ -90,7 +75,7 @@ export class ScaffoldModal {
 
 	public unsponsor = (): void => {
 		if (!this.repository.isMySponsored) {
-			this.templates.fetchMySponsored();
+			this.templates.fetchSponsored();
 			return;
 		}
 		this.templates.cancelSponsorship(this.repository);
@@ -111,12 +96,15 @@ export class ScaffoldModal {
 	}
 
 	public createNewRepository = () => {
-		this.advanceStep(ScaffoldStep.AwaitingCreation);
-		let replacementsMap = underscore(this.replacements).reduce((map: any, replacement: Replacement) => {
-			map[replacement.name] = replacement.value;
-			return map;
-		}, {});
-		this.repoCreator.createRepo(this.repository.wireModel.owner, this.repository.wireModel.name, this.newRepoName, replacementsMap).then(result => {
+		this.oAuth.gitHubLogin.then(gitHubLogin => {
+			this.advanceStep(ScaffoldStep.AwaitingCreation);
+			let replacementsMap = underscore(this.replacements).reduce((map: any, replacement: Replacement) => {
+				map[replacement.name] = replacement.value;
+				return map;
+			}, {});
+			this.newRepositoryUrl = `https://github.com/${gitHubLogin}/${this.newRepoName}`
+			return this.repoCreator.createRepo(this.repository.repository.gitHubMetadata.owner, this.repository.repository.gitHubMetadata.name, gitHubLogin, this.newRepoName, replacementsMap)
+		}).then(result => {
 			this.advanceStep(ScaffoldStep.Complete);
 		}).catch((error: Error) => {
 			this.eventAggregator.publish(error);
@@ -148,9 +136,26 @@ export class ScaffoldModal {
 	private reset = () => {
 		this.errorMessage = null;
 		this.newRepoName = null;
+		this.newRepositoryUrl = null;
 		this.replacements = null;
 		this.maxStep = ScaffoldStep.ChooseName;
 		this.currentStep = ScaffoldStep.ChooseName;
+
+		this.repoCreator.findKeys(this.repository.repository.gitHubMetadata.owner, this.repository.repository.gitHubMetadata.name).then(keys => {
+			this.replacements = underscore(keys)
+				.map((key: string) => {
+					let replacement = new Replacement(key, '');
+					if (/current.?year/i.test(replacement.friendlyName))
+						replacement.value = new Date(Date.now()).getUTCFullYear().toString();
+					return replacement;
+				});
+			this.repoNameChanged(this.newRepoName, this.newRepoName);
+			this.maxStep = ScaffoldStep.EnterReplacements;
+			if (this.currentStep >= ScaffoldStep.AwaitingReplacements)
+				this.tryChangeStep(ScaffoldStep.EnterReplacements);
+		}).catch((error: Error) => {
+			this.eventAggregator.publish(error);
+		});
 	}
 
 	private fillInReplacementsNeedingAuthentication() {

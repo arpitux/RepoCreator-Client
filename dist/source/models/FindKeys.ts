@@ -1,15 +1,10 @@
-import { Repository } from 'source/models/Repository';
+import { RepositoryKey } from 'source/models/Repository';
 
 export class Request {
 	constructor(
-		public repository: Repository
+		public repository_owner: string,
+		public repository_name: string
 	) {}
-
-	public static deserialize(input: any): Request {
-		return new Request(
-			Repository.deserialize(input.repository)
-		);
-	}
 }
 
 export class Progress {

@@ -1,24 +1,40 @@
 import { autoinject } from 'aurelia-dependency-injection';
 import { computedFrom } from 'aurelia-binding';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { Repository as RepositoryWireModel } from 'source/models/Repository';
+import { Repository } from 'source/models/Repository';
+import { RepositoryViewModel } from 'source/view-models/RepositoryViewModel';
+import { Repositories } from 'source/services/Repositories';
 import { RepoCreator } from 'source/services/RepoCreator';
 import { OAuth } from 'source/services/OAuth-Auth0';
+import { GitHub } from 'source/services/GitHub';
 import underscore from 'underscore';
+import wu from 'wu';
 
 @autoinject
 export class Templates {
-	private allTemplates: RepositoryViewModel[] = [];
-
 	constructor(
 		private oAuth: OAuth,
+		private gitHub: GitHub,
 		private repoCreator: RepoCreator,
+		private repositories: Repositories,
 		private eventAggregator: EventAggregator
 	) {}
 
-	@computedFrom('allTemplates')
-	public get all(): RepositoryViewModel[] {
-		return this.allTemplates;
+	public get all(): Iterable<RepositoryViewModel> {
+		return wu(this.repositories.repositories.values()).map(repository => new RepositoryViewModel(repository));
+	}
+
+	public searchGitHub = (searchInput: string): void => {
+		// clear out previous search (assume that if we have no repo creator metadata then it was a GitHub search result)
+		wu(this.repositories.repositories.entries())
+			.filter(pair => !pair[1].repoCreatorMetadata)
+			.forEach(pair => this.repositories.repositories.delete(pair[0]));
+
+		this.gitHub.search(searchInput).then(searchResults => {
+			this.repositories.addMany(wu(searchResults).map(searchResult => Repository.deserializeFromGitHub(searchResult)));
+		}).catch((error: Error) => {
+			this.eventAggregator.publish(error);
+		});
 	}
 
 	public fetchAllWithoutLoginPrompt = (): void => {
@@ -26,141 +42,59 @@ export class Templates {
 		this.fetchPopular();
 		if (this.oAuth.isLoggedOrLoggingIn) {
 			this.fetchFavorites();
-			this.fetchMySponsored();
 		}
 	}
 
 	public fetchAllWithLoginPrompt = (): void => {
+		this.fetchFavorites();
 		this.fetchSponsored();
 		this.fetchPopular();
-		this.fetchFavorites();
-		this.fetchMySponsored();
 	}
 
 	public fetchFavorites = (): void => {
-		this.repoCreator.getFavorites().then(wireModels => {
-			let favoriteTemplates = underscore(wireModels).map(wireModel => new RepositoryViewModel(wireModel, "", "images/zoltu.png", 10, false, false, true, false));
-			this.mergeTemplates(favoriteTemplates);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
+		this.repoCreator.getFavorites()
+			.then(this.repositories.addMany)
+			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public fetchSponsored = (): void => {
-		this.repoCreator.getSponsored().then(wireModels => {
-			let sponsoredTemplates = underscore(wireModels).map(wireModel => new RepositoryViewModel(wireModel, "", "images/zoltu.png", 5, true, false, false, false));
-			this.mergeTemplates(sponsoredTemplates);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
+		this.repoCreator.getSponsored()
+			.then(this.repositories.addMany)
+			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public fetchPopular = (): void => {
-		this.repoCreator.getPopular().then(wireModels => {
-			let popularTemplates = underscore(wireModels).map(wireModel => new RepositoryViewModel(wireModel, "", "images/zoltu.png", 0, false, true, false, false));
-			this.mergeTemplates(popularTemplates);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
-	}
-
-	public fetchMySponsored = (): void => {
-		this.repoCreator.getMyRepositories().then(wireModels => {
-			let mySponsoredTemplates = underscore(wireModels).map(sponsoredWireModel => new RepositoryViewModel(sponsoredWireModel.repository, "", "images/zoltu.png", 0, false, false, false, true));
-			this.mergeTemplates(mySponsoredTemplates);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
+		this.repoCreator.getPopular()
+			.then(this.repositories.addMany)
+			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public addFavorite = (viewModel: RepositoryViewModel): void => {
-		this.repoCreator.addFavorite(viewModel.wireModel).then(wireModels => {
-			let favoriteTemplates = underscore(wireModels).map(wireModel => new RepositoryViewModel(wireModel, "", "images/zoltu.png", 10, false, false, true, false));
-			this.clearFavorites();
-			this.mergeTemplates(favoriteTemplates);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
+		this.repoCreator.addFavorite(viewModel.repository.key)
+			.then(this.repositories.addMany)
+			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public removeFavorite = (viewModel: RepositoryViewModel): void => {
-		this.repoCreator.removeFavorite(viewModel.wireModel).then(wireModels => {
-			let favoriteTemplates = underscore(wireModels).map(wireModel => new RepositoryViewModel(wireModel, "", "images/zoltu.png", 10, false, false, true, false));
-			this.clearFavorites();
-			this.mergeTemplates(favoriteTemplates);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
+		this.repoCreator.removeFavorite(viewModel.repository.key)
+			.then(this.repositories.addMany)
+			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public sponsor = (viewModel: RepositoryViewModel): void => {
 		if (viewModel.isMySponsored)
 			return;
 
-		this.repoCreator.sponsor(viewModel.wireModel).then(wireModels => {
-			let sponsoredTemplates = underscore(wireModels).map(wireModel => new RepositoryViewModel(wireModel, "", "images/zoltu.png", 5, true, false, false, false));
-			this.clearSponsored();
-			this.mergeTemplates(sponsoredTemplates);
-		}).catch((error: Error) => {
-			this.eventAggregator.publish(error);
-		});
+		this.repoCreator.sponsor(viewModel.repository.key)
+			.then(this.repositories.addMany)
+			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public cancelSponsorship = (viewModel: RepositoryViewModel): void => {
 		if (!viewModel.isMySponsored)
 			return;
 
-		this.repoCreator.cancelSponsorship(viewModel.wireModel)
-			.then(x => viewModel.isMySponsored = false)
+		this.repoCreator.cancelSponsorship(viewModel.repository.key)
 			.catch((error: Error) => this.eventAggregator.publish(error));
-	}
-
-	private clearFavorites = () => {
-		underscore(this.allTemplates)
-			.each(template => template.isFavorite = false);
-	}
-
-	private clearSponsored = () => {
-		underscore(this.allTemplates)
-			.each(template => template.isSponsored = false);
-	}
-
-	private mergeTemplates = (repos: RepositoryViewModel[]) => {
-		repos.forEach(repo => {
-			let match: RepositoryViewModel = underscore(this.allTemplates).find(existingRepo => existingRepo.equals(repo));
-			if (match)
-				match.merge(repo);
-			else
-				this.allTemplates.push(repo);
-		});
-	}
-}
-
-export class RepositoryViewModel {
-	public gitHubLink: string;
-
-	constructor(
-		public wireModel: RepositoryWireModel,
-		public description: string,
-		public icon: string,
-		public favoriteCount: number,
-		public isSponsored: boolean,
-		public isPopular: boolean,
-		public isFavorite: boolean,
-		public isMySponsored: boolean
-	) {
-		this.gitHubLink = `https://github.com/${this.wireModel.owner}/${this.wireModel.name}`;
-	}
-
-	public equals = (other: RepositoryViewModel): boolean => {
-		return this.wireModel.owner == other.wireModel.owner
-			&& this.wireModel.name == other.wireModel.name;
-	}
-
-	public merge = (other: RepositoryViewModel): void => {
-		this.isFavorite = this.isFavorite || other.isFavorite;
-		this.isSponsored = this.isSponsored || other.isSponsored;
-		this.isMySponsored = this.isMySponsored || other.isMySponsored;
-		this.isPopular = this.isPopular || other.isPopular;
 	}
 }

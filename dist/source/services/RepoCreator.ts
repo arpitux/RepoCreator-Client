@@ -2,8 +2,7 @@ import { autoinject } from 'aurelia-dependency-injection';
 import { HttpClient, RequestBuilder, HttpResponseMessage } from 'aurelia-http-client';
 import { OAuth } from 'source/services/OAuth-Auth0';
 import { StripeCheckout, StripeToken } from 'source/services/StripeCheckout';
-import { Repository } from 'source/models/Repository';
-import { SponsoredRepository } from 'source/models/SponsoredRepository';
+import { RepositoryKey, Repository, RepositoryRepoCreatorMetadata } from 'source/models/Repository';
 import { Request as FindKeysRequest, Progress as FindKeysProgress, Step as FindKeysProgressStep } from 'source/models/FindKeys';
 import { Request as CreateRepoRequest, Progress as CreateRepoProgress, Step as CreateRepoProgressStep } from 'source/models/CreateRepo';
 import underscore from 'underscore';
@@ -17,124 +16,168 @@ export class RepoCreator {
 	constructor(
 		private oAuth: OAuth,
 		private stripeCheckout: StripeCheckout) {
-		this.httpClient.configure((builder: RequestBuilder) => builder['withHeader']('Accept', 'application/json'));
-		this.httpClient.configure((builder: RequestBuilder) => builder['withHeader']('Content-Type', 'application/json'));
+		this.httpClient.configure((builder: RequestBuilder) => builder.withHeader('Accept', 'application/json'));
+		this.httpClient.configure((builder: RequestBuilder) => builder.withHeader('Content-Type', 'application/json'));
 	}
 
-	findKeys(repoOwner: string, repoName: string): Promise<string[]> {
+	findKeys(repositoryOwner: string, repositoryName: string): Promise<string[]> {
 		return this.oAuth.maybeJwtToken.then(jwtToken => {
 			if (jwtToken)
-				this.httpClient.configure(builder => builder['withHeader']('Authorization', `Bearer ${jwtToken}`));
-			let repository = new Repository('GitHub', repoOwner, repoName);
-			let request = new FindKeysRequest(repository);
+				this.httpClient.configure(builder => builder.withHeader('Authorization', `Bearer ${jwtToken}`));
+			let request = new FindKeysRequest(repositoryOwner, repositoryName);
 			return new Promise((resolve: (result: string[]) => void, reject: (error: Error) => void) => new FindKeys(this.httpClient, this.oAuth, request, resolve, reject).execute());
 		});
 	}
 
-	createRepo(templateRepoOwner: string, templateRepoName: string, destinationRepoName: string, replacements: any): Promise<string> {
+	createRepo(templateRepositoryOwner: string, templateRepositoryName: string, destinationRepositoryOwner: string, destinationRepositoryName: string, replacements: any): Promise<string> {
 		return this.oAuth.jwtToken.then(jwtToken => this.oAuth.gitHubLogin.then(login => {
 			if (jwtToken)
-				this.httpClient.configure(builder => builder['withHeader']('Authorization', `Bearer ${jwtToken}`));
-			let templateRepository = new Repository('GitHub', templateRepoOwner, templateRepoName);
-			let destinationRepository = new Repository('GitHub', login, destinationRepoName);
-			let request = new CreateRepoRequest(destinationRepository, templateRepository, replacements);
+				this.httpClient.configure(builder => builder.withHeader('Authorization', `Bearer ${jwtToken}`));
+			let request = new CreateRepoRequest(templateRepositoryOwner, templateRepositoryName, destinationRepositoryOwner, destinationRepositoryName, replacements);
 			return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => new CreateRepo(this.httpClient, this.oAuth, request, resolve, reject).execute());
 		}));
 	}
 
-	getPopular(): Promise<Repository[]> {
-		return this.httpClient.createRequest(`${baseUri}/api/popular/`)
-			.asGet()
-			.withHeader('Accept', 'application/json')
-			.withHeader('Content-Type', 'application/json')
-			.send()
-			.then(response => underscore(response.content).map(item => Repository.deserialize(item)));
-	}
-
-	getSponsored(): Promise<Repository[]> {
-		return this.httpClient.createRequest(`${baseUri}/api/sponsored/`)
-			.asGet()
-			.withHeader('Accept', 'application/json')
-			.withHeader('Content-Type', 'application/json')
-			.send()
-			.then(response => underscore(response.content).map(item => Repository.deserialize(item)));
-	}
-
-	sponsor(repository: Repository): Promise<Repository[]> {
-		return this.oAuth.jwtToken.then(jwtToken => this.oAuth.gitHubEmail.then(email => {
-			return this.stripeCheckout.popup(email, 'Sponsor a repository so anyone can use it as a template!', 500, 'Sponsor');
-		}).then(value => {
-			// TODO: show processing
-			let paymentToken = value.id;
-			this.httpClient.configure(builder => builder['withHeader']('Authorization', 'Bearer ' + jwtToken));
-			return this.httpClient.put(`${baseUri}/api/sponsored/add/`, { 'payment_token': paymentToken, 'repository': repository })
+	getRepositoryMetadata(repositoryKey: RepositoryKey): Promise<RepositoryRepoCreatorMetadata> {
+		return this.submitRequestWithMaybeAuthentication(() => {
+			return Promise.resolve(
+				this.httpClient.createRequest(`${baseUri}/api/repository/${repositoryKey.provider}/${repositoryKey.id}`)
+				.asGet());
 		}).then((response: HttpResponseMessage) => {
-			return underscore(response.content).map((item: any) => Repository.deserialize(item))
-		}));
+			if (response.statusCode === 404)
+				return null;
+			if (!response.isSuccess)
+				throw new Error(`Failed to get metadata about repository from RepoCreator (${response.statusCode}): ${response.content.Message}`);
+			return RepositoryRepoCreatorMetadata.deserialize(response.content);
+		});
+	}
+
+	getPopular(): Promise<Repository[]> {
+		return this.submitRequestWithMaybeAuthentication(() => {
+			return Promise.resolve(
+				this.httpClient.createRequest(`${baseUri}/api/popular/`)
+					.asGet());
+		}).then(response => {
+			if (!response.isSuccess)
+				throw new Error(`Failed to popular repositories (${response.statusCode}): ${response.content.Message}`);
+			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
+		});
 	}
 
 	getFavorites(): Promise<Repository[]> {
-		return this.oAuth.jwtToken.then(jwtToken => {
-			return this.httpClient.createRequest(`${baseUri}/api/favorites/`)
-				.asGet()
-				.withHeader('Authorization', `Bearer ${jwtToken}`)
-				.withHeader('Accept', 'application/json')
-				.withHeader('Content-Type', 'application/json')
-				.send();
+		return this.submitRequestWithAuthentication(() => {
+			return Promise.resolve(this.httpClient.createRequest(`${baseUri}/api/favorites/`)
+				.asGet());
 		}).then(response => {
-			return underscore(response.content).map(item => Repository.deserialize(item));
+			if (!response.isSuccess)
+				throw new Error(`Failed to get favorite repositories (${response.statusCode}): ${response.content.Message}`);
+			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
 		});
 	}
 
-	addFavorite(repository: Repository): Promise<Repository[]> {
-		return this.oAuth.jwtToken.then(jwtToken => {
-			return this.httpClient.createRequest(`${baseUri}/api/favorites/${repository.owner}/${repository.name}/`)
-				.asPut()
-				.withHeader('Authorization', `Bearer ${jwtToken}`)
-				.withHeader('Accept', 'application/json')
-				.withHeader('Content-Type', 'application/json')
-				.send();
+	addFavorite(repositoryKey: RepositoryKey): Promise<Repository[]> {
+		return this.submitRequestWithAuthentication(() => {
+			return Promise.resolve(
+				this.httpClient.createRequest(`${baseUri}/api/favorites/${repositoryKey.provider}/${repositoryKey.id}/`)
+					.asPut());
 		}).then(response => {
-			return underscore(response.content).map(item => Repository.deserialize(item));
+			if (!response.isSuccess)
+				throw new Error(`Failed to favorite repository (${response.statusCode}): ${response.content.Message}`);
+			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
 		});
 	}
 
-	removeFavorite(repository: Repository): Promise<Repository[]> {
-		return this.oAuth.jwtToken.then(jwtToken => {
-			return this.httpClient.createRequest(`${baseUri}/api/favorites/${repository.owner}/${repository.name}/`)
-				.asDelete()
-				.withHeader('Authorization', `Bearer ${jwtToken}`)
-				.withHeader('Accept', 'application/json')
-				.withHeader('Content-Type', 'application/json')
-				.send();
+	removeFavorite(repositoryKey: RepositoryKey): Promise<Repository[]> {
+		return this.submitRequestWithAuthentication(() => {
+			return Promise.resolve(
+				this.httpClient.createRequest(`${baseUri}/api/favorites/${repositoryKey.provider}/${repositoryKey.id}/`)
+					.asDelete());
 		}).then(response => {
-			return underscore(response.content).map(item => Repository.deserialize(item));
+			if (!response.isSuccess)
+				throw new Error(`Failed to un-favorite repository (${response.statusCode}): ${response.content.Message}`);
+			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
 		});
 	}
 
-	getMyRepositories(): Promise<SponsoredRepository[]> {
-		return this.oAuth.jwtToken.then(jwtToken => {
-			return this.httpClient.createRequest(`${baseUri}/api/sponsored/mine/`)
-				.asGet()
-				.withHeader('Authorization', `Bearer ${jwtToken}`)
-				.withHeader('Accept', 'application/json')
-				.withHeader('Content-Type', 'application/json')
-				.send();
+	getSponsored(): Promise<Repository[]> {
+		return this.submitRequestWithMaybeAuthentication(() => {
+			return Promise.resolve(
+				this.httpClient.createRequest(`${baseUri}/api/sponsored/`)
+					.asGet());
 		}).then(response => {
-			return underscore(response.content).map(item => SponsoredRepository.deserialize(item));
+			if (!response.isSuccess)
+				throw new Error(`Failed to get sponsored repositories (${response.statusCode}): ${response.content.Message}`);
+			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
 		});
 	}
 
-	cancelSponsorship(repository: Repository): Promise<HttpResponseMessage> {
-		return this.oAuth.jwtToken.then(jwtToken => {
-			return this.httpClient.createRequest(`${baseUri}/api/sponsored/cancel/`)
-				.asDelete()
-				.withContent(repository)
-				.withHeader('Authorization', `Bearer ${jwtToken}`)
-				.withHeader('Accept', 'application/json')
-				.withHeader('Content-Type', 'application/json')
-				.send();
+	sponsor(repositoryKey: RepositoryKey): Promise<Repository[]> {
+		return this.submitRequestWithAuthentication(() => {
+			return this.oAuth.gitHubEmail.then(email => {
+				return this.stripeCheckout.popup(email, 'Sponsor a repository so anyone can use it as a template!', 500, 'Sponsor').then(stripeToken => {
+					return this.httpClient.createRequest(`${baseUri}/api/sponsored/${repositoryKey.provider}/${repositoryKey.id}`)
+						.asPut()
+						.withContent({ 'payment_token': stripeToken.id });
+				});
+			});
+		}).then((response: HttpResponseMessage) => {
+			if (!response.isSuccess)
+				throw new Error(`Failed to sponsored repository (${response.statusCode}): ${response.content.Message}`);
+			return underscore(response.content).map((item: any) => Repository.deserializeFromRepoCreator(item))
 		});
+	}
+
+	cancelSponsorship(repositoryKey: RepositoryKey): Promise<HttpResponseMessage> {
+		return this.submitRequestWithAuthentication(() => {
+			return Promise.resolve(
+				this.httpClient.createRequest(`${baseUri}/api/sponsored/${repositoryKey.provider}/${repositoryKey.id}`)
+					.asDelete()
+					.withContent(repositoryKey));
+		});
+	}
+
+	private submitRequestWithAuthentication(requestBuilderSupplier: () => Promise<RequestBuilder>): Promise<HttpResponseMessage> {
+		return this.logoutAndRetryOnForbidden(() => {
+			return this.oAuth.jwtToken.then(jwtToken => {
+				return requestBuilderSupplier().then(requestBuilder => {
+					return requestBuilder
+						.withHeader('Authorization', `Bearer ${jwtToken}`)
+						.withHeader('Accept', 'application/json')
+						.withHeader('Content-Type', 'application/json');
+				});
+			});
+		});
+	}
+
+	private submitRequestWithMaybeAuthentication(requestBuilderSupplier: () => Promise<RequestBuilder>): Promise<HttpResponseMessage> {
+		return this.logoutAndRetryOnForbidden(() => {
+			return this.oAuth.maybeJwtToken.then(maybeJwtToken => {
+				return requestBuilderSupplier().then(requestBuilder => {
+					if (maybeJwtToken)
+						return requestBuilder
+							.withHeader('Authorization', `Bearer ${maybeJwtToken}`)
+							.withHeader('Accept', 'application/json')
+							.withHeader('Content-Type', 'application/json');
+					else
+						return requestBuilder
+							.withHeader('Accept', 'application/json')
+							.withHeader('Content-Type', 'application/json');
+				})
+			});
+		});
+	}
+
+	private logoutAndRetryOnForbidden(requestBuilderSupplier: () => Promise<RequestBuilder>): Promise<HttpResponseMessage> {
+		return requestBuilderSupplier().then(requestBuilder => {
+				return requestBuilder.send();
+			}).then((response: HttpResponseMessage) => {
+				if (response.statusCode === 403) {
+					this.oAuth.logout();
+					return requestBuilderSupplier().then(requestBuilder => requestBuilder.send());
+				} else {
+					return response;
+				}
+			});
 	}
 }
 

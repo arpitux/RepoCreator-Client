@@ -5,14 +5,17 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { GitHub } from 'source/services/GitHub';
 import { ScaffoldModal } from 'source/components/scaffold-modal';
 import { Templates } from 'source/services/Templates';
-import { Repository as RepositoryWireModel } from 'source/models/Repository';
-import { RepositoryViewModel } from 'source/services/Templates';
+import { Repositories } from 'source/services/Repositories';
+import { Repository } from 'source/models/Repository';
+import { RepositoryViewModel } from 'source/view-models/RepositoryViewModel';
 import underscore from 'underscore';
+import wu from 'wu';
 
 @autoinject
 export class RepositoryChooser {
 	private currentFilter: RepoFilter = RepoFilter.All;
 	private unreadError: string = null;
+	private searchInput: string = "";
 
 	constructor(
 		private templates: Templates,
@@ -27,9 +30,8 @@ export class RepositoryChooser {
 		this.templates.fetchAllWithoutLoginPrompt();
 	}
 
-	//@computedFrom('currentFilter')
 	get filteredTemplates(): RepositoryViewModel[] {
-		return this.templates.all.filter(repository => {
+		return Array.from(wu(this.templates.all).filter(repository => {
 			switch (this.currentFilter) {
 				case RepoFilter.All:
 					return true;
@@ -44,12 +46,12 @@ export class RepositoryChooser {
 				default:
 					throw new Error("Unexpected RepoFilter enum value.");
 			}
-		}).sort((a, b): number => {
+		})).sort((a, b): number => {
 			if (a.isSponsored && !b.isSponsored)
 				return -1;
 			if (b.isSponsored && !a.isSponsored)
 				return 1;
-			return 0;
+			return b.favoriteCount - a.favoriteCount;
 		});
 	}
 
@@ -68,18 +70,8 @@ export class RepositoryChooser {
 			this.templates.fetchAllWithLoginPrompt();
 	}
 
-	getCssFilters = (repository: RepositoryViewModel): string => {
-		let selectors: string[] = [];
-		if (repository.isFavorite)
-			selectors.push('favorite');
-		if (repository.isSponsored)
-			selectors.push('sponsored');
-		if (repository.isMySponsored)
-			selectors.push('my-sponsored');
-		if (repository.isPopular)
-			selectors.push('popular');
-
-		return selectors.join(' ');
+	searchGitHub = (): void => {
+		this.templates.searchGitHub(this.searchInput);
 	}
 
 	// required for Aurelia template binding
