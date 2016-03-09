@@ -13,7 +13,7 @@ export class Repositories {
 	constructor(
 		private gitHub: GitHub,
 		private repoCreator: RepoCreator,
-		private eventAggregator: EventAggregator;
+		private eventAggregator: EventAggregator
 	) {}
 
 	public add = (newRepository: Repository) => {
@@ -34,6 +34,7 @@ export class Repositories {
 	public addMany = (newRepositories: Iterable<Repository>) => {
 		wu(newRepositories).forEach(this.add);
 	}
+
 
 	private updateGitHubMetadata = (repository: Repository) => {
 		this.gitHub.getRepository(repository.key.id).then(searchResult => {

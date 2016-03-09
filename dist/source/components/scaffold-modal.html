@@ -39,7 +39,7 @@
 							</button>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" disabled.bind="repository.isSponsored" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
 								<i class="fa fa-dollar"></i>
 								Sponsor
 							</button>

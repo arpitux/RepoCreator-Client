@@ -53,13 +53,13 @@ export class Templates {
 
 	public fetchFavorites = (): void => {
 		this.repoCreator.getFavorites()
-			.then(this.repositories.addMany)
+			.then(favorites =>  this.repositories.addMany(favorites))
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public fetchSponsored = (): void => {
 		this.repoCreator.getSponsored()
-			.then(this.repositories.addMany)
+			.then(sponsoreds => this.repositories.addMany(sponsoreds))
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
@@ -71,13 +71,15 @@ export class Templates {
 
 	public addFavorite = (viewModel: RepositoryViewModel): void => {
 		this.repoCreator.addFavorite(viewModel.repository.key)
-			.then(this.repositories.addMany)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => viewModel.repository.repoCreatorMetadata = metadata)
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
 	public removeFavorite = (viewModel: RepositoryViewModel): void => {
 		this.repoCreator.removeFavorite(viewModel.repository.key)
-			.then(this.repositories.addMany)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => viewModel.repository.repoCreatorMetadata = metadata)
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
@@ -86,7 +88,8 @@ export class Templates {
 			return;
 
 		this.repoCreator.sponsor(viewModel.repository.key)
-			.then(this.repositories.addMany)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => viewModel.repository.repoCreatorMetadata = metadata)
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
@@ -95,6 +98,8 @@ export class Templates {
 			return;
 
 		this.repoCreator.cancelSponsorship(viewModel.repository.key)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => viewModel.repository.repoCreatorMetadata = metadata)
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 }
