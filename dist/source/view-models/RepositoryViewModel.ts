@@ -17,12 +17,25 @@ export class RepositoryViewModel {
 		return this.repository.gitHubMetadata && this.repository.gitHubMetadata.description || "";
 	}
 
+	public get language(): string {
+		return this.repository.gitHubMetadata && this.repository.gitHubMetadata.language || "";
+	}
+
 	public get gitHubLink(): string {
 		return `https://github.com/${this.owner}/${this.name}`;
 	}
 
 	public get icon(): string {
-		return `images/templates-bg/javascript.png`;
+		switch (this.language) {
+			case 'JavaScript':
+				return `images/templates-bg/javascript.png`;
+			case 'C#':
+				return `images/templates-bg/csharp.png`;
+			case 'TypeScript':
+				return `images/templates-bg/typescript.png`
+			default:
+				return `images/templates-bg/unknown.png`;
+		}
 	}
 
 	public get isSponsored(): boolean {
