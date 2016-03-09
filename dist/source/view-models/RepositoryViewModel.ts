@@ -22,7 +22,7 @@ export class RepositoryViewModel {
 	}
 
 	public get icon(): string {
-		return `images/zoltu.png`;
+		return `images/templates-bg/javascript.png`;
 	}
 
 	public get isSponsored(): boolean {
