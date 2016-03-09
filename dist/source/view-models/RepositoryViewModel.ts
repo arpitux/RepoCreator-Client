@@ -27,12 +27,24 @@ export class RepositoryViewModel {
 
 	public get icon(): string {
 		switch (this.language) {
-			case 'JavaScript':
-				return `images/templates-bg/javascript.png`;
 			case 'C#':
 				return `images/templates-bg/csharp.png`;
+			case 'Go':
+				return `images/templates-bg/go.png`;
+			case `Java`:
+				return `images/templates-bg/java.png`;
+			case 'JavaScript':
+				return `images/templates-bg/javascript.png`;
+			case `Kotlin`:
+				return `images/templates-bg/kotlin.png`;
+			case `Python`:
+				return `images/templates-bg/python.png`;
+			case `Ruby`:
+				return `images/templates-bg/ruby.png`;
+			case `Rust`:
+				return `images/templates-bg/rust.png`;
 			case 'TypeScript':
-				return `images/templates-bg/typescript.png`
+				return `images/templates-bg/typescript.png`;
 			default:
 				return `images/templates-bg/unknown.png`;
 		}
