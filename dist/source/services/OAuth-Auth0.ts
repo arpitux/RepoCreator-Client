@@ -90,9 +90,15 @@ export class OAuth {
 	private _userPromise: Promise<User> = null;
 
 	constructor() {
-		let localStorageJwtToken = sessionStorage.getItem('JWT Token');
-		if (localStorageJwtToken)
-			this._userPromise = Promise.resolve(User.deserializeFromJson(localStorageJwtToken));
+		try {
+			let localStorageUser = sessionStorage.getItem('Auth0 User');
+			if (localStorageUser) {
+				let user = User.deserializeFromJson(localStorageUser);
+				this._userPromise = Promise.resolve(user);
+			}
+		} catch (thing) {
+			this.logout();
+		}
 	}
 
 	private get userPromise(): Promise<User> {
@@ -147,7 +153,7 @@ export class OAuth {
 
 	logout = (): void => {
 		// calling this.auth0.logout() causes a redirect, so we'll just clear their session and reject the promise instead
-		sessionStorage.removeItem('JWT Token');
+		sessionStorage.clear();
 		this.userPromise = Promise.reject<User>(new Error('Not logged in.'));
 	}
 
@@ -158,7 +164,7 @@ export class OAuth {
 				return result;
 			}, new Map<string, Identity>());
 			let user = new User(result.profile.user_id, result.profile.nickname, result.profile.email, result.jwtToken, identities);
-			sessionStorage.setItem('JWT Token', JSON.stringify(user));
+			sessionStorage.setItem('Auth0 User', JSON.stringify(user));
 			return user;
 		});
 	}
