@@ -19,6 +19,8 @@ export class ScaffoldModal {
 	private newRepoName: string;
 	private newRepositoryUrl: string;
 	private replacements: Replacement[];
+	private processingFavorite: boolean = false;
+	private processingSponsor: boolean = false;
 
 	constructor(
 		private oAuth: OAuth,
@@ -54,7 +56,10 @@ export class ScaffoldModal {
 			this.templates.fetchFavorites();
 			return;
 		}
-		this.templates.addFavorite(this.repository);
+		this.processingFavorite = true;
+		this.templates.addFavorite(this.repository)
+			.then(() => this.processingFavorite = false)
+			.catch(() => this.processingFavorite = false);
 	}
 
 	public removeFavorite = (): void => {
@@ -62,7 +67,10 @@ export class ScaffoldModal {
 			this.templates.fetchFavorites();
 			return;
 		}
-		this.templates.removeFavorite(this.repository);
+		this.processingFavorite = true;
+		this.templates.removeFavorite(this.repository)
+			.then(() => this.processingFavorite = false)
+			.catch(() => this.processingFavorite = false);
 	}
 
 	public sponsor = (): void => {
@@ -70,7 +78,10 @@ export class ScaffoldModal {
 			this.templates.fetchSponsored();
 			return;
 		}
-		this.templates.sponsor(this.repository);
+		this.processingSponsor = true;
+		this.templates.sponsor(this.repository)
+			.then(() => this.processingSponsor = false)
+			.catch(() => this.processingSponsor = false);
 	}
 
 	public unsponsor = (): void => {
@@ -78,7 +89,9 @@ export class ScaffoldModal {
 			this.templates.fetchSponsored();
 			return;
 		}
-		this.templates.cancelSponsorship(this.repository);
+		this.templates.cancelSponsorship(this.repository)
+			.then(() => this.processingSponsor = false)
+			.catch(() => this.processingSponsor = false);
 	}
 
 	public repoNamed = () => {

@@ -26,30 +26,54 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
-								<i class="fa fa-heart"></i>
-								Favorite
-							</button>
-							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
-								<span class="fa-stack mn7">
-									 <i class="fa fa-heart fa-stack-1x"></i>
-									<i class="fa fa-bolt fa-stack-1x fa-inverse text-warning"></i>
-								</span>
-								Un-Favorite
-							</button>
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" disabled.bind="processingFavorite" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
+									<template if.bind="!processingFavorite">
+										<i class="fa fa-heart"></i>
+										Favorite
+									</template>
+									<template if.bind="processingFavorite">
+										<i class="fa fa-refresh fa-spin"></i>
+										Processing...
+									</template>
+								</button>
+								<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" disabled.bind="processingFavorite" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
+									<template if.bind="!processingFavorite">
+										<span class="fa-stack mn7">
+											<i class="fa fa-heart fa-stack-1x"></i>
+											<i class="fa fa-bolt fa-stack-1x fa-inverse text-warning"></i>
+										</span>
+										Un-Favorite
+									</template>
+									<template if.bind="processingFavorite">
+										<i class="fa fa-refresh fa-spin"></i>
+										Processing...
+									</template>
+								</button>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" disabled.bind="repository.isSponsored" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
-								<i class="fa fa-dollar"></i>
-								Sponsor
-							</button>
-							<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" click.delegate="unsponsor()" if.bind="repository.isMySponsored">
-								<span class="fa-stack mn7">
-									<i class="fa fa-dollar fa-stack-1x"></i>
-									<i class="fa fa-ban fa-stack-2x text-danger"></i>
-								</span>
-								Un-Sponsor
-							</button>
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" disabled.bind="repository.isSponsored || processingSponsor" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
+									<template if.bind="!processingSponsor">
+										<i class="fa fa-dollar"></i>
+										Sponsor
+									</template>
+									<template if.bind="processingSponsor">
+										<i class="fa fa-refresh fa-spin"></i>
+										Processing...
+									</template>
+								</button>
+								<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" disabled.bind="processingSponsor" click.delegate="unsponsor()" if.bind="repository.isMySponsored">
+									<template if.bind="!processingSponsor">
+										<span class="fa-stack mn7">
+											<i class="fa fa-dollar fa-stack-1x"></i>
+											<i class="fa fa-ban fa-stack-2x text-danger"></i>
+										</span>
+										Un-Sponsor
+									</template>
+									<template if.bind="processingSponsor">
+										<i class="fa fa-refresh fa-spin"></i>
+										Processing...
+									</template>
+								</button>
 							</div>
 						</div>
 					</div>
