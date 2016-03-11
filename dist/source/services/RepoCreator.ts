@@ -8,6 +8,7 @@ import { Request as CreateRepoRequest, Progress as CreateRepoProgress, Step as C
 import underscore from 'underscore';
 
 let baseUri: string = 'https://repocreator-api.zoltu.io';
+//let baseUri: string = 'http://localhost:64736';
 
 @autoinject
 export class RepoCreator {
@@ -44,11 +45,11 @@ export class RepoCreator {
 				this.httpClient.createRequest(`${baseUri}/api/repository/${repositoryKey.provider}/${repositoryKey.id}`)
 				.asGet());
 		}).then((response: HttpResponseMessage) => {
+			return RepositoryRepoCreatorMetadata.deserialize(response.content);
+		}).catch((response: HttpResponseMessage) => {
 			if (response.statusCode === 404)
 				return null;
-			if (!response.isSuccess)
-				throw new Error(`Failed to get metadata about repository from RepoCreator (${response.statusCode}): ${response.content.Message}`);
-			return RepositoryRepoCreatorMetadata.deserialize(response.content);
+			throw new Error(`Failed to get metadata about repository from RepoCreator (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -58,9 +59,9 @@ export class RepoCreator {
 				this.httpClient.createRequest(`${baseUri}/api/popular/`)
 					.asGet());
 		}).then(response => {
-			if (!response.isSuccess)
-				throw new Error(`Failed to popular repositories (${response.statusCode}): ${response.content.Message}`);
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
+		}).catch((response: HttpResponseMessage) => {
+			throw new Error(`Failed to popular repositories (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -69,9 +70,9 @@ export class RepoCreator {
 			return Promise.resolve(this.httpClient.createRequest(`${baseUri}/api/favorites/`)
 				.asGet());
 		}).then(response => {
-			if (!response.isSuccess)
-				throw new Error(`Failed to get favorite repositories (${response.statusCode}): ${response.content.Message}`);
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
+		}).catch((response: HttpResponseMessage) => {
+			throw new Error(`Failed to get favorite repositories (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -81,9 +82,9 @@ export class RepoCreator {
 				this.httpClient.createRequest(`${baseUri}/api/favorites/${repositoryKey.provider}/${repositoryKey.id}/`)
 					.asPut());
 		}).then(response => {
-			if (!response.isSuccess)
-				throw new Error(`Failed to favorite repository (${response.statusCode}): ${response.content.Message}`);
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
+		}).catch((response: HttpResponseMessage) => {
+			throw new Error(`Failed to favorite repository (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -93,9 +94,9 @@ export class RepoCreator {
 				this.httpClient.createRequest(`${baseUri}/api/favorites/${repositoryKey.provider}/${repositoryKey.id}/`)
 					.asDelete());
 		}).then(response => {
-			if (!response.isSuccess)
-				throw new Error(`Failed to un-favorite repository (${response.statusCode}): ${response.content.Message}`);
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
+		}).catch((response: HttpResponseMessage) => {
+				throw new Error(`Failed to un-favorite repository (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -105,9 +106,9 @@ export class RepoCreator {
 				this.httpClient.createRequest(`${baseUri}/api/sponsored/`)
 					.asGet());
 		}).then(response => {
-			if (!response.isSuccess)
-				throw new Error(`Failed to get sponsored repositories (${response.statusCode}): ${response.content.Message}`);
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
+		}).catch((response: HttpResponseMessage) => {
+				throw new Error(`Failed to get sponsored repositories (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -121,9 +122,9 @@ export class RepoCreator {
 				});
 			});
 		}).then((response: HttpResponseMessage) => {
-			if (!response.isSuccess)
-				throw new Error(`Failed to sponsored repository (${response.statusCode}): ${response.content.Message}`);
 			return underscore(response.content).map((item: any) => Repository.deserializeFromRepoCreator(item))
+		}).catch((response: HttpResponseMessage) => {
+				throw new Error(`Failed to sponsored repository (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -170,7 +171,7 @@ export class RepoCreator {
 	private logoutAndRetryOnForbidden(requestBuilderSupplier: () => Promise<RequestBuilder>): Promise<HttpResponseMessage> {
 		return requestBuilderSupplier().then(requestBuilder => {
 				return requestBuilder.send();
-			}).then((response: HttpResponseMessage) => {
+			}).catch((response: HttpResponseMessage) => {
 				if (response.statusCode === 403) {
 					this.oAuth.logout();
 					return requestBuilderSupplier().then(requestBuilder => requestBuilder.send());

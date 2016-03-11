@@ -154,7 +154,7 @@ export class OAuth {
 	logout = (): void => {
 		// calling this.auth0.logout() causes a redirect, so we'll just clear their session and reject the promise instead
 		sessionStorage.clear();
-		this.userPromise = Promise.reject<User>(new Error('Not logged in.'));
+		this._userPromise = null;
 	}
 
 	private login = (): Promise<User> => {
