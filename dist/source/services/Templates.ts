@@ -24,13 +24,13 @@ export class Templates {
 		return wu(this.repositories.repositories.values()).map(repository => new RepositoryViewModel(repository));
 	}
 
-	public searchGitHub = (searchInput: string): void => {
+	public searchGitHub = (searchInput: string): Promise<void> => {
 		// clear out previous search (assume that if we have no repo creator metadata then it was a GitHub search result)
 		wu(this.repositories.repositories.entries())
 			.filter(pair => !pair[1].repoCreatorMetadata)
 			.forEach(pair => this.repositories.repositories.delete(pair[0]));
 
-		this.gitHub.search(searchInput).then(searchResults => {
+		return this.gitHub.search(searchInput).then(searchResults => {
 			this.repositories.addMany(wu(searchResults).map(searchResult => Repository.deserializeFromGitHub(searchResult)));
 		}).catch((error: Error) => {
 			this.eventAggregator.publish(error);
@@ -51,50 +51,55 @@ export class Templates {
 		this.fetchPopular();
 	}
 
-	public fetchFavorites = (): void => {
-		this.repoCreator.getFavorites()
+	public fetchFavorites = (): Promise<void> => {
+		return this.repoCreator.getFavorites()
+			.then(favorites =>  this.repositories.addMany(favorites))
+			.catch((error: Error) => this.eventAggregator.publish(error));
+	}
+
+	public fetchSponsored = (): Promise<void> => {
+		return this.repoCreator.getSponsored()
+			.then(sponsoreds => this.repositories.addMany(sponsoreds))
+			.catch((error: Error) => this.eventAggregator.publish(error));
+	}
+
+	public fetchPopular = (): Promise<void> => {
+		return this.repoCreator.getPopular()
 			.then(this.repositories.addMany)
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
-	public fetchSponsored = (): void => {
-		this.repoCreator.getSponsored()
-			.then(this.repositories.addMany)
+	public addFavorite = (viewModel: RepositoryViewModel): Promise<void> => {
+		return this.repoCreator.addFavorite(viewModel.repository.key)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => { viewModel.repository.repoCreatorMetadata = metadata })
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
-	public fetchPopular = (): void => {
-		this.repoCreator.getPopular()
-			.then(this.repositories.addMany)
+	public removeFavorite = (viewModel: RepositoryViewModel): Promise<void> => {
+		return this.repoCreator.removeFavorite(viewModel.repository.key)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => { viewModel.repository.repoCreatorMetadata = metadata })
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
-	public addFavorite = (viewModel: RepositoryViewModel): void => {
-		this.repoCreator.addFavorite(viewModel.repository.key)
-			.then(this.repositories.addMany)
-			.catch((error: Error) => this.eventAggregator.publish(error));
-	}
-
-	public removeFavorite = (viewModel: RepositoryViewModel): void => {
-		this.repoCreator.removeFavorite(viewModel.repository.key)
-			.then(this.repositories.addMany)
-			.catch((error: Error) => this.eventAggregator.publish(error));
-	}
-
-	public sponsor = (viewModel: RepositoryViewModel): void => {
+	public sponsor = (viewModel: RepositoryViewModel): Promise<void> => {
 		if (viewModel.isMySponsored)
 			return;
 
-		this.repoCreator.sponsor(viewModel.repository.key)
-			.then(this.repositories.addMany)
+		return this.repoCreator.sponsor(viewModel.repository.key)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => { viewModel.repository.repoCreatorMetadata = metadata })
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 
-	public cancelSponsorship = (viewModel: RepositoryViewModel): void => {
+	public cancelSponsorship = (viewModel: RepositoryViewModel): Promise<void> => {
 		if (!viewModel.isMySponsored)
 			return;
 
-		this.repoCreator.cancelSponsorship(viewModel.repository.key)
+		return this.repoCreator.cancelSponsorship(viewModel.repository.key)
+			.then(x => this.repoCreator.getRepositoryMetadata(viewModel.repository.key))
+			.then(metadata => { viewModel.repository.repoCreatorMetadata = metadata })
 			.catch((error: Error) => this.eventAggregator.publish(error));
 	}
 }
