@@ -1,8 +1,7 @@
-import { computedFrom } from 'aurelia-binding';
+import { computedFrom, BindingEngine } from 'aurelia-binding';
 import { autoinject } from 'aurelia-dependency-injection';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogController } from 'aurelia-dialog';
-import { BindingEngine } from 'aurelia-binding';
 import { OAuth } from 'source/services/OAuth-Auth0';
 import { RepoCreator } from 'source/services/RepoCreator';
 import { Repository } from 'source/models/Repository';
