@@ -61,6 +61,10 @@ ai-dialog > ai-dialog-body {
 	display: inherit;
 }
 
+#template-step-complete {
+	display: inherit;
+}
+
 #loader_replacements {
 	font-size: 28px;
 	color: #888;
