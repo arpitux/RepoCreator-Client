@@ -21,7 +21,7 @@
 								<div class="mb20 fs20"><i class="fa fa-user"></i> ${repository.owner}</div>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Read More</a>
+								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Open in GitHub</a>
 							</div>
 						</div>
 						<div class="row">
@@ -111,7 +111,7 @@
 									<!-- form step one -->
 									<li class="mbn">
 										<div id="repo_name_container">
-											<h3 class="br-n">Repository Name</h3>
+											<h3 class="br-n">New Repository Name</h3>
 											<hr class="primary">
 											<div class="row">
 												<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
@@ -155,7 +155,7 @@
 								<ul id="template-step-awaiting-completion" class="sf-content mtn template-step au-animate" style="height:100%" if.bind="currentStep == ScaffoldStep.AwaitingCreation">
 									<li class="mbn">
 										<div id="loader_replacements">
-											<i class="fa fa-refresh fa-spin"></i> Creating New Repository..
+											<i class="fa fa-refresh fa-spin"></i> Creating New Repository...
 										</div>
 									</li>
 								</ul>
