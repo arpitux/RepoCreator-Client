@@ -96,7 +96,7 @@ export class RepoCreator {
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
 		}).catch((response: HttpResponseMessage) => {
-				throw new Error(`Failed to un-favorite repository (${response.statusCode}): ${response.content.Message}`);
+			throw new Error(`Failed to un-favorite repository (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -108,7 +108,7 @@ export class RepoCreator {
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
 		}).catch((response: HttpResponseMessage) => {
-				throw new Error(`Failed to get sponsored repositories (${response.statusCode}): ${response.content.Message}`);
+			throw new Error(`Failed to get sponsored repositories (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -124,7 +124,7 @@ export class RepoCreator {
 		}).then((response: HttpResponseMessage) => {
 			return underscore(response.content).map((item: any) => Repository.deserializeFromRepoCreator(item))
 		}).catch((response: HttpResponseMessage) => {
-				throw new Error(`Failed to sponsored repository (${response.statusCode}): ${response.content.Message}`);
+			throw new Error(`Failed to sponsored repository (${response.statusCode}): ${response.content.Message}`);
 		});
 	}
 
@@ -176,7 +176,7 @@ export class RepoCreator {
 					this.oAuth.logout();
 					return requestBuilderSupplier().then(requestBuilder => requestBuilder.send());
 				} else {
-					return response;
+					throw response;
 				}
 			});
 	}
