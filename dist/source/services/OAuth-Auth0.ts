@@ -164,8 +164,16 @@ export class OAuth {
 				return result;
 			}, new Map<string, Identity>());
 			let user = new User(result.profile.user_id, result.profile.nickname, result.profile.email, result.jwtToken, identities);
-			sessionStorage.setItem('Auth0 User', JSON.stringify(user));
+			sessionStorage.setItem('Auth0 User', JSON.stringify(user, OAuth.mapReplacer));
 			return user;
 		});
+	}
+
+	private static mapReplacer(key: any, value: any) {
+		if (value instanceof Map)
+			// this becomes much simpler in ES6:  return [...value]
+			return [...Array.from(value)];
+		else
+			return value;
 	}
 }
