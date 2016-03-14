@@ -670,6 +670,10 @@ body.ai-dialog-open .navbar {
     z-index: 1000 !important;
 }
 
+.msg_templats_loading{
+    text-align: center; font-size: 30px;
+}
+
 .btn-dialog-close{
     position: absolute;
     top: 0px;
