@@ -658,12 +658,15 @@ body.ai-dialog-open .navbar {
     line-height: 20px;
     text-align: left;
     display: inline-block;
+   
 }
 
 .app-search-error .message .text {
     padding: 15px 20px 15px 20px;
     border-radius: 3px;
     margin-bottom: 30px;
+    position:relative;
+    padding-right:60px;
 }
 
 .navbar-fixed-bottom, .navbar-fixed-top {
@@ -704,4 +707,32 @@ body.ai-dialog-open .navbar {
         line-height:1.42857143 !important;
         padding: 6px 12px !important;
     }
+}
+
+.btn-search-error-close
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 30px;
+    font-family: Arial, Baskerville, monospace;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    text-decoration: none;
+    z-index: 1040;
+    color: rgba(255,255,255,0.4);
+    background: transparent;
+    border: 0px;
+    -webkit-appearance: none;
+    outline: none;
+    padding: 0px;
+    box-shadow: none;
+    overflow: visible;
+    display: block;
+}
+.btn-search-error-close:hover
+{
+    color:white;
 }
