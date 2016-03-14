@@ -736,3 +736,48 @@ body.ai-dialog-open .navbar {
 {
     color:white;
 }
+
+.social-slider{
+    position:fixed;
+    bottom:50px;
+    right:-235px;
+    z-index:2000;
+    height:45px;
+    display:table;
+    width:280px;
+}
+.social-slider .btn-visible{
+    text-align:center;
+    display:table-cell;
+    vertical-align:top;
+    width:45px;
+}
+.social-slider .btn-visible:hover{
+    cursor:pointer;
+}
+.social-slider .btn-visible .btn-share{
+     width:45px;
+    height:45px;
+    font-size:25px;
+    line-height:45px;
+    color:white;
+     background-color:#439AD5;
+}
+.social-slider .btn-hidden
+{
+    display:table-cell;height:50px;overflow:hidden;position:relative;
+}
+.social-slider .btn-hidden .links-container
+{
+    width:100%;margin:-10px 0px 0px -30px;background-color:#74B5E0;height:55px;position:absolute;
+}
+.social-slider .shareaholic-share-buttons-container li.shareaholic-share-button
+{
+    padding:5px 5px 5px 0px !important;
+}
+ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-icon, ul li.shareaholic-share-button i.shareaholic-service-icon, ul.shareaholic-share-buttons li i.shareaholic-service-icon, ul li i.shareaholic-service-icon
+{
+    height:35px !important;
+    width:35px !important;
+    font-size:18px !important;
+}
