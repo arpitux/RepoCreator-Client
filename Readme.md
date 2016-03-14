@@ -52,5 +52,5 @@ node_modules/.bin/jspm install --dev typescript@<next-version-from-first-command
 > Note: Verify that this list of dependencies is all that is used by searching through the project for `import.*from .aurelia-.*`
 
 ```
-node_modules/.bin/jspm install aurelia-bootstrapper aurelia-dependency-injection aurelia-event-aggregator aurelia-router aurelia-templating aurelia-binding aurelia-http-client aurelia-computed
+node_modules/.bin/jspm install aurelia-animator-css aurelia-binding aurelia-bootstrapper aurelia-computed aurelia-dependency-injection aurelia-dialog aurelia-event-aggregator aurelia-http-client
 ```

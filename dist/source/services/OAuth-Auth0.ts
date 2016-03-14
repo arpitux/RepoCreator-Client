@@ -154,7 +154,7 @@ export class OAuth {
 	logout = (): void => {
 		// calling this.auth0.logout() causes a redirect, so we'll just clear their session and reject the promise instead
 		sessionStorage.clear();
-		this.userPromise = Promise.reject<User>(new Error('Not logged in.'));
+		this._userPromise = null;
 	}
 
 	private login = (): Promise<User> => {
@@ -164,8 +164,16 @@ export class OAuth {
 				return result;
 			}, new Map<string, Identity>());
 			let user = new User(result.profile.user_id, result.profile.nickname, result.profile.email, result.jwtToken, identities);
-			sessionStorage.setItem('Auth0 User', JSON.stringify(user));
+			sessionStorage.setItem('Auth0 User', JSON.stringify(user, OAuth.mapReplacer));
 			return user;
 		});
+	}
+
+	private static mapReplacer(key: any, value: any) {
+		if (value instanceof Map)
+			// this becomes much simpler in ES6:  return [...value]
+			return [...Array.from(value)];
+		else
+			return value;
 	}
 }

@@ -1,6 +1,6 @@
-import { OAuth } from 'source/services/OAuth-Auth0';
 import { autoinject } from 'aurelia-dependency-injection';
 import { HttpClient, RequestBuilder, HttpResponseMessage } from 'aurelia-http-client';
+import { OAuth } from 'source/services/OAuth-Auth0';
 
 @autoinject
 export class GitHub {

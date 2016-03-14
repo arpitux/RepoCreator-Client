@@ -29,13 +29,40 @@
 
 	<!-- Helper CSS Classes -->
 	<link href="assets/css/custom.css" rel="stylesheet">
-	<link href="assets/css/stepsForm.css" rel="stylesheet">
 
 	<!-- Animations -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" rel="stylesheet">
 
 	<!-- Spectrum CSS -->
 	<link href="assets/css/spectrum.css" rel="stylesheet">
+
+	<!-- Shareaholic -->
+	<script data-cfasync='false' type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='960b0b8781977a74bec33de82585d9d1' async='async'></script>
+
+	<!-- UserReport -->
+	<script data-cfasync='false' async='async' type='text/javascript'>
+		var _urq = _urq || [];
+		_urq.push(['initSite', '2ac05ea6-d468-4e5a-8091-d465e4bc6741']);
+		(function() {
+			var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
+			ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
+		})();
+	</script>
+
+	<!-- Rollbar -->
+	<script data-cfasync='false'type='text/javascript'>
+	var _rollbarConfig = {
+		accessToken: "8e9a353d7dc1437ab9307e0f6ea3491f",
+		captureUncaught: true,
+		payload: {
+			environment: "production"
+		}
+	};
+	// Rollbar Snippet
+	!function(r){function o(e){if(t[e])return t[e].exports;var n=t[e]={exports:{},id:e,loaded:!1};return r[e].call(n.exports,n,n.exports,o),n.loaded=!0,n.exports}var t={};return o.m=r,o.c=t,o.p="",o(0)}([function(r,o,t){"use strict";var e=t(1).Rollbar,n=t(2);_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://d37gvrvc0wt4s1.cloudfront.net/js/v1.8/rollbar.min.js";var a=e.init(window,_rollbarConfig),i=n(a,_rollbarConfig);a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,i)},function(r,o){"use strict";function t(r){return function(){try{return r.apply(this,arguments)}catch(o){try{console.error("[Rollbar]: Internal error",o)}catch(t){}}}}function e(r,o,t){window._rollbarWrappedError&&(t[4]||(t[4]=window._rollbarWrappedError),t[5]||(t[5]=window._rollbarWrappedError._rollbarContext),window._rollbarWrappedError=null),r.uncaughtError.apply(r,t),o&&o.apply(window,t)}function n(r){var o=function(){var o=Array.prototype.slice.call(arguments,0);e(r,r._rollbarOldOnError,o)};return o.belongsToShim=!0,o}function a(r){this.shimId=++s,this.notifier=null,this.parentShim=r,this._rollbarOldOnError=null}function i(r){var o=a;return t(function(){if(this.notifier)return this.notifier[r].apply(this.notifier,arguments);var t=this,e="scope"===r;e&&(t=new o(this));var n=Array.prototype.slice.call(arguments,0),a={shim:t,method:r,args:n,ts:new Date};return window._rollbarShimQueue.push(a),e?t:void 0})}function l(r,o){if(o.hasOwnProperty&&o.hasOwnProperty("addEventListener")){var t=o.addEventListener;o.addEventListener=function(o,e,n){t.call(this,o,r.wrap(e),n)};var e=o.removeEventListener;o.removeEventListener=function(r,o,t){e.call(this,r,o&&o._wrapped?o._wrapped:o,t)}}}var s=0;a.init=function(r,o){var e=o.globalAlias||"Rollbar";if("object"==typeof r[e])return r[e];r._rollbarShimQueue=[],r._rollbarWrappedError=null,o=o||{};var i=new a;return t(function(){if(i.configure(o),o.captureUncaught){i._rollbarOldOnError=r.onerror,r.onerror=n(i);var t,a,s="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(t=0;t<s.length;++t)a=s[t],r[a]&&r[a].prototype&&l(i,r[a].prototype)}return r[e]=i,i})()},a.prototype.loadFull=function(r,o,e,n,a){var i=function(){var o;if(void 0===r._rollbarPayloadQueue){var t,e,n,i;for(o=new Error("rollbar.js did not load");t=r._rollbarShimQueue.shift();)for(n=t.args,i=0;i<n.length;++i)if(e=n[i],"function"==typeof e){e(o);break}}"function"==typeof a&&a(o)},l=!1,s=o.createElement("script"),u=o.getElementsByTagName("script")[0],p=u.parentNode;s.crossOrigin="",s.src=n.rollbarJsUrl,s.async=!e,s.onload=s.onreadystatechange=t(function(){if(!(l||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){s.onload=s.onreadystatechange=null;try{p.removeChild(s)}catch(r){}l=!0,i()}}),p.insertBefore(s,u)},a.prototype.wrap=function(r,o){try{var t;if(t="function"==typeof o?o:function(){return o||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._wrapped){r._wrapped=function(){try{return r.apply(this,arguments)}catch(o){throw o._rollbarContext=t()||{},o._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=o,o}},r._wrapped._isWrap=!0;for(var e in r)r.hasOwnProperty(e)&&(r._wrapped[e]=r[e])}return r._wrapped}catch(n){return r}};for(var u="log,debug,info,warn,warning,error,critical,global,configure,scope,uncaughtError".split(","),p=0;p<u.length;++p)a.prototype[u[p]]=i(u[p]);r.exports={Rollbar:a,_rollbarWindowOnError:e}},function(r,o){"use strict";r.exports=function(r,o){return function(t){if(!t&&!window._rollbarInitialized){var e=window.RollbarNotifier,n=o||{},a=n.globalAlias||"Rollbar",i=window.Rollbar.init(n,r);i._processShimQueue(window._rollbarShimQueue||[]),window[a]=i,window._rollbarInitialized=!0,e.processPayloads()}}}}]);
+	// End Rollbar Snippet
+	</script>
 
 </head>
 
@@ -98,7 +125,7 @@
 					<div class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
 							<div class="item active">
-								<h4>Get started quickly with your new idea</h4>
+								<h4>Quickly get started with your new idea</h4>
 							</div>
 							<div class="item">
 								<h4>Skip the boilerplate and immediately start on the business logic</h4>
@@ -139,7 +166,7 @@
 					<div class="col-md-10 col-md-offset-1">
 						<h2>How it Works</h2>
 						<hr class="primary">
-						<p>You can use any repository on Github as the template for RepoCreator. If you'd like to create your own template, just create your project like you normally would but anywhere you would type a repo-specific string, instead type magic_variable_magic, magic.variable.magic or magic-variable-magic.</p>
+						<p>You can use any repository on Github as the template for RepoCreator. Repositories with magic strings in them make much better templates! If you'd like to create your own template, just create your project like you normally would but anywhere you would type a repo-specific string, instead type:<br/><code>magic_variable_magic</code>, <code>magic.variable.magic</code> or <code>magic-variable-magic</code>.</p>
 						<p>For example, if you have the following tag in your template's HTML file:</p>
 						<pre class="mb20 fs16 p20 text-yellow">&lt;title&gt; magic_app_name_magic &lt;/title&gt;</pre>
 						<p>When you create a new project from the template you will be prompted for the replacement of <code>app_name</code>. If you set the value to <code>My Cool App</code>, then in the new repo you will have this:</p>
@@ -157,29 +184,28 @@
 					<div class="col-lg-8 col-lg-offset-2 text-center">
 						<h2>Features</h2>
 						<hr class="light">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 					</div>
 					<div class="col-lg-12 text-center" data-scrollreveal="enter bottom over 1.5s">
 						<ul id="services-1-carousel" class="icon-effect list-inline">
 							<li class="item">
 								<span class="icon icon-code"></span>
 								<h3>Works with any language</h3>
-								<p>RepoCreator can be used with any programming language.</p>
+								<p>RepoCreator is language agnostic, all you need is a web browser and a GitHub account.</p>
 							</li>
 							<li class="item">
 								<span class="icon icon-github"></span>
-								<h3>Github Integration</h3>
-								<p>Completely supports Github integration.</p>
+								<h3>GitHub Integration</h3>
+								<p>Interacts directly with GitHub to create a new repository for you from a template.</p>
 							</li>
 							<li class="item">
 								<span class="icon icon-money"></span>
 								<h3>Money back guarantee</h3>
-								<p>We refund your money if you are not happy.</p>
+								<p>If you sponsor a repository and aren't satisfied with our service, we'll give you a full refund.</p>
 							</li>
 							<li class="item">
 								<span class="icon icon-envelope-o"></span>
 								<h3>Full Support</h3>
-								<p>We also provide email support just in case you get lost.</p>
+								<p>If you have any trouble just send us a message and we'll get back to you ASAP.</p>
 							</li>
 						</ul>
 					</div>
@@ -306,7 +332,7 @@
 					<div class="col-md-8 col-md-offset-2">
 						<h2>Pricing</h2>
 						<hr class="primary">
-						<p>Sponsorship is billed monthly. Once a template is sponsored, anyone that has access to the template repository can use it as a template for free!</p>
+						<p>Once a template is sponsored, anyone that has access to the template repository can use it as a template for <b><i>FREE</i></b>!  Sponsored repositories also show up automatically to all users, without them having to search.</p>
 					</div>
 				</div>
 				<div class="row">
@@ -321,11 +347,12 @@
 									<span class="period">forever</span>
 								</div>
 								<ul class="pricing-items list-unstyled text-center">
-									<li class="item"><i class="fa fa-check-circle"></i> Public Access</li>
-									<li class="item"><i class="fa fa-check-circle"></i> Dedicated Support</li>
+									<li class="item"><i class="fa fa-circle-o text-danger"></i> Sponsored</li>
+									<li class="item"><i class="fa fa-circle-o text-danger"></i> Any License</li>
+									<li class="item"><i class="fa fa-circle-o text-danger"></i> Private</li>
 									<li id="info_cc0" class="pn" style="display:none">
 										<div class="p15">
-											Any template repository that is both public and CC0 licensed will be free to use.
+											Any template repository that is both public and CC0 licensed will be free to use as a template.
 										</div>
 									</li>
 									<li class="pricing-button page-scroll">
@@ -347,9 +374,9 @@
 									<span class="period">monthly</span>
 								</div>
 								<ul class="pricing-items list-unstyled text-center">
-									<li class="item"><i class="fa fa-check-circle"></i> Public Access</li>
-									<li class="item"><i class="fa fa-check-circle"></i> Sponsored</li>
-									<li class="item"><i class="fa fa-check-circle"></i> Dedicated Support</li>
+									<li class="item"><i class="fa fa-check-circle-o text-success"></i> Sponsored</li>
+									<li class="item"><i class="fa fa-check-circle-o text-success"></i> Any License</li>
+									<li class="item"><i class="fa fa-circle-o text-danger"></i> Private</li>
 									<li id="info_any5" class="pn" style="display:none">
 										<div class="p15">
 											If you would like a repository to be available as a template but do not want to, or cannot, use the CC0 license then you can sponsor the repository so it is available for use as a template.
@@ -366,7 +393,7 @@
 					<div class="col-md-4 pricing-col" data-scrollreveal="enter right over 1.5s">
 						<div class="pricing-table">
 							<div class="pricing-heading" style="background-image: url('assets/img/demo-pricing/1.jpg')">
-								<h2>Any</h2>
+								<h2>Private</h2>
 							</div>
 							<div class="content">
 								<div class="price">
@@ -374,12 +401,12 @@
 									<span class="period">monthly</span>
 								</div>
 								<ul class="pricing-items list-unstyled text-center">
-									<li class="item"><i class="fa fa-check-circle"></i> Private Access</li>
-									<li class="item"><i class="fa fa-check-circle"></i> Sponsored</li>
-									<li class="item"><i class="fa fa-check-circle"></i> Dedicated Support</li>
+									<li class="item"><i class="fa fa-check-circle-o text-success"></i> Sponsored</li>
+									<li class="item"><i class="fa fa-check-circle-o text-success"></i> Any License</li>
+									<li class="item"><i class="fa fa-check-circle-o text-success"></i> Private</li>
 									<li id="info_any10" class="pn" style="display:none">
 										<div class="p15">
-											If you want to use a private repository as a template you can sponsor it to make it available.
+											If you want to use a private repository as a template you can sponsor it to make it available as template to anyone else with read access to that repository.
 										</div>
 									</li>
 									<li class="pricing-button page-scroll">
@@ -400,7 +427,7 @@
 				<div class="container">
 					<div class="row text-center">
 						<div class="col-lg-8 col-lg-offset-2">
-							<h2>Have Query? Let us Help!</h2>
+							<h2>Have a question? Let us help!</h2>
 							<hr class="light">
 							<a href="https://help.zoltu.io/" target="_blank" class="btn btn-outline btn-light btn-lg btn-square"><i class="fa fa-envelope"></i> Support</a>
 						</div>
@@ -413,16 +440,7 @@
 			<div class="upper">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-3">
-							<h2 class="script mtn">RepoCreator</h2>
-							<address>
-								<strong>Zoltu LLC</strong>
-								<br>San Francisco, CA 94107
-								<br>
-								<abbr title="Phone">P:</abbr> (123) 456-7890
-							</address>
-						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<ul class="list-unstyled footer-links page-scroll">
 								<li>
 									<a href="#about">About RepoCreator</a>
@@ -435,7 +453,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<ul class="list-unstyled footer-links page-scroll">
 								<li>
 									<a href="#templates">Templates</a>
@@ -448,21 +466,8 @@
 								</li>
 							</ul>
 						</div>
-						<div class="col-md-3">
-							<ul class="list-inline">
-								<li>
-									<a href="#" class="btn btn-social-light btn-facebook"><i class="fa fa-fw fa-facebook"></i></a>
-								</li>
-								<li>
-									<a href="#" class="btn btn-social-light btn-twitter"><i class="fa fa-fw fa-twitter"></i></a>
-								</li>
-								<li>
-									<a href="#" class="btn btn-social-light btn-dribbble"><i class="fa fa-fw fa-dribbble"></i></a>
-								</li>
-								<li>
-									<a href="#" class="btn btn-social-light btn-google-plus"><i class="fa fa-fw fa-google-plus"></i></a>
-								</li>
-							</ul>
+						<div class="col-md-4">
+							<div class='shareaholic-canvas' data-app='share_buttons' data-app-id='24029163'></div>
 						</div>
 					</div>
 				</div>
@@ -505,7 +510,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.4/SmoothScroll.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqBootstrapValidation/1.3.7/jqBootstrapValidation.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.7/jquery.nicescroll.min.js"></script>
 
 	<!-- Spectrum JavaScript Files -->

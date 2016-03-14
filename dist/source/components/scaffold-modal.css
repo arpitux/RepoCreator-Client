@@ -61,6 +61,10 @@ ai-dialog > ai-dialog-body {
 	display: inherit;
 }
 
+#template-step-complete {
+	display: inherit;
+}
+
 #loader_replacements {
 	font-size: 28px;
 	color: #888;
@@ -440,4 +444,25 @@ ai-dialog > ai-dialog-body {
 .template-step.au-leave-active {
 	-webkit-animation-name: fadeOutRight;
 	animation-name: fadeOutRight;
+}
+
+.template-header {
+    font-size:22px;
+    padding: 10px 50px 10px 15px;
+    color:white;
+    background-color:#41c4ab;
+    overflow:hidden;
+    white-space:nowrap;
+    position:relative;
+}
+
+.template-header:after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 50px;
+    background: linear-gradient(to right, rgba(65, 196, 171, 0), rgba(65, 196, 171, 1) 50%);
 }

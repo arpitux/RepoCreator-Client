@@ -3,7 +3,7 @@
  * Copyright 2013-2015 Start Bootstrap Themes
  * To use this theme you must have a license purchased at WrapBootstrap (https://wrapbootstrap.com)
  */
- 
+
 // Functions to run on document ready
 jQuery(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
@@ -117,31 +117,6 @@ jQuery(document).ready(function() {
         $(this).addClass("floating-label-form-group-with-focus");
     }).on("blur", ".floating-label-form-group", function() {
         $(this).removeClass("floating-label-form-group-with-focus");
-    });
-
-});
-
-// Functions to run on window load
-$(window).load(function() {
-
-    // Isotope Plugin for Portfolio Filtering
-    // init Isotope
-    var $container = $('.isotope').isotope({
-        itemSelector: '.portfolio-item'
-    });
-    $('#filters').on('click', 'button', function() {
-        var filterValue = $(this).attr('data-filter');
-        $container.isotope({
-            filter: filterValue
-        });
-    });
-    // change is-checked class on buttons
-    $('#filters').each(function(i, buttonGroup) {
-        var $buttonGroup = $(buttonGroup);
-        $buttonGroup.on('click', 'button', function() {
-            $buttonGroup.find('.active').removeClass('active');
-            $(this).addClass('active');
-        });
     });
 
 });

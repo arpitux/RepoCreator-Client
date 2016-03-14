@@ -449,7 +449,7 @@ pre {
     width: 100%;
     color: white;
     text-align: center;
-    
+
 }
 
 .repo-popup-img {
@@ -482,7 +482,7 @@ pre {
 }
 
 @media (max-width: 991px) {
-    
+
     #repo-popup-steps-container {
         height: 500px !important;
     }
@@ -699,25 +699,4 @@ body.ai-dialog-open .navbar {
         line-height:1.42857143 !important;
         padding: 6px 12px !important;
     }
-}
-
-.template-header{
-    font-size:22px;
-    padding: 10px 50px 10px 15px;
-    color:white;
-    background-color:#41c4ab;
-    overflow:hidden;
-    white-space:nowrap;
-    position:relative;
-}
-
-.template-header:after{
-    content: "";
-    text-align: right;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100px;
-    height: 50px;
-    background: linear-gradient(to right, rgba(65, 196, 171, 0), rgba(65, 196, 171, 1) 50%);
 }
