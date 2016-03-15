@@ -354,14 +354,15 @@
     -moz-border-radius: 0px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
     color: #fff;
-    right: 13px;
+    right: 10px;
     font-size: 12px;
-    padding: 6px 9px;
+    padding: 4px 7px;
     position: absolute;
-    top: 15px;
+    top: 10px;
     z-index: 3;
+    border-radius:5px;
 }
 
 .portfolio-1 .portfolio-item .portfolio-link {
@@ -657,16 +658,23 @@ body.ai-dialog-open .navbar {
     line-height: 20px;
     text-align: left;
     display: inline-block;
+   
 }
 
 .app-search-error .message .text {
     padding: 15px 20px 15px 20px;
     border-radius: 3px;
     margin-bottom: 30px;
+    position:relative;
+    padding-right:60px;
 }
 
 .navbar-fixed-bottom, .navbar-fixed-top {
     z-index: 1000 !important;
+}
+
+.msg_templats_loading{
+    text-align: center; font-size: 30px;
 }
 
 .btn-dialog-close{
@@ -699,4 +707,130 @@ body.ai-dialog-open .navbar {
         line-height:1.42857143 !important;
         padding: 6px 12px !important;
     }
+}
+
+.btn-search-error-close
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 30px;
+    font-family: Arial, Baskerville, monospace;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    text-decoration: none;
+    z-index: 1040;
+    color: rgba(255,255,255,0.4);
+    background: transparent;
+    border: 0px;
+    -webkit-appearance: none;
+    outline: none;
+    padding: 0px;
+    box-shadow: none;
+    overflow: visible;
+    display: block;
+}
+.btn-search-error-close:hover
+{
+    color:white;
+}
+
+.social-slider{
+    position:fixed;
+    bottom:50px;
+    right:-235px;
+    z-index:2000;
+    height:45px;
+    display:table;
+    width:280px;
+}
+.social-slider .btn-visible{
+    text-align:center;
+    display:table-cell;
+    vertical-align:top;
+    width:45px;
+}
+.social-slider .btn-visible:hover{
+    cursor:pointer;
+}
+.social-slider .btn-visible .btn-share{
+     width:45px;
+    height:45px;
+    font-size:25px;
+    line-height:45px;
+    color:white;
+     background-color:#439AD5;
+}
+.social-slider .btn-hidden
+{
+    display:table-cell;height:50px;overflow:hidden;position:relative;
+}
+.social-slider .btn-hidden .links-container
+{
+    width:100%;margin:-10px 0px 0px -30px;background-color:#74B5E0;height:55px;position:absolute;
+}
+.social-slider .shareaholic-share-buttons-container li.shareaholic-share-button
+{
+    padding:5px 5px 5px 0px !important;
+}
+ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-icon, ul li.shareaholic-share-button i.shareaholic-service-icon, ul.shareaholic-share-buttons li i.shareaholic-service-icon, ul li i.shareaholic-service-icon
+{
+    height:35px !important;
+    width:35px !important;
+    font-size:18px !important;
+}
+
+.ribbon {
+  position: absolute;
+  left: 6px; top: 8px;
+  z-index: 1;
+  overflow: hidden;
+  width: 100px; height: 100px;
+  text-align: right;
+}
+.ribbon span {
+  font-size: 11px;
+  font-weight: bold;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 25px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 120px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#439AD5 0%, #439AD5 100%);
+  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 25px; left: -21px;
+}
+.ribbon span::before {
+  content: "";
+  position: absolute; left: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid #439AD5;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #439AD5;
+}
+.ribbon span::after {
+  content: "";
+  position: absolute; right: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #439AD5;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #439AD5;
+}
+@media (max-width: 991px) {
+    .ribbon{
+        top:-7px;
+    }
+}
+.services-1 .icon
+{
+    cursor: initial !important;
 }
