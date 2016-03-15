@@ -830,3 +830,7 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
         top:-7px;
     }
 }
+.services-1 .icon
+{
+    cursor: initial !important;
+}
