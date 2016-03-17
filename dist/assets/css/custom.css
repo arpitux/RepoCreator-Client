@@ -811,19 +811,19 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
   content: "";
   position: absolute; left: 0px; top: 100%;
   z-index: -1;
-  border-left: 3px solid #439AD5;
+  border-left: 3px solid #2674A8;
   border-right: 3px solid transparent;
   border-bottom: 3px solid transparent;
-  border-top: 3px solid #439AD5;
+  border-top: 3px solid #2674A8;
 }
 .ribbon span::after {
   content: "";
   position: absolute; right: 0px; top: 100%;
   z-index: -1;
   border-left: 3px solid transparent;
-  border-right: 3px solid #439AD5;
+  border-right: 3px solid #2674A8;
   border-bottom: 3px solid transparent;
-  border-top: 3px solid #439AD5;
+  border-top: 3px solid #2674A8;
 }
 @media (max-width: 991px) {
     .ribbon{
