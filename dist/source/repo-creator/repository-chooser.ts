@@ -75,6 +75,10 @@ export class RepositoryChooser {
 		this.templates.searchGitHub(this.searchInput);
 	}
 
+	clearError = (): void => {
+		this.unreadError = null;
+	}
+
 	// required for Aurelia template binding
 	private RepoFilter: any = RepoFilter;
 }
