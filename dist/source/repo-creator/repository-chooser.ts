@@ -25,6 +25,7 @@ export class RepositoryChooser {
 	) {
 		this.eventAggregator.subscribe(Error, (error: Error) => this.unreadError = error.message);
 		this.eventAggregator.subscribe(Error, (error: Error) => Rollbar.error(error.message, error));
+		this.eventAggregator.subscribe(Error, (error: Error) => trackJs.track(error));
 	}
 
 	activate() {
