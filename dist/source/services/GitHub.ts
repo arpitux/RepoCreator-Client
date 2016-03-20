@@ -41,6 +41,11 @@ export class GitHub {
 					throw response;
 				return <SearchResult>response.content
 			}).catch ((response: HttpResponseMessage) => {
+				if (!(response instanceof HttpResponseMessage))
+					if (response instanceof Error)
+						throw response;
+					else
+						throw new Error(`Caught an error that wasn't an HttpResponseMessage or an Error: ${response}`);
 				if (response.statusCode === 403)
 					return this.oAuth.gitHubLogin.then(username => this.getRepository(id));
 				throw new Error(`Failed to get metadata about repository from GitHub (${response.statusCode}): ${response.content}`);
