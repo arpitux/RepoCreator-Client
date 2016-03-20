@@ -23,6 +23,12 @@ export class RepositoryChooser {
 		private dialogService: DialogService,
 		private eventAggregator: EventAggregator
 	) {
+		trackJs.configure({ onError: payload => {
+			if (payload.message.startsWith('404 : GET https://repocreator-api.zoltu.io/api/repository/GitHub/'))
+				return false;
+			return true;
+		}});
+
 		this.eventAggregator.subscribe(Error, (error: Error) => this.unreadError = error.message);
 		this.eventAggregator.subscribe(Error, (error: Error) => Rollbar.error(error.message, error));
 		this.eventAggregator.subscribe(Error, (error: Error) => trackJs.track(error));
