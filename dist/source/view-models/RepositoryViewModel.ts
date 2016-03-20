@@ -59,7 +59,7 @@ export class RepositoryViewModel {
 	}
 
 	public get isPopular(): boolean {
-		return this.repository.repoCreatorMetadata && this.repository.repoCreatorMetadata.favoriteCount > 1 || false;
+		return this.repository.repoCreatorMetadata && this.repository.repoCreatorMetadata.favoriteCount > 0 || false;
 	}
 
 	public get isMySponsored(): boolean {
