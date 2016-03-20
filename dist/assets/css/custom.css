@@ -834,3 +834,12 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
 {
     cursor: initial !important;
 }
+.zoltu-logo-header{
+    height:40px;
+    margin-top:5px !important;
+}
+.zoltu-logo-footer{
+    height:50px;
+    margin-top:10px;
+    margin-bottom:15px;
+}
