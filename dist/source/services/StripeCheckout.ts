@@ -3,7 +3,7 @@ import { Token as StripeToken, Handler as StripeHandler } from 'stripe-checkout'
 export { StripeToken }
 
 export class StripeCheckout {
-	private key: string = 'pk_test_AcLrbacBaKbfvvzv92dgd9XD';
+	private key: string = 'pk_live_dE91sDhX91BjTLPtreCzITEh';
 	private companyName: string = 'Zoltu';
 	private stripeHandler: StripeHandler = stripeCheckout.configure({
 		key: this.key,
