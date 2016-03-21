@@ -26,6 +26,8 @@ export class RepositoryChooser {
 		trackJs.configure({ onError: payload => {
 			if (payload.message.startsWith('404 : GET https://repocreator-api.zoltu.io/api/repository/GitHub/'))
 				return false;
+			if (payload.message.startsWith('404 HTTP/2.0 404: GET https://repocreator-api.zoltu.io/api/repository/GitHub/'))
+				return false;
 			return true;
 		}});
 
@@ -79,6 +81,8 @@ export class RepositoryChooser {
 	}
 
 	searchGitHub = (): void => {
+		if (!this.searchInput)
+			return;
 		this.templates.searchGitHub(this.searchInput);
 	}
 

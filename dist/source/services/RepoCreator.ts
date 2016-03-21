@@ -61,7 +61,7 @@ export class RepoCreator {
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
 		}).catch((error: Error) => {
-			throw new Error(`Failed to popular repositories.  ${error.toString()}`);
+			throw new Error(`Failed to get popular repositories.  ${error.toString()}`);
 		});
 	}
 
@@ -181,7 +181,8 @@ export class RepoCreator {
 				let error = new Error();
 				if (errorOrResponse.content)
 					error.message = errorOrResponse.content.Message;
-				error.name = errorOrResponse.statusCode.toString();
+				if (errorOrResponse.statusCode)
+					error.name = errorOrResponse.statusCode.toString();
 				return error;
 			} else {
 				return new Error(`Unknown error.  ${errorOrResponse.toString()}`)
