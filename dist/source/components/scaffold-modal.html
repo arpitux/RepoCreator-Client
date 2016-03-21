@@ -18,10 +18,10 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<div class="mb20 fs20"><i class="fa fa-user"></i> ${repository.owner}</div>
+								<div class="repo-owner-name"><i class="fa fa-user"></i> ${repository.owner}</div>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><i class="fa fa-github"></i> Open in GitHub</a>
+								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><span class="hidden-xs">Open in </span>GitHub <i class="fa fa-external-link"></i></a>
 							</div>
 						</div>
 						<div class="row">
@@ -76,6 +76,29 @@
 								</button>
 							</div>
 						</div>
+						<div class="github-profile-logout" style="display:none">
+							<img src="https://avatars1.githubusercontent.com/u/9971612?v=3&s=460" />
+							<div class="username">
+								<div class="fs12">Signed in as</div>
+								<div class="fw700 text-white">
+									[username]
+								</div>
+							</div>
+							<div class="dropup pull-right">
+							  <button class="btn btn-lg btn-outline btn-light dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<i class="fa fa-ellipsis-v"></i>
+							  </button>
+							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+								<li><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+							  </ul>
+							</div>
+						</div>
+						<a class="github-profile-login" href="#">
+							<div class="github"><i class="fa fa-github"></i></div>
+							<div class="caption">
+								Login with Github
+							</div>
+						</a>
 					</div>
 					<div class="repo-popup-img"></div>
 				</div>
@@ -138,7 +161,9 @@
 												<div id="replacement_scrolling">
 													<div class="row text-left">
 														<div class="col-xs-12 col-sm-6 mb20" repeat.for="replacement of replacements">
-															<span class="label label-primary index1" style="padding:.1em .5em">${$index + 1}</span> <label class="label1">${replacement.friendlyName}</label>
+															<div class="replacement-name-container">
+																<span class="label label-primary index1" style="padding:.1em .5em">${$index + 1}</span> <span class="label1 replacement-name" title="${replacement.friendlyName}">${replacement.friendlyName}</span>
+															</div>
 															<input class="form-control input-lg brr4 text1" value.bind="replacement.value"/>
 														</div>
 													</div>

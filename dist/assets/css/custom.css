@@ -45,13 +45,18 @@
 .mrn10 {
     margin-right: -10px;
 }
-
+.ml5 {
+    margin-left: 5px;
+}
 .ml10 {
     margin-left: 10px;
 }
 
 .ml20 {
     margin-left: 20px;
+}
+.mb5 {
+    margin-bottom: 5px;
 }
 
 .mb10 {
@@ -184,6 +189,10 @@
 
 .pb20 {
     padding-bottom: 20px;
+}
+
+.fs10{
+    font-size:10px;
 }
 
 .fs12 {
@@ -522,6 +531,7 @@ pre {
 
     #repo-popup-steps-container {
         height: 550px;
+        padding: 30px 15px 0px 15px;
     }
 }
 
@@ -532,6 +542,7 @@ pre {
 
     #repo-popup-steps-container {
         height: 600px;
+        padding: 30px 15px 0px 15px;
     }
 }
 
@@ -842,4 +853,71 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
     height:50px;
     margin-top:10px;
     margin-bottom:15px;
+}
+.replacement-name-container{
+    position:relative;margin-bottom:5px;overflow:hidden;height:17px;
+}
+.replacement-name{
+    position:absolute;
+    margin-left:5px;
+    overflow:hidden;
+}
+.overflow-hidden{
+    overflow:hidden;
+}
+.repo-owner-name{
+    margin-bottom:20px;
+    font-size:20px;
+    overflow:hidden;
+    white-space:nowrap;
+}
+@media (max-width: 767px) {
+    .repo-owner-name{
+        margin-bottom:10px;
+    }
+}
+.github-profile-logout{
+    position:absolute;bottom:20px;width:calc(100% - 40px);left:20px;text-align:left;
+    background-color: rgb(77,82,94);border:1px solid rgb(48,52,58);
+    border-radius:3px;
+    color:#ddd;
+}
+.github-profile-logout img{
+    height:50px;
+    width:50px;
+    background-color:rgb(48,52,58);
+    border-top-left-radius:3px;
+    border-bottom-left-radius:3px;
+}
+.github-profile-logout .username{
+    position:absolute;
+    top:0px;
+    left:60px;
+    padding-top:6px;
+}
+.github-profile-login{
+    position:absolute;bottom:20px;width:calc(100% - 40px);left:20px;text-align:left;
+    background-color: rgb(77,82,94);border:1px solid rgb(48,52,58);
+    border-radius:3px;
+    color:#ddd;
+    line-height:50px;
+}
+.github-profile-login:hover, .github-profile-login:focus{
+    text-decoration:none;
+    color:white;
+}
+.github-profile-login .github{
+    height:50px;
+    width:50px;
+    background-color:rgb(48,52,58);
+    border-top-left-radius:3px;
+    border-bottom-left-radius:3px;
+    line-height:50px;
+    text-align:center;
+    font-size:25px;
+}
+.github-profile-login .caption{
+     position:absolute;
+    top:0px;
+    left:60px;
 }
