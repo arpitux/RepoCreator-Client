@@ -75,9 +75,12 @@ export class RepositoryChooser {
 
 	filter = (newFilter: RepoFilter): void => {
 		this.currentFilter = newFilter;
-		if (this.currentFilter == RepoFilter.Favorite
-			|| this.currentFilter == RepoFilter.MySponsored)
-			this.templates.fetchAllWithLoginPrompt();
+		if (this.currentFilter == RepoFilter.Favorite)
+			this.templates.fetchFavorites();
+		if (this.currentFilter == RepoFilter.MySponsored) {
+			this.templates.fetchFavorites();
+			this.templates.fetchSponsored();
+		}
 	}
 
 	searchGitHub = (): void => {
