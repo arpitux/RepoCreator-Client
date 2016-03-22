@@ -481,13 +481,13 @@ pre {
 
 @media (max-width: 767px) {
     .repo-popup-img-container, .repo-popup-img {
-        height: 135px !important;
+        height: 170px !important;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     .repo-popup-img-container, .repo-popup-img {
-        height: 155px !important;
+        height: 140px !important;
     }
 }
 
@@ -871,17 +871,8 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
     overflow:hidden;
     white-space:nowrap;
 }
-@media (max-width: 767px) {
-    .repo-owner-name{
-        margin-bottom:10px;
-    }
-}
-.github-profile-logout{
-    position:absolute;bottom:20px;width:calc(100% - 40px);left:20px;text-align:left;
-    background-color: rgb(77,82,94);border:1px solid rgb(48,52,58);
-    border-radius:3px;
-    color:#ddd;
-}
+
+
 .github-profile-logout img{
     height:50px;
     width:50px;
@@ -892,32 +883,81 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
 .github-profile-logout .username{
     position:absolute;
     top:0px;
+    padding-top:5px;
+    line-height:20px;
     left:60px;
-    padding-top:6px;
 }
-.github-profile-login{
-    position:absolute;bottom:20px;width:calc(100% - 40px);left:20px;text-align:left;
-    background-color: rgb(77,82,94);border:1px solid rgb(48,52,58);
+.github-profile-logout button.dropdown-toggle{
+    border:0px !important;
+    color:#aaa !important;
+    margin-top:4px;
+}
+.github-profile-logout .dropdown-toggle:hover, .github-profile-logout .dropdown-toggle:focus{
+    color:#fff !important;
+    background-color:transparent !important;
+}
+.github-profile-login, .github-profile-logout{
+    bottom:0px;
+    width:calc(100% - 10px);
+    display:block;
+    position:relative;
+    text-align:left;
+    background-color: rgb(77,82,94);
+    border:1px solid rgb(48,52,58);
     border-radius:3px;
     color:#ddd;
-    line-height:50px;
 }
 .github-profile-login:hover, .github-profile-login:focus{
     text-decoration:none;
     color:white;
 }
 .github-profile-login .github{
-    height:50px;
-    width:50px;
+    height:46px;
+    width:46px;
     background-color:rgb(48,52,58);
     border-top-left-radius:3px;
     border-bottom-left-radius:3px;
-    line-height:50px;
+    line-height:46px;
     text-align:center;
     font-size:25px;
 }
 .github-profile-login .caption{
-     position:absolute;
-    top:0px;
-    left:60px;
+    position:absolute;
+    bottom:0px;
+    left:46px;
+    text-align:center;
+    width:calc(100% - 46px);
+    line-height:46px;
+}
+
+@media (max-width: 768px) {
+    .github-profile-login, .github-profile-logout{
+        margin-top:15px;
+    }
+    .github-profile-login .github, .github-profile-logout img{
+        height:34px;
+        width:34px;
+        line-height:34px;
+    }
+    .github-profile-login .caption, .github-profile-logout .username{
+        line-height:34px !important;
+    }
+     .github-profile-logout .username{
+         padding-top:0px;
+     }
+     .github-profile-logout button.dropdown-toggle{
+         padding:2px 16px;
+     }
+}
+@media (min-width: 991px) {
+    .login-logout-container{
+        position:absolute;
+        bottom:20px;
+    }
+    .github-profile-login{
+        width:calc(100% - 10px);
+    }
+    .btn-open-github, .btn-favorite, .btn-sponsor{
+        margin-bottom:22px;
+    }
 }

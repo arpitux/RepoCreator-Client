@@ -21,12 +21,12 @@
 								<div class="repo-owner-name"><i class="fa fa-user"></i> ${repository.owner}</div>
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-12">
-								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light"><span class="hidden-xs">Open in </span>GitHub <i class="fa fa-external-link"></i></a>
+								<a target="_blank" href.bind="repository.gitHubLink" class="btn btn-square btn-outline btn-light btn-open-github"><span class="hidden-xs">View on </span>GitHub <i class="fa fa-external-link"></i></a>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-6 col-sm-6 col-md-12">
-								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" disabled.bind="processingFavorite" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
+							<div class="col-xs-6 col-sm-4 col-md-12">
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg btn-favorite" disabled.bind="processingFavorite" click.delegate="addFavorite()" if.bind="!repository.isFavorite">
 									<template if.bind="!processingFavorite">
 										<i class="fa fa-heart"></i>
 										Favorite
@@ -36,7 +36,7 @@
 										Processing...
 									</template>
 								</button>
-								<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" disabled.bind="processingFavorite" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
+								<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg btn-favorite" disabled.bind="processingFavorite" click.delegate="removeFavorite()" if.bind="repository.isFavorite">
 									<template if.bind="!processingFavorite">
 										<span class="fa-stack mn7">
 											<i class="fa fa-heart fa-stack-1x"></i>
@@ -50,8 +50,8 @@
 									</template>
 								</button>
 							</div>
-							<div class="col-xs-6 col-sm-6 col-md-12">
-								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg mt20" disabled.bind="repository.isSponsored || processingSponsor" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
+							<div class="col-xs-6 col-sm-4 col-md-12">
+								<button type="button" class="btn btn-block btn-primary btn-xs-small btn-square btn-lg btn-sponsor" disabled.bind="repository.isSponsored || processingSponsor" click.delegate="sponsor()" if.bind="!repository.isMySponsored">
 									<template if.bind="!processingSponsor">
 										<i class="fa fa-credit-card-alt"></i>
 										Sponsor
@@ -61,7 +61,7 @@
 										Processing...
 									</template>
 								</button>
-								<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg mt20" disabled.bind="processingSponsor" click.delegate="unsponsor()" if.bind="repository.isMySponsored">
+								<button type="button" class="btn btn-block btn-warning btn-xs-small btn-square btn-lg btn-sponsor" disabled.bind="processingSponsor" click.delegate="unsponsor()" if.bind="repository.isMySponsored">
 									<template if.bind="!processingSponsor">
 										<span class="fa-stack mn7">
 											<i class="fa fa-credit-card-alt fa-stack-1x"></i>
@@ -75,30 +75,32 @@
 									</template>
 								</button>
 							</div>
-						</div>
-						<div class="github-profile-logout" style="display:none">
-							<img src="https://avatars1.githubusercontent.com/u/9971612?v=3&s=460" />
-							<div class="username">
-								<div class="fs12">Signed in as</div>
-								<div class="fw700 text-white">
-									[username]
+							<div class="col-xs-12 col-sm-4 col-md-12 login-logout-container">
+								<div class="github-profile-logout">
+									<img src="https://avatars1.githubusercontent.com/u/9971612?v=3&s=460" />
+									<div class="username">
+										<div class="fs12 hidden-xs">Signed in as</div>
+										<div class="fw700 text-white">
+											[username]
+										</div>
+									</div>
+									<div class="dropup pull-right">
+									  <button class="btn btn-lg btn-outline btn-light dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										<i class="fa fa-ellipsis-v"></i>
+									  </button>
+									  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+										<li><a href="#"><i class="fa fa-sign-out"></i> Sign out</a></li>
+									  </ul>
+									</div>
 								</div>
-							</div>
-							<div class="dropup pull-right">
-							  <button class="btn btn-lg btn-outline btn-light dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-								<i class="fa fa-ellipsis-v"></i>
-							  </button>
-							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-								<li><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
-							  </ul>
+								<a class="github-profile-login" href="#"  style="display:none">
+									<div class="github"><i class="fa fa-github"></i></div>
+									<div class="caption">
+										Sign in with GitHub
+									</div>
+								</a>
 							</div>
 						</div>
-						<a class="github-profile-login" href="#">
-							<div class="github"><i class="fa fa-github"></i></div>
-							<div class="caption">
-								Login with Github
-							</div>
-						</a>
 					</div>
 					<div class="repo-popup-img"></div>
 				</div>
