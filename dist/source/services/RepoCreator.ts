@@ -46,10 +46,10 @@ export class RepoCreator {
 				.asGet());
 		}).then((response: HttpResponseMessage) => {
 			return RepositoryRepoCreatorMetadata.deserialize(response.content);
-		}).catch((response: HttpResponseMessage) => {
-			if (response.statusCode === 404)
+		}).catch((error: Error) => {
+			if (error.name === '404')
 				return null;
-			throw new Error(`Failed to get metadata about repository from RepoCreator (${response.statusCode}): ${response.content.Message}`);
+			throw new Error(`Failed to get metadata about repository from RepoCreator (${repositoryKey.id}).  ${error.toString()}`);
 		});
 	}
 
@@ -60,8 +60,8 @@ export class RepoCreator {
 					.asGet());
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
-		}).catch((response: HttpResponseMessage) => {
-			throw new Error(`Failed to popular repositories (${response.statusCode}): ${response.content.Message}`);
+		}).catch((error: Error) => {
+			throw new Error(`Failed to get popular repositories.  ${error.toString()}`);
 		});
 	}
 
@@ -71,8 +71,8 @@ export class RepoCreator {
 				.asGet());
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
-		}).catch((response: HttpResponseMessage) => {
-			throw new Error(`Failed to get favorite repositories (${response.statusCode}): ${response.content.Message}`);
+		}).catch((error: Error) => {
+			throw new Error(`Failed to get favorite repositories.  ${error.toString()}`);
 		});
 	}
 
@@ -83,8 +83,8 @@ export class RepoCreator {
 					.asPut());
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
-		}).catch((response: HttpResponseMessage) => {
-			throw new Error(`Failed to favorite repository (${response.statusCode}): ${response.content.Message}`);
+		}).catch((error: Error) => {
+			throw new Error(`Failed to favorite repository (${repositoryKey.id}).  ${error.toString()}`);
 		});
 	}
 
@@ -95,8 +95,8 @@ export class RepoCreator {
 					.asDelete());
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
-		}).catch((response: HttpResponseMessage) => {
-			throw new Error(`Failed to un-favorite repository (${response.statusCode}): ${response.content.Message}`);
+		}).catch((error: Error) => {
+			throw new Error(`Failed to un-favorite repository (${repositoryKey.id}).  ${error.toString()}`);
 		});
 	}
 
@@ -107,8 +107,8 @@ export class RepoCreator {
 					.asGet());
 		}).then(response => {
 			return underscore(response.content).map(item => Repository.deserializeFromRepoCreator(item));
-		}).catch((response: HttpResponseMessage) => {
-			throw new Error(`Failed to get sponsored repositories (${response.statusCode}): ${response.content.Message}`);
+		}).catch((error: Error) => {
+			throw new Error(`Failed to get sponsored repositories.  ${error.toString()}`);
 		});
 	}
 
@@ -123,8 +123,8 @@ export class RepoCreator {
 			});
 		}).then((response: HttpResponseMessage) => {
 			return underscore(response.content).map((item: any) => Repository.deserializeFromRepoCreator(item))
-		}).catch((response: HttpResponseMessage) => {
-			throw new Error(`Failed to sponsored repository (${response.statusCode}): ${response.content.Message}`);
+		}).catch((error: Error) => {
+			throw new Error(`Failed to sponsored repository (${repositoryKey.id}).  ${error.toString()}`);
 		});
 	}
 
@@ -134,6 +134,8 @@ export class RepoCreator {
 				this.httpClient.createRequest(`${baseUri}/api/sponsored/${repositoryKey.provider}/${repositoryKey.id}`)
 					.asDelete()
 					.withContent(repositoryKey));
+		}).catch((error: Error) => {
+			throw new Error(`Failed to cancel sponsorship (${repositoryKey.id}).  ${error.toString()}`);
 		});
 	}
 
@@ -169,14 +171,36 @@ export class RepoCreator {
 	}
 
 	private logoutAndRetryOnForbidden(requestBuilderSupplier: () => Promise<RequestBuilder>): Promise<HttpResponseMessage> {
+		let getError = (errorOrResponse: Error|HttpResponseMessage): Error => {
+			if (errorOrResponse instanceof Error) {
+				if (errorOrResponse.message === 'Popup closed')
+					return new Error('You must be logged in to complete this action.');
+				else
+					return errorOrResponse;
+			} else if (errorOrResponse instanceof HttpResponseMessage) {
+				let error = new Error();
+				if (errorOrResponse.content)
+					error.message = errorOrResponse.content.Message;
+				if (errorOrResponse.statusCode)
+					error.name = errorOrResponse.statusCode.toString();
+				return error;
+			} else {
+				return new Error(`Unknown error.  ${errorOrResponse.toString()}`)
+			}
+		};
+
 		return requestBuilderSupplier().then(requestBuilder => {
 				return requestBuilder.send();
-			}).catch((response: HttpResponseMessage) => {
-				if (response.statusCode === 403) {
+			}).catch((errorOrResponse: Error|HttpResponseMessage) => {
+				if (errorOrResponse instanceof HttpResponseMessage && errorOrResponse.statusCode === 403) {
 					this.oAuth.logout();
-					return requestBuilderSupplier().then(requestBuilder => requestBuilder.send());
+					return requestBuilderSupplier().then(requestBuilder => {
+						return requestBuilder.send()
+					}).catch((errorOrResponse: Error|HttpResponseMessage) => {
+						throw getError(errorOrResponse);
+					});
 				} else {
-					throw response;
+					throw getError(errorOrResponse);
 				}
 			});
 	}

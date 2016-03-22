@@ -23,8 +23,19 @@ export class RepositoryChooser {
 		private dialogService: DialogService,
 		private eventAggregator: EventAggregator
 	) {
-		this.eventAggregator.subscribe(Error, (error: Error) => this.unreadError = error.message);
-		this.eventAggregator.subscribe(Error, (error: Error) => Rollbar.error(error.message, error));
+		trackJs.configure({ onError: payload => {
+			if (payload.message.startsWith('404 : GET https://repocreator-api.zoltu.io/api/repository/GitHub/'))
+				return false;
+			if (payload.message.startsWith('404 HTTP/2.0 404: GET https://repocreator-api.zoltu.io/api/repository/GitHub/'))
+				return false;
+			if (payload.message.startsWith('404 OK: GET https://repocreator-api.zoltu.io/api/repository/GitHub/'))
+				return false;
+			return true;
+		}});
+
+		this.eventAggregator.subscribe(Error, (error: Error) => this.unreadError = error.message || "Unkown error occurred.");
+		this.eventAggregator.subscribe(Error, (error: Error) => Rollbar.error(error.message || "No .message", error));
+		this.eventAggregator.subscribe(Error, (error: Error) => trackJs.track(error));
 	}
 
 	activate() {
@@ -66,13 +77,22 @@ export class RepositoryChooser {
 
 	filter = (newFilter: RepoFilter): void => {
 		this.currentFilter = newFilter;
-		if (this.currentFilter == RepoFilter.Favorite
-			|| this.currentFilter == RepoFilter.MySponsored)
-			this.templates.fetchAllWithLoginPrompt();
+		if (this.currentFilter == RepoFilter.Favorite)
+			this.templates.fetchFavorites();
+		if (this.currentFilter == RepoFilter.MySponsored) {
+			this.templates.fetchFavorites();
+			this.templates.fetchSponsored();
+		}
 	}
 
 	searchGitHub = (): void => {
+		if (!this.searchInput)
+			return;
 		this.templates.searchGitHub(this.searchInput);
+	}
+
+	clearError = (): void => {
+		this.unreadError = null;
 	}
 
 	// required for Aurelia template binding

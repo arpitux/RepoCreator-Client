@@ -5,10 +5,19 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
+	<meta name="description" content="Project Scaffolding as a Service - While project scaffolding is nothing new, RepoCreator simplifies the process by giving you a simple web interface that interacts directly with GitHub. There is no need to download or install a tool and all of its dependencies.">
+	<meta name="author" content="Zoltu">
+	<meta property="og:url" content="https://repocreator.zoltu.io/" />
+	<meta property="og:title" content="RepoCreator" />
+	<meta property="og:description" content="Project Scaffolding as a Service - While project scaffolding is nothing new, RepoCreator simplifies the process by giving you a simple web interface that interacts directly with GitHub. There is no need to download or install a tool and all of its dependencies." />
+	<meta property="og:image" content="https://repocreator.zoltu.io/images/Zoltu-Logo-Full-Size.png" />
 
 	<title>RepoCreator</title>
+
+	<!-- BEGIN TRACKJS -->
+	<script data-cfasync='false' type="text/javascript">window._trackJs = { token: '47373a7c9a884a19b5763bca9d164ef3' };</script>
+	<script data-cfasync='false' type="text/javascript" src="https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
+	<!-- END TRACKJS -->
 
 	<!-- Bootstrap Core CSS -->
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
@@ -51,7 +60,7 @@
 	</script>
 
 	<!-- Rollbar -->
-	<script data-cfasync='false'type='text/javascript'>
+	<script data-cfasync='false' type='text/javascript'>
 	var _rollbarConfig = {
 		accessToken: "8e9a353d7dc1437ab9307e0f6ea3491f",
 		captureUncaught: true,
@@ -102,7 +111,7 @@
 						<li class="page-scroll">
 							<a href="#pricing">Pricing</a>
 						</li>
-						<li class="page-scroll">
+						<li>
 							<a target="_blank" href="https://help.zoltu.io/">Support <i class="fa fa-external-link"></i></a>
 						</li>
 					</ul>
@@ -220,7 +229,7 @@
 					</div>
 				</div>
 				<div aurelia-app="source/main">
-					<div class="msg_templats_loading text-primary"><i class="fa fa-refresh fa-spin"></i> Loading in a moment..</div>
+					<div class="msg_templats_loading text-primary"><i class="fa fa-refresh fa-spin"></i> Loading, please wait...</div>
 				</div>
 			</div>
 		</section>
