@@ -8,6 +8,7 @@ class User {
 		public nickname: string,
 		public email: string,
 		public jwtToken: string,
+		public photoUrl: string,
 		public identities: Map<string, Identity>
 	) {
 		this.validate();
@@ -30,8 +31,9 @@ class User {
 		let nickname: string = object.nickname;
 		let email: string = object.email;
 		let jwtToken: string = object.jwtToken;
+		let photoUrl: string = object.photoUrl;
 		let identities: Map<string, Identity> = new Map<string, Identity>(object.identities);
-		let user = new User(userId, nickname, email, jwtToken, identities);
+		let user = new User(userId, nickname, email, jwtToken, photoUrl, identities);
 		return user;
 	}
 
@@ -44,6 +46,8 @@ class User {
 			throw new Error(`Expected email to be a string but it was a ${typeof this.email}`)
 		if (typeof this.jwtToken !== 'string')
 			throw new Error(`Expected jwtToken to be a string but it was a ${typeof this.jwtToken}`)
+		if (typeof this.photoUrl !== 'string')
+			throw new Error(`Expected photoUrl to be a string but it was a ${typeof this.photoUrl}`)
 		if (!(this.identities instanceof Map))
 			throw new Error(`Expected identities to be a Map<Identities> but it was a ${typeof this.identities}`)
 	}
@@ -139,6 +143,10 @@ export class OAuth {
 		return this._userPromise.then(user => user.identities.get('github')['access_token']);
 	}
 
+	get photoUrl(): Promise<string> {
+		return this.userPromise.then(user => user.photoUrl);
+	}
+
 	get gitHubAuthToken(): Promise<string> {
 		return this.userPromise.then(user => user.identities.get('github')['access_token']);
 	}
@@ -150,6 +158,7 @@ export class OAuth {
 	get gitHubEmail(): Promise<string> {
 		return this.userPromise.then(user => user.email);
 	}
+
 
 	logout = (): void => {
 		// calling this.auth0.logout() causes a redirect, so we'll just clear their session and reject the promise instead
@@ -163,7 +172,7 @@ export class OAuth {
 				result.set(identity.provider, identity);
 				return result;
 			}, new Map<string, Identity>());
-			let user = new User(result.profile.user_id, result.profile.nickname, result.profile.email, result.jwtToken, identities);
+			let user = new User(result.profile.user_id, result.profile.nickname, result.profile.email, result.jwtToken, result.profile.picture, identities);
 			sessionStorage.setItem('Auth0 User', JSON.stringify(user, OAuth.mapReplacer));
 			return user;
 		});

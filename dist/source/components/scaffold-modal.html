@@ -76,12 +76,12 @@
 								</button>
 							</div>
 							<div class="col-xs-12 col-sm-4 col-md-12 login-logout-container">
-								<div class="github-profile-logout">
-									<img src="https://avatars1.githubusercontent.com/u/9971612?v=3&s=460" />
+								<div class="github-profile-logout" if.bind="isLoggedIn">
+									<img src.bind="loggedInPhoto" />
 									<div class="username">
 										<div class="fs12 hidden-xs">Signed in as</div>
 										<div class="fw700 text-white">
-											[username]
+											${loggedInUserName}
 										</div>
 									</div>
 									<div class="dropup pull-right">
@@ -89,11 +89,11 @@
 										<i class="fa fa-ellipsis-v"></i>
 									  </button>
 									  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-										<li><a href="#"><i class="fa fa-sign-out"></i> Sign out</a></li>
+										<li><a click.delegate="logout()"><i class="fa fa-sign-out"></i> Sign out</a></li>
 									  </ul>
 									</div>
 								</div>
-								<a class="github-profile-login" href="#"  style="display:none">
+								<a class="github-profile-login" click.delegate="login()" if.bind="!isLoggedIn">
 									<div class="github"><i class="fa fa-github"></i></div>
 									<div class="caption">
 										Sign in with GitHub
