@@ -1,7 +1,7 @@
 branches:
   only:
     - master
-version: 1.0.{build}
+version: '{build}'
 clone_depth: 1
 environment:
   JSPM_GITHUB_AUTH_TOKEN:
