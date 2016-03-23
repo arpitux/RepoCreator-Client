@@ -45,13 +45,18 @@
 .mrn10 {
     margin-right: -10px;
 }
-
+.ml5 {
+    margin-left: 5px;
+}
 .ml10 {
     margin-left: 10px;
 }
 
 .ml20 {
     margin-left: 20px;
+}
+.mb5 {
+    margin-bottom: 5px;
 }
 
 .mb10 {
@@ -184,6 +189,10 @@
 
 .pb20 {
     padding-bottom: 20px;
+}
+
+.fs10{
+    font-size:10px;
 }
 
 .fs12 {
@@ -472,13 +481,13 @@ pre {
 
 @media (max-width: 767px) {
     .repo-popup-img-container, .repo-popup-img {
-        height: 135px !important;
+        height: 170px !important;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     .repo-popup-img-container, .repo-popup-img {
-        height: 155px !important;
+        height: 140px !important;
     }
 }
 
@@ -522,6 +531,7 @@ pre {
 
     #repo-popup-steps-container {
         height: 550px;
+        padding: 30px 15px 0px 15px;
     }
 }
 
@@ -532,6 +542,7 @@ pre {
 
     #repo-popup-steps-container {
         height: 600px;
+        padding: 30px 15px 0px 15px;
     }
 }
 
@@ -842,4 +853,111 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
     height:50px;
     margin-top:10px;
     margin-bottom:15px;
+}
+.replacement-name-container{
+    position:relative;margin-bottom:5px;overflow:hidden;height:17px;
+}
+.replacement-name{
+    position:absolute;
+    margin-left:5px;
+    overflow:hidden;
+}
+.overflow-hidden{
+    overflow:hidden;
+}
+.repo-owner-name{
+    margin-bottom:20px;
+    font-size:20px;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+
+.github-profile-logout img{
+    height:50px;
+    width:50px;
+    background-color:rgb(48,52,58);
+    border-top-left-radius:3px;
+    border-bottom-left-radius:3px;
+}
+.github-profile-logout .username{
+    position:absolute;
+    top:0px;
+    padding-top:5px;
+    line-height:20px;
+    left:60px;
+}
+.github-profile-logout button.dropdown-toggle{
+    border:0px !important;
+    color:#aaa !important;
+    margin-top:4px;
+}
+.github-profile-logout .dropdown-toggle:hover, .github-profile-logout .dropdown-toggle:focus{
+    color:#fff !important;
+    background-color:transparent !important;
+}
+.github-profile-login, .github-profile-logout{
+    bottom:0px;
+    width:calc(100% - 10px);
+    display:block;
+    position:relative;
+    text-align:left;
+    background-color: rgb(77,82,94);
+    border:1px solid rgb(48,52,58);
+    border-radius:3px;
+    color:#ddd;
+}
+.github-profile-login:hover, .github-profile-login:focus{
+    text-decoration:none;
+    color:white;
+}
+.github-profile-login .github{
+    height:46px;
+    width:46px;
+    background-color:rgb(48,52,58);
+    border-top-left-radius:3px;
+    border-bottom-left-radius:3px;
+    line-height:46px;
+    text-align:center;
+    font-size:25px;
+}
+.github-profile-login .caption{
+    position:absolute;
+    bottom:0px;
+    left:46px;
+    text-align:center;
+    width:calc(100% - 46px);
+    line-height:46px;
+}
+
+@media (max-width: 768px) {
+    .github-profile-login, .github-profile-logout{
+        margin-top:15px;
+    }
+    .github-profile-login .github, .github-profile-logout img{
+        height:34px;
+        width:34px;
+        line-height:34px;
+    }
+    .github-profile-login .caption, .github-profile-logout .username{
+        line-height:34px !important;
+    }
+     .github-profile-logout .username{
+         padding-top:0px;
+     }
+     .github-profile-logout button.dropdown-toggle{
+         padding:2px 16px;
+     }
+}
+@media (min-width: 991px) {
+    .login-logout-container{
+        position:absolute;
+        bottom:20px;
+    }
+    .github-profile-login{
+        width:calc(100% - 10px);
+    }
+    .btn-open-github, .btn-favorite, .btn-sponsor{
+        margin-bottom:22px;
+    }
 }
