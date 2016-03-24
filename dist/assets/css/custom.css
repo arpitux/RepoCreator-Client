@@ -896,6 +896,9 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
     color:#fff !important;
     background-color:transparent !important;
 }
+.github-profile-logout .dropup ul.dropdown-menu li a:hover{
+    cursor:pointer
+}
 .github-profile-login, .github-profile-logout{
     bottom:0px;
     width:calc(100% - 10px);
@@ -910,6 +913,7 @@ ul.shareaholic-share-buttons li.shareaholic-share-button i.shareaholic-service-i
 .github-profile-login:hover, .github-profile-login:focus{
     text-decoration:none;
     color:white;
+    cursor:pointer;
 }
 .github-profile-login .github{
     height:46px;
