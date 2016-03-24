@@ -20,6 +20,8 @@ export class ScaffoldModal {
 	private replacements: Replacement[];
 	private processingFavorite: boolean = false;
 	private processingSponsor: boolean = false;
+	private loginName: string = null;
+	private photoUrl: string = null;
 
 	constructor(
 		private oAuth: OAuth,
@@ -37,17 +39,70 @@ export class ScaffoldModal {
 		this.reset();
 	}
 
-	public get populatedReplacementCount() {
+	public get populatedReplacementCount(): number {
 		return this.replacements.filter(replacement => !!replacement.value).length;
 	}
 
 	@computedFrom('newRepoName')
-	public get hasNewRepoName() {
+	public get hasNewRepoName(): boolean {
 		return !!this.newRepoName && this.newRepoName.length > 0;
 	}
 
-	public get allReplacementsPopulated() {
+	public get allReplacementsPopulated(): boolean {
 		return this.populatedReplacementCount === this.replacements.length;
+	}
+
+	public get loggedInUserName(): string {
+		if (!this.isLoggedIn)
+			throw new Error(`Attempted to get username but user is not logged in.`);
+
+		// this is terrible, waiting for async binding plugin to work with latest Aurelia to fix
+		if (!this.loginName && this.loginName !== "") {
+			this.oAuth.gitHubLogin
+				.then(loginName => this.loginName = loginName)
+				.catch(error => this.eventAggregator.publish(error));
+			this.loginName = "";
+		}
+
+		return this.loginName;
+	}
+
+	public get loggedInPhoto(): string {
+		if (!this.isLoggedIn)
+			throw new Error(`Attempted to get photo but user is not logged in.`);
+
+		// this is terrible, waiting for async binding plugin to work with latest Aurelia to fix
+		if (!this.photoUrl && this.photoUrl !== "") {
+			this.oAuth.photoUrl
+				.then(photoUrl => this.photoUrl = photoUrl)
+				.catch(error => this.eventAggregator.publish(error));
+			this.photoUrl = "";
+		}
+
+		return this.photoUrl;
+	}
+
+	public get isLoggedIn(): boolean {
+		return this.oAuth.isLoggedOrLoggingIn;
+	}
+
+	public login = (): void => {
+		// force a login
+		// this is terrible, waiting for async binding plugin to work with latest Aurelia to fix
+		this.oAuth.gitHubLogin
+			.then(loginName => this.loginName = loginName)
+			.catch(error => this.eventAggregator.publish(error));
+		this.oAuth.photoUrl
+			.then(photoUrl => this.photoUrl = photoUrl)
+			.catch(error => this.eventAggregator.publish(error));
+		this.loginName = "";
+		this.photoUrl = "";
+	}
+
+	public logout = (): void => {
+		this.oAuth.logout();
+		this.loginName = null;
+		this.photoUrl = null;
 	}
 
 	public addFavorite = (): void => {
